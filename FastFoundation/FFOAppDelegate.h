@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  AppDelegate.h
 //  FastFoundation
 //
 //  Created by Michael Eisel on 3/30/17.
@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface FFOAppDelegate : UIResponder <UIApplicationDelegate>
+
+@property (strong, nonatomic) UIWindow *window;
 
 
 @end
