@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		B32879F31E8E1625007E49B7 /* FFODateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = B32879F21E8E1625007E49B7 /* FFODateFormatter.m */; };
+		B38586DB1EEE46BD00496750 /* NSArrayFFOMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = B38586DA1EEE46BD00496750 /* NSArrayFFOMethods.m */; };
+		B38586DE1EEE48BA00496750 /* pcg_basic.c in Sources */ = {isa = PBXBuildFile; fileRef = B38586DC1EEE48BA00496750 /* pcg_basic.c */; };
 		B38C42111E8E001700033ACD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C42101E8E001700033ACD /* main.m */; };
 		B38C42141E8E001700033ACD /* FFOAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C42131E8E001700033ACD /* FFOAppDelegate.m */; };
 		B38C42171E8E001700033ACD /* FFOViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C42161E8E001700033ACD /* FFOViewController.m */; };
@@ -19,6 +21,10 @@
 /* Begin PBXFileReference section */
 		B32879F11E8E1625007E49B7 /* FFODateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFODateFormatter.h; sourceTree = "<group>"; };
 		B32879F21E8E1625007E49B7 /* FFODateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFODateFormatter.m; sourceTree = "<group>"; };
+		B38586D91EEE46BD00496750 /* NSArrayFFOMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSArrayFFOMethods.h; sourceTree = "<group>"; };
+		B38586DA1EEE46BD00496750 /* NSArrayFFOMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSArrayFFOMethods.m; sourceTree = "<group>"; };
+		B38586DC1EEE48BA00496750 /* pcg_basic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pcg_basic.c; sourceTree = "<group>"; };
+		B38586DD1EEE48BA00496750 /* pcg_basic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pcg_basic.h; sourceTree = "<group>"; };
 		B38C420C1E8E001700033ACD /* FastFoundation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FastFoundation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B38C42101E8E001700033ACD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B38C42121E8E001700033ACD /* FFOAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOAppDelegate.h; sourceTree = "<group>"; };
@@ -62,6 +68,8 @@
 		B38C420E1E8E001700033ACD /* FastFoundation */ = {
 			isa = PBXGroup;
 			children = (
+				B38586DC1EEE48BA00496750 /* pcg_basic.c */,
+				B38586DD1EEE48BA00496750 /* pcg_basic.h */,
 				B38C42121E8E001700033ACD /* FFOAppDelegate.h */,
 				B38C42131E8E001700033ACD /* FFOAppDelegate.m */,
 				B38C42151E8E001700033ACD /* FFOViewController.h */,
@@ -74,6 +82,8 @@
 				B38C422B1E8E029100033ACD /* NSString+FFOMethods.m */,
 				B32879F11E8E1625007E49B7 /* FFODateFormatter.h */,
 				B32879F21E8E1625007E49B7 /* FFODateFormatter.m */,
+				B38586D91EEE46BD00496750 /* NSArrayFFOMethods.h */,
+				B38586DA1EEE46BD00496750 /* NSArrayFFOMethods.m */,
 			);
 			path = FastFoundation;
 			sourceTree = "<group>";
@@ -159,7 +169,9 @@
 			files = (
 				B32879F31E8E1625007E49B7 /* FFODateFormatter.m in Sources */,
 				B38C42171E8E001700033ACD /* FFOViewController.m in Sources */,
+				B38586DE1EEE48BA00496750 /* pcg_basic.c in Sources */,
 				B38C42141E8E001700033ACD /* FFOAppDelegate.m in Sources */,
+				B38586DB1EEE46BD00496750 /* NSArrayFFOMethods.m in Sources */,
 				B38C422C1E8E029100033ACD /* NSString+FFOMethods.m in Sources */,
 				B38C42111E8E001700033ACD /* main.m in Sources */,
 			);

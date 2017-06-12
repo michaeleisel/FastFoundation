@@ -8,6 +8,7 @@
 
 #import "FFOViewController.h"
 #import "NSString+FFOMethods.h"
+#import "pcg_basic.h"
 
 @interface FFOViewController ()
 
@@ -31,14 +32,10 @@
     	for (NSString *string in @[longString, shortString, lowercaseString]) {
             	NSArray <NSArray<id>*> *pairs = @[
             	@[@"ffo", ^{
-            		//[@"assdsd" ffo_componentsSeparatedByString:@"s"];
-                //[string ffo_lowercaseString];
-                [longString ffo_stringByReplacingOccurrencesOfString:shortString withString:lowercaseString];
+                    pcg32_boundedrand(100);
             	}],
             	@[@"apple", ^{
-            		//[@"assdsd" componentsSeparatedByString:@"s"];
-                //[string lowercaseString];
-                    [longString stringByReplacingOccurrencesOfString:shortString withString:lowercaseString];
+                    //arc4random_uniform(100);
             	}]];
             	for (NSArray <id>*pair in pairs) {
             		NSLog(@"%@", pair[0]);
@@ -53,7 +50,7 @@
 	CFTimeInterval startTime, endTime;
 	@autoreleasepool {
     	startTime = CACurrentMediaTime();
-    	for (NSInteger i = 0; i < 1e6; i++) {
+    	for (NSInteger i = 0; i < 1e7; i++) {
 			block();
     	}
     	endTime = CACurrentMediaTime();
