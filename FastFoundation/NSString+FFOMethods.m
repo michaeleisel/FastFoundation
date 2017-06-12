@@ -81,6 +81,39 @@ static FFOBuffer sBuffers[kFFOBufferCount];
 	return CFBridgingRelease(CFStringCreateWithCString(kCFAllocatorDefault, buffer->string, kCFStringEncodingUTF8));
 }
 
+- (NSString *)ffo_stringByReplacingOccurrencesOfString:(NSString *)targetString withString:(NSString *)replacementString
+{
+    const char *target = FFOCStringFromString(targetString);
+    const char *replacement = FFOCStringFromString(replacementString);
+    const char *chars = FFOCStringFromString(self);
+    FFOBuffer *buffer = FFOGetBuffer();
+    if (!buffer || !target || !replacement || !chars) {
+        return [self stringByReplacingOccurrencesOfString:targetString withString:replacementString];
+    }
+    const char *remainingStr = chars;
+    const char *end = chars + strlen(chars);
+    NSInteger targetLength = strlen(target);
+    NSInteger replacementLength = strlen(replacement);
+    do {
+        const char *nextMatch = strstr(remainingStr, target) ?: end;
+        FFOCopyBuffer(buffer, remainingStr, nextMatch - remainingStr);
+        if (nextMatch < end) {
+            FFOCopyBuffer(buffer, replacement, replacementLength);
+        }
+        remainingStr = nextMatch + targetLength;
+    } while (remainingStr < end);
+    buffer->string[buffer->stringLength] = '\0';
+    // Cleanup
+    buffer->stringLength = 0;
+    return CFBridgingRelease(CFStringCreateWithCString(kCFAllocatorDefault, buffer->string, kCFStringEncodingUTF8));
+}
+
+static void FFOCopyBuffer(FFOBuffer *buffer, const char *new, NSInteger newLength)
+{
+    memcpy(buffer->string + buffer->stringLength, new, newLength);
+    buffer->stringLength += newLength;
+}
+
 static const char *FFOCStringFromString(NSString *string)
 {
 	// todo: copy characters into a buffer instead of calling -UTF8String

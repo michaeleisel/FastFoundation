@@ -12,6 +12,7 @@
 
 - (NSArray <NSString *>*)ffo_componentsSeparatedByString:(NSString *)separator;
 - (NSString *)ffo_lowercaseString;
+- (NSString *)ffo_stringByReplacingOccurrencesOfString:(NSString *)target withString:(NSString *)replacement;
 //- (NSString *)ffo_uppercaseString;
 
 @end

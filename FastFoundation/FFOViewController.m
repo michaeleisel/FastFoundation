@@ -24,17 +24,27 @@
 	for (NSInteger i = 0; i < strlen(chars); i++) {
 		unichars[i] = chars[i];
 	}
-	NSArray <NSArray<id>*> *pairs =
-    @[
-	@[@"ffo", ^{
-		//[@"assdsd" ffo_componentsSeparatedByString:@"s"];
-	}],
-	@[@"apple", ^{
-		//[@"assdsd" componentsSeparatedByString:@"s"];
-	}]];
-	for (NSArray <id>*pair in pairs) {
-		NSLog(@"%@", pair[0]);
-		[self benchmarkBlock:pair[1]];
+	NSString *longString = @"the QUICK brown FOX jumped OVER the LAZY dog";
+	NSString *shortString = @"QUICK";
+	NSString *lowercaseString = @"quick";
+	for (NSInteger i = 0; i < 3; i++) {
+    	for (NSString *string in @[longString, shortString, lowercaseString]) {
+            	NSArray <NSArray<id>*> *pairs = @[
+            	@[@"ffo", ^{
+            		//[@"assdsd" ffo_componentsSeparatedByString:@"s"];
+                //[string ffo_lowercaseString];
+                [longString ffo_stringByReplacingOccurrencesOfString:shortString withString:lowercaseString];
+            	}],
+            	@[@"apple", ^{
+            		//[@"assdsd" componentsSeparatedByString:@"s"];
+                //[string lowercaseString];
+                    [longString stringByReplacingOccurrencesOfString:shortString withString:lowercaseString];
+            	}]];
+            	for (NSArray <id>*pair in pairs) {
+            		NSLog(@"%@", pair[0]);
+            		[self benchmarkBlock:pair[1]];
+            	}
+		}
 	}
 }
 
@@ -53,6 +63,12 @@
 
 - (void)runTests
 {
+    for (NSArray <NSString *>*strings in @[@[@"abcd", @"a", @"foo"], @[@"the quick brown fox", @"o", @""]]) {
+        NSString *appleString = [strings[0] stringByReplacingOccurrencesOfString:strings[1] withString:strings[2]];
+        NSString *FFOString = [strings[0] ffo_stringByReplacingOccurrencesOfString:strings[1] withString:strings[2]];
+        NSAssert([appleString isEqual:FFOString], @"");
+    }
+
 	for (NSString *string in @[@"asdfasdf", @"AAAsafdAB", @"", @"AB"]) {
 		NSString *appleString = [string lowercaseString];
 		NSString *FFOString = [string ffo_lowercaseString];
