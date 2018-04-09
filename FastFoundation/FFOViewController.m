@@ -9,6 +9,7 @@
 #import "FFOViewController.h"
 #import "NSString+FFOMethods.h"
 #import "pcg_basic.h"
+#import "NSArrayFFOMethods.h"
 
 @interface FFOViewController ()
 
@@ -26,16 +27,17 @@
 		unichars[i] = chars[i];
 	}
 	NSString *longString = @"the QUICK brown FOX jumped OVER the LAZY dog";
-	NSString *shortString = @"QUICK";
-	NSString *lowercaseString = @"quick";
+	NSString *shortString = @", ";
+	NSString *lowercaseString = @"";
+    NSArray *items = @[@"the", @"quick", @"super duper long string", @"jumped", @"over", @"the"];
 	for (NSInteger i = 0; i < 3; i++) {
     	for (NSString *string in @[longString, shortString, lowercaseString]) {
             	NSArray <NSArray<id>*> *pairs = @[
             	@[@"ffo", ^{
-                    pcg32_boundedrand(100);
+                    [items ffo_componentsJoinedByString:string];
             	}],
             	@[@"apple", ^{
-                    //arc4random_uniform(100);
+                    [items componentsJoinedByString:string];
             	}]];
             	for (NSArray <id>*pair in pairs) {
             		NSLog(@"%@", pair[0]);
@@ -50,7 +52,7 @@
 	CFTimeInterval startTime, endTime;
 	@autoreleasepool {
     	startTime = CACurrentMediaTime();
-    	for (NSInteger i = 0; i < 1e7; i++) {
+    	for (NSInteger i = 0; i < 1e6; i++) {
 			block();
     	}
     	endTime = CACurrentMediaTime();
@@ -77,6 +79,18 @@
 		NSArray <NSString *>*FFOArray = [pair[0] ffo_componentsSeparatedByString:pair[1]];
 		NSAssert([appleArray isEqual:FFOArray], @"");
 	}
+
+    ({
+    	NSString *longString = @"the QUICK brown FOX jumped OVER the LAZY dog";
+    	NSString *shortString = @", ";
+    	NSString *lowercaseString = @"";
+        NSArray *items = @[@"the", @"quick", @"super duper long string", @"jumped", @"over", @"the"];
+        for (NSString *string in @[longString, shortString, lowercaseString]) {
+            NSString *ffoArray = [items ffo_componentsJoinedByString:string];
+            NSString *appleArray = [items componentsJoinedByString:string];
+            NSAssert([appleArray isEqual:ffoArray], @"");
+        }
+    });
 }
 
 @end

@@ -78,6 +78,7 @@ static FFOBuffer sBuffers[kFFOBufferCount];
 	if (!hasUppercaseChars) {
 		return [self copy];
 	}
+    buffer->string[strLength] = '\0';
 	return CFBridgingRelease(CFStringCreateWithCString(kCFAllocatorDefault, buffer->string, kCFStringEncodingUTF8));
 }
 

@@ -44,6 +44,7 @@ static Class sNSStringClass;
             i += joinerLen;
         }
     }
+    sBuffer[i] = '\0';
     return CFBridgingRelease(CFStringCreateWithCString(kCFAllocatorDefault, sBuffer, kCFStringEncodingUTF8));
 }
 
