@@ -1,0 +1,15 @@
+[package]
+name = "rusty"
+version = "0.1.0"
+
+[lib]
+crate-type = ["staticlib"]
+
+[profile.release]
+# codegen-units = 1 # change this to trade off compile time vs. speed
+debug = true # generate debug symbols for the dSYM file
+
+[build-dependencies]
+cbindgen = "0.5.2"
+
+[dependencies]

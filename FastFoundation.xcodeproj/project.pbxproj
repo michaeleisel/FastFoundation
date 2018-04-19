@@ -16,6 +16,8 @@
 		B38C421C1E8E001700033ACD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B38C421B1E8E001700033ACD /* Assets.xcassets */; };
 		B38C42291E8E025200033ACD /* Launch.xib in Resources */ = {isa = PBXBuildFile; fileRef = B38C42281E8E025200033ACD /* Launch.xib */; };
 		B38C422C1E8E029100033ACD /* NSString+FFOMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C422B1E8E029100033ACD /* NSString+FFOMethods.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B3D753B620890F6A0090C3E2 /* rusty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D753B520890F6A0090C3E2 /* rusty.a */; };
+		B3F73C41207C383300E11E2D /* fishhook.c in Sources */ = {isa = PBXBuildFile; fileRef = B3F73C40207C383300E11E2D /* fishhook.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,63 @@
 		B38C42281E8E025200033ACD /* Launch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Launch.xib; sourceTree = "<group>"; };
 		B38C422A1E8E029100033ACD /* NSString+FFOMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FFOMethods.h"; sourceTree = "<group>"; };
 		B38C422B1E8E029100033ACD /* NSString+FFOMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FFOMethods.m"; sourceTree = "<group>"; };
+		B3D753B520890F6A0090C3E2 /* rusty.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = rusty.a; sourceTree = SOURCE_ROOT; };
+		B3D753B72089249A0090C3E2 /* rust_bindings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rust_bindings.h; sourceTree = SOURCE_ROOT; };
+		B3F73C40207C383300E11E2D /* fishhook.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fishhook.c; sourceTree = "<group>"; };
+		B3F73C42207C383700E11E2D /* fishhook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fishhook.h; sourceTree = "<group>"; };
+		B3F73C44207C403D00E11E2D /* ARKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ARKit.framework; path = System/Library/Frameworks/ARKit.framework; sourceTree = SDKROOT; };
+		B3F73C45207C403D00E11E2D /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
+		B3F73C46207C403D00E11E2D /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
+		B3F73C47207C403D00E11E2D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		B3F73C48207C403D00E11E2D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		B3F73C49207C403D00E11E2D /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		B3F73C4A207C403D00E11E2D /* HealthKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKitUI.framework; path = System/Library/Frameworks/HealthKitUI.framework; sourceTree = SDKROOT; };
+		B3F73C4B207C403D00E11E2D /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		B3F73C4C207C403D00E11E2D /* CoreNFC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreNFC.framework; path = System/Library/Frameworks/CoreNFC.framework; sourceTree = SDKROOT; };
+		B3F73C4D207C403D00E11E2D /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		B3F73C4E207C403D00E11E2D /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
+		B3F73C4F207C403D00E11E2D /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		B3F73C50207C403D00E11E2D /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		B3F73C51207C403D00E11E2D /* GameplayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameplayKit.framework; path = System/Library/Frameworks/GameplayKit.framework; sourceTree = SDKROOT; };
+		B3F73C52207C403E00E11E2D /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		B3F73C53207C403E00E11E2D /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
+		B3F73C54207C403E00E11E2D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		B3F73C55207C403E00E11E2D /* CallKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CallKit.framework; path = System/Library/Frameworks/CallKit.framework; sourceTree = SDKROOT; };
+		B3F73C56207C403E00E11E2D /* ContactsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ContactsUI.framework; path = System/Library/Frameworks/ContactsUI.framework; sourceTree = SDKROOT; };
+		B3F73C57207C403E00E11E2D /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		B3F73C58207C403E00E11E2D /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		B3F73C59207C403E00E11E2D /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		B3F73C5A207C403E00E11E2D /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		B3F73C5B207C403E00E11E2D /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		B3F73C5C207C403E00E11E2D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		B3F73C5D207C403E00E11E2D /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		B3F73C5E207C403E00E11E2D /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		B3F73C5F207C403E00E11E2D /* DeviceCheck.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DeviceCheck.framework; path = System/Library/Frameworks/DeviceCheck.framework; sourceTree = SDKROOT; };
+		B3F73C60207C403E00E11E2D /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		B3F73C61207C403E00E11E2D /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		B3F73C62207C403E00E11E2D /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		B3F73C63207C403E00E11E2D /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
+		B3F73C64207C403E00E11E2D /* HomeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HomeKit.framework; path = System/Library/Frameworks/HomeKit.framework; sourceTree = SDKROOT; };
+		B3F73C65207C403F00E11E2D /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		B3F73C66207C403F00E11E2D /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
+		B3F73C67207C403F00E11E2D /* CoreSpotlight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreSpotlight.framework; path = System/Library/Frameworks/CoreSpotlight.framework; sourceTree = SDKROOT; };
+		B3F73C68207C403F00E11E2D /* FileProviderUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FileProviderUI.framework; path = System/Library/Frameworks/FileProviderUI.framework; sourceTree = SDKROOT; };
+		B3F73C69207C403F00E11E2D /* CarrierBundleUtilities.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = CarrierBundleUtilities.tbd; path = usr/lib/CarrierBundleUtilities.tbd; sourceTree = SDKROOT; };
+		B3F73C6A207C403F00E11E2D /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
+		B3F73C6B207C403F00E11E2D /* CoreML.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreML.framework; path = System/Library/Frameworks/CoreML.framework; sourceTree = SDKROOT; };
+		B3F73C6C207C403F00E11E2D /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
+		B3F73C6D207C403F00E11E2D /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		B3F73C6E207C403F00E11E2D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		B3F73C6F207C403F00E11E2D /* FileProvider.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FileProvider.framework; path = System/Library/Frameworks/FileProvider.framework; sourceTree = SDKROOT; };
+		B3F73C70207C403F00E11E2D /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
+		B3F73C71207C403F00E11E2D /* GSS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GSS.framework; path = System/Library/Frameworks/GSS.framework; sourceTree = SDKROOT; };
+		B3F73C72207C403F00E11E2D /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
+		B3F73C73207C403F00E11E2D /* IdentityLookup.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IdentityLookup.framework; path = System/Library/Frameworks/IdentityLookup.framework; sourceTree = SDKROOT; };
+		B3F73C74207C403F00E11E2D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		B3F73C75207C403F00E11E2D /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		B3F73C76207C403F00E11E2D /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		B3F73C77207C403F00E11E2D /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		B3F73C78207C403F00E11E2D /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3D753B620890F6A0090C3E2 /* rusty.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,6 +114,7 @@
 			children = (
 				B38C420E1E8E001700033ACD /* FastFoundation */,
 				B38C420D1E8E001700033ACD /* Products */,
+				B3F73C43207C403C00E11E2D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -68,12 +129,16 @@
 		B38C420E1E8E001700033ACD /* FastFoundation */ = {
 			isa = PBXGroup;
 			children = (
+				B3D753B520890F6A0090C3E2 /* rusty.a */,
 				B38586DC1EEE48BA00496750 /* pcg_basic.c */,
 				B38586DD1EEE48BA00496750 /* pcg_basic.h */,
+				B3D753B72089249A0090C3E2 /* rust_bindings.h */,
 				B38C42121E8E001700033ACD /* FFOAppDelegate.h */,
 				B38C42131E8E001700033ACD /* FFOAppDelegate.m */,
 				B38C42151E8E001700033ACD /* FFOViewController.h */,
 				B38C42161E8E001700033ACD /* FFOViewController.m */,
+				B3F73C40207C383300E11E2D /* fishhook.c */,
+				B3F73C42207C383700E11E2D /* fishhook.h */,
 				B38C421B1E8E001700033ACD /* Assets.xcassets */,
 				B38C42201E8E001700033ACD /* Info.plist */,
 				B38C420F1E8E001700033ACD /* Supporting Files */,
@@ -94,6 +159,66 @@
 				B38C42101E8E001700033ACD /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B3F73C43207C403C00E11E2D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B3F73C52207C403E00E11E2D /* Accounts.framework */,
+				B3F73C60207C403E00E11E2D /* AddressBook.framework */,
+				B3F73C61207C403E00E11E2D /* AddressBookUI.framework */,
+				B3F73C78207C403F00E11E2D /* AdSupport.framework */,
+				B3F73C44207C403D00E11E2D /* ARKit.framework */,
+				B3F73C5D207C403E00E11E2D /* AssetsLibrary.framework */,
+				B3F73C4F207C403D00E11E2D /* AudioToolbox.framework */,
+				B3F73C72207C403F00E11E2D /* AudioUnit.framework */,
+				B3F73C5C207C403E00E11E2D /* AVFoundation.framework */,
+				B3F73C59207C403E00E11E2D /* AVKit.framework */,
+				B3F73C55207C403E00E11E2D /* CallKit.framework */,
+				B3F73C69207C403F00E11E2D /* CarrierBundleUtilities.tbd */,
+				B3F73C62207C403E00E11E2D /* CFNetwork.framework */,
+				B3F73C50207C403D00E11E2D /* CloudKit.framework */,
+				B3F73C6A207C403F00E11E2D /* Contacts.framework */,
+				B3F73C56207C403E00E11E2D /* ContactsUI.framework */,
+				B3F73C65207C403F00E11E2D /* CoreAudio.framework */,
+				B3F73C53207C403E00E11E2D /* CoreAudioKit.framework */,
+				B3F73C4D207C403D00E11E2D /* CoreBluetooth.framework */,
+				B3F73C6E207C403F00E11E2D /* CoreData.framework */,
+				B3F73C47207C403D00E11E2D /* CoreFoundation.framework */,
+				B3F73C54207C403E00E11E2D /* CoreGraphics.framework */,
+				B3F73C75207C403F00E11E2D /* CoreImage.framework */,
+				B3F73C74207C403F00E11E2D /* CoreLocation.framework */,
+				B3F73C57207C403E00E11E2D /* CoreMedia.framework */,
+				B3F73C6C207C403F00E11E2D /* CoreMIDI.framework */,
+				B3F73C6B207C403F00E11E2D /* CoreML.framework */,
+				B3F73C5B207C403E00E11E2D /* CoreMotion.framework */,
+				B3F73C4C207C403D00E11E2D /* CoreNFC.framework */,
+				B3F73C67207C403F00E11E2D /* CoreSpotlight.framework */,
+				B3F73C6D207C403F00E11E2D /* CoreTelephony.framework */,
+				B3F73C77207C403F00E11E2D /* CoreText.framework */,
+				B3F73C5E207C403E00E11E2D /* CoreVideo.framework */,
+				B3F73C5F207C403E00E11E2D /* DeviceCheck.framework */,
+				B3F73C70207C403F00E11E2D /* EventKit.framework */,
+				B3F73C63207C403E00E11E2D /* EventKitUI.framework */,
+				B3F73C46207C403D00E11E2D /* ExternalAccessory.framework */,
+				B3F73C6F207C403F00E11E2D /* FileProvider.framework */,
+				B3F73C68207C403F00E11E2D /* FileProviderUI.framework */,
+				B3F73C48207C403D00E11E2D /* Foundation.framework */,
+				B3F73C66207C403F00E11E2D /* GameController.framework */,
+				B3F73C4B207C403D00E11E2D /* GameKit.framework */,
+				B3F73C51207C403D00E11E2D /* GameplayKit.framework */,
+				B3F73C5A207C403E00E11E2D /* GLKit.framework */,
+				B3F73C71207C403F00E11E2D /* GSS.framework */,
+				B3F73C49207C403D00E11E2D /* HealthKit.framework */,
+				B3F73C4A207C403D00E11E2D /* HealthKitUI.framework */,
+				B3F73C64207C403E00E11E2D /* HomeKit.framework */,
+				B3F73C58207C403E00E11E2D /* iAd.framework */,
+				B3F73C73207C403F00E11E2D /* IdentityLookup.framework */,
+				B3F73C76207C403F00E11E2D /* ImageIO.framework */,
+				B3F73C45207C403D00E11E2D /* Intents.framework */,
+				B3F73C4E207C403D00E11E2D /* IntentsUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -173,6 +298,7 @@
 				B38C42141E8E001700033ACD /* FFOAppDelegate.m in Sources */,
 				B38586DB1EEE46BD00496750 /* NSArrayFFOMethods.m in Sources */,
 				B38C422C1E8E029100033ACD /* NSString+FFOMethods.m in Sources */,
+				B3F73C41207C383300E11E2D /* fishhook.c in Sources */,
 				B38C42111E8E001700033ACD /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -185,7 +311,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -206,7 +332,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -233,7 +359,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -254,7 +380,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -277,6 +403,10 @@
 				DEVELOPMENT_TEAM = LE4EC4296K;
 				INFOPLIST_FILE = FastFoundation/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.eisel.michael.FastFoundation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -289,6 +419,10 @@
 				DEVELOPMENT_TEAM = LE4EC4296K;
 				INFOPLIST_FILE = FastFoundation/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.eisel.michael.FastFoundation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
