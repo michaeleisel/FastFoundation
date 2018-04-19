@@ -228,6 +228,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B38C42231E8E001700033ACD /* Build configuration list for PBXNativeTarget "FastFoundation" */;
 			buildPhases = (
+				B3D753B820892F5D0090C3E2 /* Build rust */,
 				B38C42081E8E001700033ACD /* Sources */,
 				B38C42091E8E001700033ACD /* Frameworks */,
 				B38C420A1E8E001700033ACD /* Resources */,
@@ -286,6 +287,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B3D753B820892F5D0090C3E2 /* Build rust */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Build rust";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd ${SRCROOT} && ruby build_rust.rb";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B38C42081E8E001700033ACD /* Sources */ = {
@@ -401,6 +419,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = LE4EC4296K;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = FastFoundation/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -417,12 +436,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = LE4EC4296K;
+				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = FastFoundation/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.eisel.michael.FastFoundation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

@@ -1,2 +1,3 @@
 # autogen_warning = "/* asdf */"
 # sys_includes = ["Foundation/Foundation.h"]
+language = "C"

@@ -1,4 +1,4 @@
 #[no_mangle]
-pub extern "C" fn printz() {
+pub extern fn printz() {
 	println!("works");
 }
