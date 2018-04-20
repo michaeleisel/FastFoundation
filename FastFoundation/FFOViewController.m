@@ -43,8 +43,9 @@ static NSInteger totalz = 0;
             count++; \
         } \
         endTime = CACurrentMediaTime(); \
+        usleep(500000); \
     } \
-    printf("%.1e per second\n", count / (endTime - startTime)); \
+    printf("%.2e per second\n", count / (endTime - startTime)); \
 })
 
 - (void)pushController
@@ -54,65 +55,57 @@ static NSInteger totalz = 0;
     [_navController pushViewController:_childController animated:YES];
 }
 
+static CFAllocatorRef sRustDeallocator;
+
+static NSString * FFOComponentsJoinedByString(NSArray<NSString *>*strings, NSString *joiner) {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        CFAllocatorContext context = {0};
+        context.deallocate = FFORustDeallocate;
+        sRustDeallocator = CFAllocatorCreate(NULL, &context);
+    });
+    NSInteger length = strings.count;
+    // CFArrayGetValues((CFArrayRef) strings, CFRangeMake(0, length), values);
+    // [strings getObjects:values];
+    const char *pointers[length];
+    NSInteger i = 0;
+    for (NSString *string in strings) {
+        CFStringRef cfString = (__bridge CFStringRef)string;
+        pointers[i] = CFStringGetCStringPtr(cfString, kCFStringEncodingUTF8);
+        if (pointers[i] == NULL) {
+            assert(NO && "fail");
+            return [strings componentsJoinedByString:joiner];
+        }
+        i++;
+    }
+    const char *cJoiner = [joiner UTF8String];
+    const char *result = FFOComponentsJoinedByString_Rust(pointers, length, cJoiner);
+    // return CFAutorelease(CFStringCreateWithCString(kCFAllocatorDefault, result, kCFStringEncodingUTF8));
+    return CFAutorelease(CFStringCreateWithCStringNoCopy(kCFAllocatorDefault, result, kCFStringEncodingUTF8, sRustDeallocator));
+}
+
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-	// [self runTests];
-    //const char *str = "the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\nnnnnnnnnnnthe quick brown fox jumped over the lazy dog\n";
-    printz();
-    UIViewController *rootController = [[UIViewController alloc] init];
-    rootController.view.backgroundColor = [UIColor purpleColor];
-    UIButton *button = [[UIButton alloc] init];
-    [button setTitle:@"go" forState:UIControlStateNormal];
-    button.frame = CGRectMake(0, 0, 200, 200);
-    button.backgroundColor = [UIColor redColor];
-    [button addTarget:self action:@selector(pushController) forControlEvents:UIControlEventTouchUpInside];
-    [rootController.view addSubview:button];
-
-    _navController = [[UINavigationController alloc] initWithRootViewController:rootController];
-    [self addChildViewController:_navController];
-    [self.view addSubview:_navController.view];
-    _navController.view.frame = self.view.bounds;
-
-    /*for (NSInteger i = 0; i < sizeof(str) - 1; i++) {
-        str[i] = arc4random_uniform(26) + 'a';
-    }
-    str[strlen(str) - 1] = '\0';
+	[self runTests];
+    const char *str = "the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\nnnnnnnnnnnthe quick brown fox jumped over the lazy dog\n";
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
-    BENCH("strlen", ({
-        strlen(str);
-    }));
-    BENCH("memchr", ({
-        memchr(str, 0, sizeof(str));
-    }));
-    NSLog(@"%@", @(sResult));*/
-    /*[self benchmarkBlock:^{
-        memchr(str, 0, sizeof(str));
-    }];*/
-    // for (NSInteger j = 0; j < 200; j += 10) {
-    	/*NSArray <NSArray<id>*> *pairs = @[
-    	@[@"memchr", ^{
-            memchr(str, 0, sizeof(str));
-    	}],
-    	@[@"strlen", ^{
-            strlen(str);
-    	}],
-        @[@"for loop", ^{
-            NSInteger cnt = 0;
-            while (str[cnt] != '\0') {
-                cnt++;
-            }
-            totalz += cnt;
-        }]];
-        // NSLog(@"%@", @(j));
-        printf("%zd", totalz);
-        for (NSInteger i = 0; i < 1; i++) {
-        	for (NSArray <id>*pair in pairs) {
-        		NSLog(@"%@", pair[0]);
-        		[self benchmarkBlock:pair[1]];
-        	}
-        }*/
-    // }
+    NSString *longString = @"the QUICK brown FOX jumped OVER the LAZY dog";
+    NSString *shortString = @", ";
+    NSString *lowercaseString = @"";
+    NSArray *items = @[@"the", @"quick", @"super duper long string", @"jumped", @"over", @"the"];
+    for (NSInteger zz = 0; zz < 3; zz++) {
+        BENCH("rust", ({
+            FFOComponentsJoinedByString(items, shortString);
+        }));
+        BENCH("c", ({
+            [items ffo_componentsJoinedByString:shortString];
+        }));
+        /*BENCH("objc", ({
+            [items componentsJoinedByString:shortString];
+        }));*/
+    }
+    NSLog(@"%@", @(sResult));
 }
 
 - (void)benchmarkBlock:(dispatch_block_t)block

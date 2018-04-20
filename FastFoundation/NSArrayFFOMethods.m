@@ -23,7 +23,7 @@ static Class sNSStringClass;
     NSInteger objectsDone = 0;
     NSInteger count = self.count;
     NSInteger i = 0;
-    const char *joinerStr = joiner.UTF8String;
+    const char *joinerStr = CFStringGetCStringPtr((__bridge CFStringRef)joiner, kCFStringEncodingUTF8); // joiner.UTF8String;
     NSInteger joinerLen = strlen(joinerStr);
     for (id object in self) {
         const char *str;

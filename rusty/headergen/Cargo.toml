@@ -1,0 +1,10 @@
+[package]
+name = "headergen"
+version = "0.1.0"
+
+[profile.release]
+debug = true
+
+[dependencies]
+cbindgen = "*"
+

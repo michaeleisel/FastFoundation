@@ -2,9 +2,10 @@ extern crate cbindgen;
 
 use std::io::Write;
 use std::env;
-use std::path::Path;
 use std::fs;
 use std::fs::OpenOptions;
+
+use cbindgen::Language;
 
 fn main() {
     let header = autogen_header();
@@ -13,11 +14,11 @@ fn main() {
 }
 
 fn replace_contents(header: &str) {
-    let path = "../rust_bindings.h";
-    fs::remove_file(path).unwrap();
+    let path = "../../rust_bindings.h";
     let mut file = OpenOptions::new()
         .read(true)
         .write(true)
+        .truncate(true)
         .create(true)
         .open(path)
         .unwrap();
@@ -25,12 +26,12 @@ fn replace_contents(header: &str) {
 }
 
 fn autogen_header() -> String {
-    let crate_dir = env::var("CARGO_MANIFEST_DIR").unwrap();
+    let mut crate_dir = env::var("CARGO_MANIFEST_DIR").unwrap();
+    crate_dir.push_str("/../main");
     let mut string = Vec::new();
-    let config = cbindgen::Config::from_root_or_default(Path::new(&crate_dir));
     cbindgen::Builder::new()
       .with_crate(crate_dir)
-      .with_config(config)
+      .with_language(Language::C)
       .generate()
       .unwrap()
       .write(&mut string);
