@@ -121,26 +121,67 @@ static BOOL sHasGone = NO;
     NS_VALID_UNTIL_END_OF_SCOPE NSData *objcData = [[NSFileManager defaultManager] contentsAtPath:path];
     const char *string = (const char *)[objcData bytes];
     NSInteger length = strlen(string);
-    BENCH("arm64", ({
-        NSInteger sum = 0;
-        // todo: alignment
-        uint8x16_t *vectors = (uint8x16_t *)string;
-        for (NSInteger i = 0; i < length / sizeof(uint8x16_t); i++) {
-            uint8x16_t vector = vectors[i];
-            uint8x16_t result = sOneVec & ((vmvnq_u8(vector + sLowVec)) & (vector + sHighVec));
-            if (vaddlvq_u8(result) != 0) {
-                for (NSInteger i = 0; i < sizeof(uint8x16_t); i++) {
-                    if (result[i] != 0) {
-                        sum++;
+    NSInteger total = 0;
+    for (NSInteger i = 0; i < 3; i++) {
+        CFTimeInterval start = CACurrentMediaTime();
+        // BENCH("arm64", ({
+        for (NSInteger j = 0; j < 1e3; j++) {
+            NSInteger sum = 0;
+            // todo: alignment
+            uint8x16_t *vectors = (uint8x16_t *)string;
+            for (NSInteger i = 0; i < length / sizeof(uint8x16_t); i++) {
+                uint8x16_t vector = vectors[i];
+                uint8x16_t result = sOneVec & ((vmvnq_u8(vector + sLowVec)) & (vector + sHighVec));
+                uint64_t *chunks = (uint64_t *)(&result);
+                // vceqz, vtst
+                // if (vaddlvq_u8(result) != 0) {
+                if (chunks[0] != 0) {
+                    const uint32_t *smalls = (const uint32_t *)(&(chunks[0]));
+                    if (smalls[0] != 0) {
+                        const uint8_t *chars = (const uint8_t *)(&(smalls[0]));
+                        for (NSInteger i = 0; i < sizeof(smalls[0]); i++) {
+                            if (chars[i] != 0) {
+                                sum++;
+                            }
+                        }
+                    } else if (smalls[1] != 0) {
+                        const uint8_t *chars = (const uint8_t *)(&(smalls[1]));
+                        for (NSInteger i = 0; i < sizeof(smalls[1]); i++) {
+                            if (chars[i] != 0) {
+                                sum++;
+                            }
+                        }
+                    }
+                }
+                if (chunks[1] != 0) {
+                    const uint32_t *smalls = (const uint32_t *)(&(chunks[1]));
+                    if (smalls[0] != 0) {
+                        const uint8_t *chars = (const uint8_t *)(&(smalls[0]));
+                        for (NSInteger i = 0; i < sizeof(smalls[0]); i++) {
+                            if (chars[i] != 0) {
+                                sum++;
+                            }
+                        }
+                    } else if (smalls[1] != 0) {
+                        const uint8_t *chars = (const uint8_t *)(&(smalls[1]));
+                        for (NSInteger i = 0; i < sizeof(smalls[1]); i++) {
+                            if (chars[i] != 0) {
+                                sum++;
+                            }
+                        }
                     }
                 }
             }
+            /*if (!sHasGone) {
+                printf("%zd\n", sum);
+            }*/
+            total += sum;
+            sum;
+        // }));
         }
-        if (!sHasGone) {
-            printf("%zd\n", sum);
-        }
-        sum;
-    }));
+        CFTimeInterval end = CACurrentMediaTime();
+        printf("%lf, %zd\n", (end - start), total);
+    }
     /*BENCH("memchr", ({
         NSInteger sum = -1;
         const char *ptr = string;
