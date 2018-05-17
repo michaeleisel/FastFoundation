@@ -87,25 +87,11 @@ static NSString * FFOComponentsJoinedByString(NSArray<NSString *>*strings, NSStr
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-	[self runTests];
-    const char *str = "the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\the quick brown fox jumped over the lazy dog\nnnnnnnnnnnthe quick brown fox jumped over the lazy dog\n";
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
-    NSString *longString = @"the QUICK brown FOX jumped OVER the LAZY dog";
-    NSString *shortString = @", ";
-    NSString *lowercaseString = @"";
-    NSArray *items = @[@"the", @"quick", @"super duper long string", @"jumped", @"over", @"the"];
-    for (NSInteger zz = 0; zz < 3; zz++) {
-        BENCH("rust", ({
-            FFOComponentsJoinedByString(items, shortString);
-        }));
-        BENCH("c", ({
-            [items ffo_componentsJoinedByString:shortString];
-        }));
-        /*BENCH("objc", ({
-            [items componentsJoinedByString:shortString];
-        }));*/
-    }
-    NSLog(@"%@", @(sResult));
+    self.view.backgroundColor = [UIColor whiteColor];
+    UIDatePicker *picker = [[UIDatePicker alloc] init];
+    picker.datePickerMode = UIDatePickerModeTime;
+    // NSCalendar
+    [self.view addSubview:picker];
 }
 
 - (void)benchmarkBlock:(dispatch_block_t)block
