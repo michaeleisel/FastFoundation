@@ -95,42 +95,32 @@ static const uint8x16_t sHighVec = {sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sH
 static const uint8x16_t sOneVec = {0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80};
 static BOOL sHasGone = NO;
 
+static void inline FFOSearch(NSInteger *sum, const uint8_t *chars) {
+    for (NSInteger i = 0; i < sizeof(uint32_t); i++) {
+        if (chars[i] != 0) {
+            (*sum)++;
+        }
+    }
+}
+
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
 
-    /*const char *str = "the quick \" brown fox jumped over the \" lazy doggggggggggggggggggggggggggggggggg\"\"\"\"ggggggggggggggggggggggggggggggggg";
-    NSInteger length = strlen(str);
-    uint8x16_t *vectors = (uint8x16_t *)str;
-    NSInteger sum = 0;
-    for (NSInteger i = 0; i < length / sizeof(uint8x16_t); i++) {
-        uint8x16_t vector = vectors[i];
-        uint8x16_t result = sOneVec & ((vmvnq_u8(vector + sLowVec)) & (vector + sHighVec));
-        for (NSInteger i = 0; i < sizeof(uint8x16_t); i++) {
-            if (result[i] != 0) {
-                sum++;
-            }
-        }
-        printf("%d\n", (int)vaddlvq_u8(result));
-    }
-    printf("%zd\n", sum);
-    return;*/
-
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
     NSString *path = [[NSBundle mainBundle] pathForResource:@"citm_catalog" ofType:@"json"];
     NS_VALID_UNTIL_END_OF_SCOPE NSData *objcData = [[NSFileManager defaultManager] contentsAtPath:path];
     const char *string = (const char *)[objcData bytes];
     NSInteger length = strlen(string);
     NSInteger total = 0;
-    for (NSInteger i = 0; i < 3; i++) {
+    for (NSInteger i = 0; i < 1; i++) {
         CFTimeInterval start = CACurrentMediaTime();
         // BENCH("arm64", ({
         for (NSInteger j = 0; j < 1e3; j++) {
             NSInteger sum = 0;
             // todo: alignment
             uint8x16_t *vectors = (uint8x16_t *)string;
-            for (NSInteger i = 0; i < length / sizeof(uint8x16_t); i++) {
-                uint8x16_t vector = vectors[i];
+            for (NSInteger k = 0; k < length / sizeof(uint8x16_t); k++) {
+                uint8x16_t vector = vectors[k];
                 uint8x16_t result = sOneVec & ((vmvnq_u8(vector + sLowVec)) & (vector + sHighVec));
                 uint64_t *chunks = (uint64_t *)(&result);
                 // vceqz, vtst
@@ -139,77 +129,37 @@ static BOOL sHasGone = NO;
                     const uint32_t *smalls = (const uint32_t *)(&(chunks[0]));
                     if (smalls[0] != 0) {
                         const uint8_t *chars = (const uint8_t *)(&(smalls[0]));
-                        for (NSInteger i = 0; i < sizeof(smalls[0]); i++) {
-                            if (chars[i] != 0) {
-                                sum++;
-                            }
-                        }
-                    } else if (smalls[1] != 0) {
+                        FFOSearch(&sum, chars);
+                    }
+                    if (smalls[1] != 0) {
                         const uint8_t *chars = (const uint8_t *)(&(smalls[1]));
-                        for (NSInteger i = 0; i < sizeof(smalls[1]); i++) {
-                            if (chars[i] != 0) {
-                                sum++;
-                            }
-                        }
+                        FFOSearch(&sum, chars);
                     }
                 }
                 if (chunks[1] != 0) {
                     const uint32_t *smalls = (const uint32_t *)(&(chunks[1]));
                     if (smalls[0] != 0) {
                         const uint8_t *chars = (const uint8_t *)(&(smalls[0]));
-                        for (NSInteger i = 0; i < sizeof(smalls[0]); i++) {
-                            if (chars[i] != 0) {
-                                sum++;
-                            }
-                        }
-                    } else if (smalls[1] != 0) {
+                        FFOSearch(&sum, chars);
+                    }
+                    if (smalls[1] != 0){
                         const uint8_t *chars = (const uint8_t *)(&(smalls[1]));
-                        for (NSInteger i = 0; i < sizeof(smalls[1]); i++) {
-                            if (chars[i] != 0) {
-                                sum++;
-                            }
-                        }
+                        FFOSearch(&sum, chars);
                     }
                 }
             }
-            /*if (!sHasGone) {
-                printf("%zd\n", sum);
-            }*/
-            total += sum;
-            sum;
-        // }));
+            printf("sum: %zd\n", sum);
         }
         CFTimeInterval end = CACurrentMediaTime();
         printf("%lf, %zd\n", (end - start), total);
     }
-    /*BENCH("memchr", ({
-        NSInteger sum = -1;
-        const char *ptr = string;
-        const char *end = ptr + length;
-        while (ptr != NULL) {
-            sum++;
-            ptr = memchr(ptr, '"', end - ptr);
-            if (ptr != NULL) {
-                ptr++;
-            }
+    NSInteger newTotal = 0;
+    for (NSInteger i = 0; i < length; i++) {
+        if (string[i] == '"') {
+            newTotal++;
         }
-        if (!sHasGone) {
-            printf("%zd\n", sum);
-        }
-        sum;
-    }));
-    BENCH("naive", ({
-        NSInteger sum = 0;
-        for (NSInteger i = 0; i < length; i++) {
-            if (string[i] == '"') {
-                sum++;
-            }
-        }
-        if (!sHasGone) {
-            printf("%zd\n", sum);
-        }
-        sum;
-    }));*/
+    }
+    printf("correct: %zd\n", newTotal);
 }
 
 - (void)benchmarkBlock:(dispatch_block_t)block
