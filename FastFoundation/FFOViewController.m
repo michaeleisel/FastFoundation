@@ -11,6 +11,7 @@
 #import "pcg_basic.h"
 #import "NSArrayFFOMethods.h"
 #import "rust_bindings.h"
+#import <arm_neon.h>
 
 @interface FFOViewController ()
 
@@ -30,6 +31,7 @@ static NSInteger totalz = 0;
 #define BENCH(name, ...) \
 ({ \
     printf("%s\n", name); \
+    sHasGone = NO; \
     sShouldStop = NO; \
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1.0 * NSEC_PER_SEC), queue, ^(void){ \
         sShouldStop = YES; \
@@ -41,11 +43,13 @@ static NSInteger totalz = 0;
         while (!sShouldStop) { \
             sResult += (int)__VA_ARGS__; \
             count++; \
+            sHasGone = YES; \
         } \
         endTime = CACurrentMediaTime(); \
         usleep(500000); \
     } \
     printf("%.2e per second\n", count / (endTime - startTime)); \
+    sShouldStop = NO; \
 })
 
 - (void)pushController
@@ -84,14 +88,87 @@ static NSString * FFOComponentsJoinedByString(NSArray<NSString *>*strings, NSStr
     return CFAutorelease(CFStringCreateWithCStringNoCopy(kCFAllocatorDefault, result, kCFStringEncodingUTF8, sRustDeallocator));
 }
 
+static const uint8_t sLow = 127 - '"';
+static const uint8_t sHigh = 128 - '"';
+static const uint8x16_t sLowVec = {sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow};
+static const uint8x16_t sHighVec = {sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh};
+static const uint8x16_t sOneVec = {0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80};
+static BOOL sHasGone = NO;
+
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
-    UIDatePicker *picker = [[UIDatePicker alloc] init];
-    picker.datePickerMode = UIDatePickerModeTime;
-    // NSCalendar
-    [self.view addSubview:picker];
+
+    /*const char *str = "the quick \" brown fox jumped over the \" lazy doggggggggggggggggggggggggggggggggg\"\"\"\"ggggggggggggggggggggggggggggggggg";
+    NSInteger length = strlen(str);
+    uint8x16_t *vectors = (uint8x16_t *)str;
+    NSInteger sum = 0;
+    for (NSInteger i = 0; i < length / sizeof(uint8x16_t); i++) {
+        uint8x16_t vector = vectors[i];
+        uint8x16_t result = sOneVec & ((vmvnq_u8(vector + sLowVec)) & (vector + sHighVec));
+        for (NSInteger i = 0; i < sizeof(uint8x16_t); i++) {
+            if (result[i] != 0) {
+                sum++;
+            }
+        }
+        printf("%d\n", (int)vaddlvq_u8(result));
+    }
+    printf("%zd\n", sum);
+    return;*/
+
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"citm_catalog" ofType:@"json"];
+    NS_VALID_UNTIL_END_OF_SCOPE NSData *objcData = [[NSFileManager defaultManager] contentsAtPath:path];
+    const char *string = (const char *)[objcData bytes];
+    NSInteger length = strlen(string);
+    BENCH("arm64", ({
+        NSInteger sum = 0;
+        // todo: alignment
+        uint8x16_t *vectors = (uint8x16_t *)string;
+        for (NSInteger i = 0; i < length / sizeof(uint8x16_t); i++) {
+            uint8x16_t vector = vectors[i];
+            uint8x16_t result = sOneVec & ((vmvnq_u8(vector + sLowVec)) & (vector + sHighVec));
+            if (vaddlvq_u8(result) != 0) {
+                for (NSInteger i = 0; i < sizeof(uint8x16_t); i++) {
+                    if (result[i] != 0) {
+                        sum++;
+                    }
+                }
+            }
+        }
+        if (!sHasGone) {
+            printf("%zd\n", sum);
+        }
+        sum;
+    }));
+    /*BENCH("memchr", ({
+        NSInteger sum = -1;
+        const char *ptr = string;
+        const char *end = ptr + length;
+        while (ptr != NULL) {
+            sum++;
+            ptr = memchr(ptr, '"', end - ptr);
+            if (ptr != NULL) {
+                ptr++;
+            }
+        }
+        if (!sHasGone) {
+            printf("%zd\n", sum);
+        }
+        sum;
+    }));
+    BENCH("naive", ({
+        NSInteger sum = 0;
+        for (NSInteger i = 0; i < length; i++) {
+            if (string[i] == '"') {
+                sum++;
+            }
+        }
+        if (!sHasGone) {
+            printf("%zd\n", sum);
+        }
+        sum;
+    }));*/
 }
 
 - (void)benchmarkBlock:(dispatch_block_t)block
