@@ -154,7 +154,6 @@ __used static void printBinaryRep(uint64_t num) {
                 while (chunks[1] != 0) {
                     uint64_t lead = __clzll(chunks[1]);
                     chunks[1] &= ~(1ULL<<(63 - lead));
-                    zerosSum--;
                     sum++;
                 }
             }
