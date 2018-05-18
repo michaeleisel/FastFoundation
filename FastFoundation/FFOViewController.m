@@ -12,6 +12,7 @@
 #import "NSArrayFFOMethods.h"
 #import "rust_bindings.h"
 #import <arm_neon.h>
+#import <arm_acle.h>
 
 @interface FFOViewController ()
 
@@ -103,6 +104,20 @@ static void inline FFOSearch(NSInteger *sum, const uint8_t *chars) {
     }
 }
 
+__used static void printVec(uint8x16_t vec) {
+    for (NSInteger i = 0; i < sizeof(uint8x16_t); i++) {
+        printf("%zd, ", (NSInteger)vec[i]);
+    }
+    printf("\n");
+}
+
+__used static void printBinaryRep(uint64_t num) {
+    for (NSInteger i = 0; i < sizeof(num) * 8; i++) {
+        printf("%zd", (num >> (63 - i)) & 1);
+    }
+    printf("\n");
+}
+
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
@@ -112,46 +127,56 @@ static void inline FFOSearch(NSInteger *sum, const uint8_t *chars) {
     const char *string = (const char *)[objcData bytes];
     NSInteger length = strlen(string);
     NSInteger total = 0;
+    NSInteger nIterations = 1e3;
     for (NSInteger i = 0; i < 1; i++) {
         CFTimeInterval start = CACurrentMediaTime();
-        // BENCH("arm64", ({
-        for (NSInteger j = 0; j < 1e3; j++) {
+        for (NSInteger j = 0; j < nIterations; j++) {
             NSInteger sum = 0;
             // todo: alignment
             uint8x16_t *vectors = (uint8x16_t *)string;
             for (NSInteger k = 0; k < length / sizeof(uint8x16_t); k++) {
                 uint8x16_t vector = vectors[k];
                 uint8x16_t result = sOneVec & ((vmvnq_u8(vector + sLowVec)) & (vector + sHighVec));
-                uint64_t *chunks = (uint64_t *)(&result);
-                // vceqz, vtst
-                // if (vaddlvq_u8(result) != 0) {
-                if (chunks[0] != 0) {
-                    const uint32_t *smalls = (const uint32_t *)(&(chunks[0]));
-                    if (smalls[0] != 0) {
-                        const uint8_t *chars = (const uint8_t *)(&(smalls[0]));
-                        FFOSearch(&sum, chars);
-                    }
-                    if (smalls[1] != 0) {
-                        const uint8_t *chars = (const uint8_t *)(&(smalls[1]));
-                        FFOSearch(&sum, chars);
-                    }
+                uint16_t zerosSum = vaddlvq_u8(result);
+                if (zerosSum == 0) {
+                    continue;
                 }
-                if (chunks[1] != 0) {
-                    const uint32_t *smalls = (const uint32_t *)(&(chunks[1]));
-                    if (smalls[0] != 0) {
-                        const uint8_t *chars = (const uint8_t *)(&(smalls[0]));
-                        FFOSearch(&sum, chars);
-                    }
-                    if (smalls[1] != 0){
-                        const uint8_t *chars = (const uint8_t *)(&(smalls[1]));
-                        FFOSearch(&sum, chars);
-                    }
+                uint64_t *chunks = (uint64_t *)(&result);
+                while (chunks[0] != 0) {
+                    uint64_t lead = __clzll(chunks[0]);
+                    chunks[0] &= ~(1ULL<<(63 - lead));
+                    zerosSum--;
+                    sum++;
+                }
+                if (zerosSum == 0) {
+                    continue;
+                }
+                while (chunks[1] != 0) {
+                    uint64_t lead = __clzll(chunks[1]);
+                    chunks[1] &= ~(1ULL<<(63 - lead));
+                    zerosSum--;
+                    sum++;
                 }
             }
-            printf("sum: %zd\n", sum);
+            total += sum;
         }
         CFTimeInterval end = CACurrentMediaTime();
-        printf("%lf, %zd\n", (end - start), total);
+        printf("arm %lf, %zd\n", (end - start), total);
+
+        /*start = CACurrentMediaTime();
+        for (NSInteger j = 0; j < nIterations; j++) {
+            const char *ptr = string;
+            const char *end = ptr + length;
+            while (ptr != NULL) {
+                total++;
+                ptr = memchr(ptr, '"', end - ptr);
+                if (ptr != NULL) {
+                    ptr++;
+                }
+            }
+        }
+        end = CACurrentMediaTime();
+        printf("memchr %lf, %zd\n", (end - start), total);*/
     }
     NSInteger newTotal = 0;
     for (NSInteger i = 0; i < length; i++) {
