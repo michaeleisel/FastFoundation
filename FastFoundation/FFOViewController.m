@@ -89,22 +89,15 @@ static NSString * FFOComponentsJoinedByString(NSArray<NSString *>*strings, NSStr
     return CFAutorelease(CFStringCreateWithCStringNoCopy(kCFAllocatorDefault, result, kCFStringEncodingUTF8, sRustDeallocator));
 }
 
-static const uint8_t sLow = 127 - '"';
-static const uint8_t sHigh = 128 - '"';
-static const uint8x16_t sLowVec = {sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow};
-static const uint8x16_t sHighVec = {sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh};
-static const uint8x16_t sOneVec = {0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80};
-static const uint8x16_t sAllZeroes = {0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0};
-
 static BOOL sHasGone = NO;
 
-static void inline FFOSearch(NSInteger *sum, const uint8_t *chars) {
+/*static void inline FFOSearch(NSInteger *sum, const uint8_t *chars) {
     for (NSInteger i = 0; i < sizeof(uint32_t); i++) {
         if (chars[i] != 0) {
             (*sum)++;
         }
     }
-}
+}*/
 
 __used static void printVec(uint8x16_t vec) {
     for (NSInteger i = 0; i < sizeof(uint8x16_t); i++) {
@@ -120,6 +113,88 @@ __used static void printBinaryRep(uint64_t num) {
     printf("\n");
 }
 
+/*static NSInteger FFONaive(const char *string, NSInteger length) {
+    NSInteger sum = 0;
+    for (NSInteger i = 0; i < length; i++) {
+        if (string[i] == '"') {
+            sum++;
+        }
+    }
+    return sum;
+}*/
+
+static const uint8x16_t sOneVec = {0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80};
+static const uint8x16_t sAllZeroes = {0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0};
+
+static const uint8_t sLow = 127 - '"';
+static const uint8_t sHigh = 128 - '"';
+static const uint8x16_t sLowVec = {sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow};
+static const uint8x16_t sHighVec = {sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh};
+
+static const char *FFOSearch(const char *string, int c, NSInteger length) {
+    uint8x16_t *vectors = (uint8x16_t *)string;
+    uint8x16_t *end = vectors + length / sizeof(uint8x16_t);
+    uint8x16_t vector;
+    while (vectors != end) {
+        vector = *vectors;
+        vectors++;
+        uint8x16_t result = sOneVec & ((vmvnq_u8(vector + sLowVec)) & (vector + sHighVec));
+        uint8_t max = vmaxvq_u8(result);
+        if (max == 0) {
+            continue;
+        }
+        // uint64_t *chunks = (uint64_t *)(&result);
+        uint64x2_t chunks = vreinterpretq_u64_u8(result);
+        uint64_t chunk = vgetq_lane_u64(chunks, 0);
+        if (chunk != 0) {
+            uint64_t lead = __clzll(__rbitll(chunk));
+            return string + ((const char *)vectors - string - 16 + lead / 8);
+        } else {
+            chunk = vgetq_lane_u64(chunks, 1);
+            uint64_t lead = __clzll(__rbitll(chunk));
+            return string + ((const char *)vectors - string - 16 + 8 + lead / 8);
+        }
+    }
+
+    return NULL;
+}
+
+static NSInteger FFOSearchMemChr(const char *string, NSInteger length) {
+    NSInteger sum = -1;
+    const char *ptr2 = string;
+    const char *ptr = string;
+    const char *end = ptr + length;
+    while (ptr != NULL) {
+        sum++;
+        ptr = FFOSearch(ptr, '"', end - ptr);
+        ptr2 = memchr(ptr2, '"', end - ptr2);
+        if (ptr != ptr2) {
+            printf("");
+        }
+        if (ptr != NULL) {
+            ptr++;
+        }
+        if (ptr2 != NULL) {
+            ptr2++;
+        }
+    }
+    return sum;
+}
+
+static NSInteger FFOMemChr(const char *string, NSInteger length) {
+    NSInteger sum = -1;
+    const char *ptr = string;
+    const char *end = ptr + length;
+    while (ptr != NULL) {
+        sum++;
+        ptr = memchr(ptr, '"', end - ptr);
+        if (ptr != NULL) {
+            ptr++;
+        }
+    }
+    return sum;
+}
+
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
@@ -128,71 +203,31 @@ __used static void printBinaryRep(uint64_t num) {
     NS_VALID_UNTIL_END_OF_SCOPE NSData *objcData = [[NSFileManager defaultManager] contentsAtPath:path];
     const char *string = (const char *)[objcData bytes];
     NSInteger length = strlen(string);
+    // assert(FFOSearchMemChr(string, length) == 53210);
+    // assert(FFOMemChr(string, length) == 53210);
     NSInteger total = 0;
     NSInteger nIterations = 1e3;
     for (NSInteger i = 0; i < 1; i++) {
         CFTimeInterval start = CACurrentMediaTime();
         for (NSInteger j = 0; j < nIterations; j++) {
-            NSInteger sum = 0;
-            // todo: alignment
-            uint8x16_t *vectors = (uint8x16_t *)string;
-            for (NSInteger k = 0; k < length / sizeof(uint8x16_t); k++) {
-                uint8x16_t vector = vectors[k];
-                uint8x16_t result = sOneVec & ((vmvnq_u8(vector + sLowVec)) & (vector + sHighVec));
-                uint8_t min = vmaxvq_u8(result);
-                if (min == 0) {
-                    continue;
-                }
-                /*uint16_t zerosSum = vaddlvq_u8(result);
-                if (zerosSum == 0) {
-                    continue;
-                }*/
-                // zerosSum >>= 7;
-                uint64_t *chunks = (uint64_t *)(&result);
-                uint64_t chunk = chunks[0];
-                while (chunk != 0) {
-                    uint64_t lead = __clzll(chunk);
-                    chunk &= ~(1ULL<<(63 - lead));
-                    // zerosSum--;
-                    sum++;
-                }
-                /*if (zerosSum == 0) {
-                    continue;
-                }*/
-                chunk = chunks[1];
-                while (chunk != 0) {
-                    uint64_t lead = __clzll(chunk);
-                    chunk &= ~(1ULL<<(63 - lead));
-                    sum++;
-                }
+            NSInteger l = 0;
+            if (rand() % 1) {
+                l = length;
+            } else {
+                l = length - 1;
             }
-            total += sum;
+            total += FFOSearchMemChr(string, l);
         }
         CFTimeInterval end = CACurrentMediaTime();
         printf("arm %lf, %zd\n", (end - start), total);
 
         /*start = CACurrentMediaTime();
         for (NSInteger j = 0; j < nIterations; j++) {
-            const char *ptr = string;
-            const char *end = ptr + length;
-            while (ptr != NULL) {
-                total++;
-                ptr = memchr(ptr, '"', end - ptr);
-                if (ptr != NULL) {
-                    ptr++;
-                }
-            }
+            total += FFOMemChr(string, length);
         }
         end = CACurrentMediaTime();
         printf("memchr %lf, %zd\n", (end - start), total);*/
     }
-    NSInteger newTotal = 0;
-    for (NSInteger i = 0; i < length; i++) {
-        if (string[i] == '"') {
-            newTotal++;
-        }
-    }
-    printf("correct: %zd\n", newTotal);
 }
 
 - (void)benchmarkBlock:(dispatch_block_t)block

@@ -25,6 +25,7 @@
 		B30A194520AD37A00073CFB8 /* citm_catalog.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = citm_catalog.json; sourceTree = SOURCE_ROOT; };
 		B32879F11E8E1625007E49B7 /* FFODateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFODateFormatter.h; sourceTree = "<group>"; };
 		B32879F21E8E1625007E49B7 /* FFODateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFODateFormatter.m; sourceTree = "<group>"; };
+		B3486AAD20AE640000C7291B /* FastFoundation.profdata */ = {isa = PBXFileReference; lastKnownFileType = file; path = FastFoundation.profdata; sourceTree = "<group>"; };
 		B38586D91EEE46BD00496750 /* NSArrayFFOMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSArrayFFOMethods.h; sourceTree = "<group>"; };
 		B38586DA1EEE46BD00496750 /* NSArrayFFOMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSArrayFFOMethods.m; sourceTree = "<group>"; };
 		B38586DC1EEE48BA00496750 /* pcg_basic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pcg_basic.c; sourceTree = "<group>"; };
@@ -111,12 +112,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B3486AAC20AE640000C7291B /* OptimizationProfiles */ = {
+			isa = PBXGroup;
+			children = (
+				B3486AAD20AE640000C7291B /* FastFoundation.profdata */,
+			);
+			path = OptimizationProfiles;
+			sourceTree = "<group>";
+		};
 		B38C42031E8E001700033ACD = {
 			isa = PBXGroup;
 			children = (
 				B38C420E1E8E001700033ACD /* FastFoundation */,
 				B38C420D1E8E001700033ACD /* Products */,
 				B3F73C43207C403C00E11E2D /* Frameworks */,
+				B3486AAC20AE640000C7291B /* OptimizationProfiles */,
 			);
 			sourceTree = "<group>";
 		};
@@ -423,6 +433,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_USE_OPTIMIZATION_PROFILE = NO;
 				DEVELOPMENT_TEAM = LE4EC4296K;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = FastFoundation/Info.plist;
@@ -440,6 +451,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_USE_OPTIMIZATION_PROFILE = NO;
 				DEVELOPMENT_TEAM = LE4EC4296K;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = FastFoundation/Info.plist;
