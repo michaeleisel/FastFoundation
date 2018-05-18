@@ -94,6 +94,8 @@ static const uint8_t sHigh = 128 - '"';
 static const uint8x16_t sLowVec = {sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow, sLow};
 static const uint8x16_t sHighVec = {sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sHigh};
 static const uint8x16_t sOneVec = {0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80};
+static const uint8x16_t sAllZeroes = {0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0};
+
 static BOOL sHasGone = NO;
 
 static void inline FFOSearch(NSInteger *sum, const uint8_t *chars) {
@@ -137,23 +139,30 @@ __used static void printBinaryRep(uint64_t num) {
             for (NSInteger k = 0; k < length / sizeof(uint8x16_t); k++) {
                 uint8x16_t vector = vectors[k];
                 uint8x16_t result = sOneVec & ((vmvnq_u8(vector + sLowVec)) & (vector + sHighVec));
-                uint16_t zerosSum = vaddlvq_u8(result);
-                if (zerosSum == 0) {
+                uint8_t min = vmaxvq_u8(result);
+                if (min == 0) {
                     continue;
                 }
+                /*uint16_t zerosSum = vaddlvq_u8(result);
+                if (zerosSum == 0) {
+                    continue;
+                }*/
+                // zerosSum >>= 7;
                 uint64_t *chunks = (uint64_t *)(&result);
-                while (chunks[0] != 0) {
-                    uint64_t lead = __clzll(chunks[0]);
-                    chunks[0] &= ~(1ULL<<(63 - lead));
-                    zerosSum--;
+                uint64_t chunk = chunks[0];
+                while (chunk != 0) {
+                    uint64_t lead = __clzll(chunk);
+                    chunk &= ~(1ULL<<(63 - lead));
+                    // zerosSum--;
                     sum++;
                 }
-                if (zerosSum == 0) {
+                /*if (zerosSum == 0) {
                     continue;
-                }
-                while (chunks[1] != 0) {
-                    uint64_t lead = __clzll(chunks[1]);
-                    chunks[1] &= ~(1ULL<<(63 - lead));
+                }*/
+                chunk = chunks[1];
+                while (chunk != 0) {
+                    uint64_t lead = __clzll(chunk);
+                    chunk &= ~(1ULL<<(63 - lead));
                     sum++;
                 }
             }
