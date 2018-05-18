@@ -133,7 +133,9 @@ static const uint8x16_t sHighVec = {sHigh, sHigh, sHigh, sHigh, sHigh, sHigh, sH
 
 static const char *FFOSearch(const char *string, int c, NSInteger length) {
     uint8x16_t *vectors = (uint8x16_t *)string;
-    uint8x16_t *end = vectors + length / sizeof(uint8x16_t);
+    NSInteger total = length / sizeof(uint8x16_t);
+    total -= total % 4;
+    uint8x16_t *end = vectors + total;
     uint8x16_t vector;
     while (vectors != end) {
         vector = *vectors;
@@ -141,18 +143,64 @@ static const char *FFOSearch(const char *string, int c, NSInteger length) {
         uint8x16_t result = sOneVec & ((vmvnq_u8(vector + sLowVec)) & (vector + sHighVec));
         uint8_t max = vmaxvq_u8(result);
         if (max == 0) {
-            continue;
+            uint64x2_t chunks = vreinterpretq_u64_u8(result);
+            uint64_t chunk = vgetq_lane_u64(chunks, 0);
+            if (chunk != 0) {
+                uint64_t lead = __clzll(__rbitll(chunk));
+                return string + ((const char *)vectors - string - 16 + lead / 8);
+            } else {
+                chunk = vgetq_lane_u64(chunks, 1);
+                uint64_t lead = __clzll(__rbitll(chunk));
+                return string + ((const char *)vectors - string - 16 + 8 + lead / 8);
+            }
         }
-        // uint64_t *chunks = (uint64_t *)(&result);
-        uint64x2_t chunks = vreinterpretq_u64_u8(result);
-        uint64_t chunk = vgetq_lane_u64(chunks, 0);
-        if (chunk != 0) {
-            uint64_t lead = __clzll(__rbitll(chunk));
-            return string + ((const char *)vectors - string - 16 + lead / 8);
-        } else {
-            chunk = vgetq_lane_u64(chunks, 1);
-            uint64_t lead = __clzll(__rbitll(chunk));
-            return string + ((const char *)vectors - string - 16 + 8 + lead / 8);
+        vector = *vectors;
+        vectors++;
+        result = sOneVec & ((vmvnq_u8(vector + sLowVec)) & (vector + sHighVec));
+        max = vmaxvq_u8(result);
+        if (max == 0) {
+            uint64x2_t chunks = vreinterpretq_u64_u8(result);
+            uint64_t chunk = vgetq_lane_u64(chunks, 0);
+            if (chunk != 0) {
+                uint64_t lead = __clzll(__rbitll(chunk));
+                return string + ((const char *)vectors - string - 16 + lead / 8);
+            } else {
+                chunk = vgetq_lane_u64(chunks, 1);
+                uint64_t lead = __clzll(__rbitll(chunk));
+                return string + ((const char *)vectors - string - 16 + 8 + lead / 8);
+            }
+        }
+        vector = *vectors;
+        vectors++;
+        result = sOneVec & ((vmvnq_u8(vector + sLowVec)) & (vector + sHighVec));
+        max = vmaxvq_u8(result);
+        if (max != 0) {
+            uint64x2_t chunks = vreinterpretq_u64_u8(result);
+            uint64_t chunk = vgetq_lane_u64(chunks, 0);
+            if (chunk != 0) {
+                uint64_t lead = __clzll(__rbitll(chunk));
+                return string + ((const char *)vectors - string - 16 + lead / 8);
+            } else {
+                chunk = vgetq_lane_u64(chunks, 1);
+                uint64_t lead = __clzll(__rbitll(chunk));
+                return string + ((const char *)vectors - string - 16 + 8 + lead / 8);
+            }
+        }
+        vector = *vectors;
+        vectors++;
+        result = sOneVec & ((vmvnq_u8(vector + sLowVec)) & (vector + sHighVec));
+        max = vmaxvq_u8(result);
+        if (max != 0) {
+            uint64x2_t chunks = vreinterpretq_u64_u8(result);
+            uint64_t chunk = vgetq_lane_u64(chunks, 0);
+            if (chunk != 0) {
+                uint64_t lead = __clzll(__rbitll(chunk));
+                return string + ((const char *)vectors - string - 16 + lead / 8);
+            } else {
+                chunk = vgetq_lane_u64(chunks, 1);
+                uint64_t lead = __clzll(__rbitll(chunk));
+                return string + ((const char *)vectors - string - 16 + 8 + lead / 8);
+            }
         }
     }
 
