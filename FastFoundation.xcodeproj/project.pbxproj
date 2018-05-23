@@ -41,6 +41,8 @@
 		B38C42281E8E025200033ACD /* Launch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Launch.xib; sourceTree = "<group>"; };
 		B38C422A1E8E029100033ACD /* NSString+FFOMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FFOMethods.h"; sourceTree = "<group>"; };
 		B38C422B1E8E029100033ACD /* NSString+FFOMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FFOMethods.m"; sourceTree = "<group>"; };
+		B3C0BBA220B53607006CCEF3 /* FFOArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOArray.h; sourceTree = "<group>"; };
+		B3C0BBA320B5362F006CCEF3 /* FFODefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFODefines.h; sourceTree = "<group>"; };
 		B3D753B520890F6A0090C3E2 /* rusty.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = rusty.a; sourceTree = SOURCE_ROOT; };
 		B3D753B72089249A0090C3E2 /* rust_bindings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rust_bindings.h; sourceTree = SOURCE_ROOT; };
 		B3F73C40207C383300E11E2D /* fishhook.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fishhook.c; sourceTree = "<group>"; };
@@ -142,10 +144,12 @@
 			isa = PBXGroup;
 			children = (
 				B3D753B520890F6A0090C3E2 /* rusty.a */,
+				B3C0BBA320B5362F006CCEF3 /* FFODefines.h */,
 				B38586DC1EEE48BA00496750 /* pcg_basic.c */,
 				B38586DD1EEE48BA00496750 /* pcg_basic.h */,
 				B3D753B72089249A0090C3E2 /* rust_bindings.h */,
 				B30A194520AD37A00073CFB8 /* citm_catalog.json */,
+				B3C0BBA220B53607006CCEF3 /* FFOArray.h */,
 				B38C42121E8E001700033ACD /* FFOAppDelegate.h */,
 				B38C42131E8E001700033ACD /* FFOAppDelegate.m */,
 				B38C42151E8E001700033ACD /* FFOViewController.h */,
