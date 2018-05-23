@@ -14,6 +14,7 @@
 #import <arm_neon.h>
 #import <arm_acle.h>
 #import "FFOArray.h"
+#import "ConvertUTF.h"
 
 @interface FFOViewController ()
 
@@ -87,7 +88,7 @@ NS_ENUM(NSInteger, FFOJsonTypes) {
     FFOJsonArray,
 };
 
-static const char *FFOGatherCharIdxs(const char *string, NSInteger length, FFOArray **quoteIdxs, FFOArray **slashIdxs);
+static void FFOGatherCharIdxs(const char *string, uint32_t length, FFOArray **quoteIdxs, FFOArray **slashIdxs);
 
 static inline char FFOEscapeCharForChar(char origChar) {
     switch (origChar) {
@@ -109,54 +110,61 @@ static inline char FFOEscapeCharForChar(char origChar) {
     }
 }
 
-static inline char FFOCharFromHexCode(const char *hexCode) {
-    char c = 0;
-    if (hexCode[0] <= '9') {
-        c += (hexCode[0] - '0') * 16;
-    } else {
-        c += (tolower(hexCode[0]) - 'a') * 16;
+static inline unichar FFOUnicharFromHexCode(const char *hexCode) {
+    uint32_t shiftAmount = 12;
+    unichar u = 0;
+    for (NSInteger i = 0; i < 4; i++) {
+        char c = hexCode[i];
+        uint8_t raw = 0;
+        if (c <= '9') {
+            raw = c - '0';
+        } else {
+            raw = tolower(c) - 'a';
+        }
+        u |= raw << shiftAmount;
+        shiftAmount -= 4;
     }
-
-    if (hexCode[1] <= '9') {
-        c += hexCode[1] - '0';
-    } else {
-        c += tolower(hexCode[1]) - 'a';
-    }
-
-    return c;
+    return u;
 }
 
-static inline void FFOProcessEscapedSequence(FFOArray *deletions, char *string, uint32_t slashIdx) {
+// We want to skip the next slash if that slash is denoting the low part of a unicode surrogate pair
+static inline BOOL/*skip next slash*/ FFOProcessEscapedSequence(FFOArray *deletions, char *string, uint32_t stringLen, uint32_t slashIdx) {
+    if (unlikely(slashIdx > stringLen - 2)) {
+        FFOPushToArray(deletions, stringLen - slashIdx);
+        FFOPushToArray(deletions, slashIdx);
+        return NO;
+    }
+
     char afterSlash = string[slashIdx + 1];
     if (afterSlash == 'u' || afterSlash == 'U') {
-        FFOPushToArray(deletions, 5);
-        FFOPushToArray(deletions, 5 - 2);
-        string[slashIdx] = FFOCharFromHexCode(string + slashIdx + 1);
-        string[slashIdx + 1] = FFOCharFromHexCode(string + slashIdx + 2);
-        // string[slashIdx + 1] = ;
-        NSCAssert(NO, @"utf-8 not supported yet");
-        return;
+        if (unlikely(slashIdx > stringLen - 6)) {
+            FFOPushToArray(deletions, stringLen - slashIdx);
+            FFOPushToArray(deletions, slashIdx);
+            return NO;
+        }
+        unichar uChars[2];
+        uChars[0] = FFOUnicharFromHexCode(string + slashIdx + 2);
+        uint8_t *targetStart = (uint8_t *)(string + slashIdx);
+        memcpy(string + slashIdx, uChars, 2);
+        if (UTF16CharIsHighSurrogate(uChars[0]) && slashIdx > stringLen - 12 && string[slashIdx + 6] == '\\' && string[slashIdx + 7] != 'u') {
+            uChars[1] = FFOUnicharFromHexCode(string + slashIdx + 8);
+            ConvertUTF16toUTF8((const unichar **)&uChars, uChars + 2, &targetStart, targetStart + 4, 0);
+            FFOPushToArray(deletions, slashIdx + 4);
+            FFOPushToArray(deletions, (6 - 2) * 2);
+            return YES;
+        } else {
+            ConvertUTF16toUTF8((const unichar **)&uChars, uChars + 1, &targetStart, targetStart + 2, 0);
+            FFOPushToArray(deletions, slashIdx + 2);
+            FFOPushToArray(deletions, 6 - 2);
+            return NO;
+        }
     }
 
-    FFOPushToArray(deletions, 1);
     FFOPushToArray(deletions, slashIdx + 1);
+    FFOPushToArray(deletions, 1);
     string[slashIdx] = FFOEscapeCharForChar(string[slashIdx + 1]);
+    return NO;
 }
-
-/*static char *FFOStringAfterDeletions(char *origString, uint32_t startIdx, uint32_t endIdx, FFOArray *deletions) {
-    char *newString = malloc(sizeof(char) * (endIdx - startIdx)); // unused space but oh well
-    uint32_t offset = 0;
-    uint32_t *elements = deletions->elements;
-    FFOPushToArray(deletions, endIdx);
-    for (NSInteger i = 0; i < deletions->length - 1; i += 2) {
-        uint32_t idx = elements[i];
-        uint32_t amountToDelete = elements[i + 1];
-        uint32_t nextIdx = elements[i + 2];
-        offset += amountToDelete;
-        memcpy(origString + idx, newString + idx - offset, );
-    }
-    newString[endIdx - startIdx - offset] = '\0';
-}*/
 
 // ideas:
 // use a custom allocator and then at the end send an event saying that they need to clean up and put everything into their own storage
@@ -186,7 +194,7 @@ static void FFOPerformDeletions(char *string, uint32_t startIdx, uint32_t endIdx
     string[startIdx +newLen] = '\0';
 }
 
-static void FFOJsonParse(char *string, NSInteger length) {
+static void FFOJsonParse(char *string, uint32_t length) {
     FFOArray *quoteIdxsArray, *slashIdxsArray;
     FFOArray *copyBuffer = FFOArrayWithCapacity(100);
     FFOCallbacks callbacks = {
@@ -208,17 +216,16 @@ static void FFOJsonParse(char *string, NSInteger length) {
                 uint32_t stringStartIdx = idx + 1;
                 uint32_t nextQuoteIdx = quoteIdxs[quoteIdxIdx];
                 while (nextSlashIdx < nextQuoteIdx) {
-                    FFOProcessEscapedSequence(deletions, string, nextSlashIdx);
+                    FFOProcessEscapedSequence(deletions, string, length, nextSlashIdx);
                     nextSlashIdx = slashIdxs[++slashIdxIdx];
                 }
                 if (deletions->length > 0) {
-                    FFOStringAfterDeletions(string, stringStartIdx, nextQuoteIdx, deletions, copyBuffer);
+                    FFOPerformDeletions(string, stringStartIdx, nextQuoteIdx, deletions, copyBuffer);
                     deletions->length = 0;
                 } else {
                     string[nextQuoteIdx] = '\0';
-                    callbacks.stringCallback(string + stringStartIdx);
-                    // string[nextQuoteIdx] = '"';
                 }
+                callbacks.stringCallback(string + stringStartIdx);
                 idx = nextQuoteIdx + 1;
                 break;
             case '{':
@@ -235,13 +242,17 @@ static void FFOJsonParse(char *string, NSInteger length) {
                 break;
             case ':':
                 break;
-            default: { // It's a dictionary key
-                char *colonStart = memchr(string + idx + 1, ':', length - idx - 1);
-                *colonStart = '\0';
-                callbacks.stringCallback(string + idx);
-                // *colonStart = ':'
-                idx = (uint32_t)(colonStart - string + 1);
-                break;
+            default: {
+                if ('0' <= string[idx] && string[idx] <= '9') {
+                    // It's a number
+                } else {
+                    // It's a dictionary key
+                    char *colonStart = memchr(string + idx + 1, ':', length - idx - 1);
+                    *colonStart = '\0';
+                    callbacks.stringCallback(string + idx);
+                    // *colonStart = ':'
+                    idx = (uint32_t)(colonStart - string + 1);
+                }
             }
         }
     }
@@ -259,16 +270,47 @@ static void FFOPopulateVecsForChar(char c, uint8x16_t *lowVec, uint8x16_t *highV
     *highVec = highVecTemp;
 }
 
-static const char *FFOGatherCharIdxs(const char *string, NSInteger length, FFOArray **quoteIdxs, FFOArray **slashIdxs) {
-    *quoteIdxs = FFOArrayWithCapacity(length / 10);
-    *slashIdxs = FFOArrayWithCapacity(length / 10);
+- (void)_testGatherCharIdxsWithString:(const char *)string
+{
+    FFOArray *testQuoteIdxs;
+    FFOArray *testSlashIdxs;
+    NSInteger length = strlen(string);
+    FFOGatherCharIdxs(string, (uint32_t)length, &testQuoteIdxs, &testSlashIdxs);
+    FFOArray *expectedQuoteIdxs = FFOArrayWithCapacity(1);
+    FFOArray *expectedSlashIdxs = FFOArrayWithCapacity(1);
+    for (NSInteger i = 0; i < length; i++) {
+        if (string[i] == '"') {
+            FFOPushToArray(expectedQuoteIdxs, (uint32_t)i);
+        } else if (string[i] == '\\') {
+            FFOPushToArray(expectedSlashIdxs, (uint32_t)i);
+        }
+    }
+    NSAssert(FFOArraysAreEqual(testQuoteIdxs, expectedQuoteIdxs), @"");
+    NSAssert(FFOArraysAreEqual(testSlashIdxs, expectedSlashIdxs), @"");
+}
+
+- (void)_runTests
+{
+    [self _testGatherCharIdxsWithString:""];
+    [self _testGatherCharIdxsWithString:"\""];
+    [self _testGatherCharIdxsWithString:"\"\\"];
+    [self _testGatherCharIdxsWithString:" \""];
+    [self _testGatherCharIdxsWithString:" \" "];
+    [self _testGatherCharIdxsWithString:"\"\"              "];
+    [self _testGatherCharIdxsWithString:"                  \"\""];
+    [self _testGatherCharIdxsWithString:"                  \"\"   \\ \\   adsf adsf \"  \"   \\   "];
+}
+
+static void FFOGatherCharIdxs(const char *string, uint32_t length, FFOArray **quoteIdxsPtr, FFOArray **slashIdxsPtr) {
+    FFOArray *quoteIdxs = FFOArrayWithCapacity(length / 10);
+    FFOArray *slashIdxs = FFOArrayWithCapacity(length / 10);
 
     uint8x16_t lowQuoteVec, highQuoteVec, lowSlashVec, highSlashVec;
     FFOPopulateVecsForChar('"', &lowQuoteVec, &highQuoteVec);
     FFOPopulateVecsForChar('\\', &lowSlashVec, &highSlashVec);
 
 
-    NSInteger total = length / sizeof(uint8x16_t);
+    uint32_t total = length / sizeof(uint8x16_t);
     uint8x16_t *vectors = (uint8x16_t *)string;
     uint8x16_t *end = vectors + total;
     uint8x16_t vector;
@@ -282,13 +324,13 @@ static const char *FFOGatherCharIdxs(const char *string, NSInteger length, FFOAr
             if (chunk != 0) {
                 uint64_t lead = __clzll(__rbitll(chunk));
                 uint32_t idx =  (uint32_t)(((const char *)vectors - string) + lead / 8);
-                FFOPushToArray(*quoteIdxs, idx);
+                FFOPushToArray(quoteIdxs, idx);
             }
             chunk = vgetq_lane_u64(chunks, 1);
             if (chunk != 0) {
                 uint64_t lead = __clzll(__rbitll(chunk));
                 uint32_t idx =  (uint32_t)(((const char *)vectors - string) + 8 + lead / 8);
-                FFOPushToArray(*quoteIdxs, idx);
+                FFOPushToArray(quoteIdxs, idx);
             }
         }
 
@@ -300,24 +342,35 @@ static const char *FFOGatherCharIdxs(const char *string, NSInteger length, FFOAr
             if (chunk != 0) {
                 uint64_t lead = __clzll(__rbitll(chunk));
                 uint32_t idx =  (uint32_t)(((const char *)vectors - string) + lead / 8);
-                FFOPushToArray(*slashIdxs, idx);
+                FFOPushToArray(slashIdxs, idx);
             }
             chunk = vgetq_lane_u64(chunks, 1);
             if (chunk != 0) {
                 uint64_t lead = __clzll(__rbitll(chunk));
                 uint32_t idx =  (uint32_t)(((const char *)vectors - string) + 8 + lead / 8);
-                FFOPushToArray(*slashIdxs, idx);
+                FFOPushToArray(slashIdxs, idx);
             }
         }
     }
-    // todo: last bit at the end
 
-    return NULL;
+    // Do the bit at the end
+    for (uint32_t i = length - length % sizeof(uint8x16_t); i < length; i++) {
+        if (string[i] == '"') {
+            FFOPushToArray(quoteIdxs, i);
+        } else if (string [i] == '\\'){
+            FFOPushToArray(slashIdxs, i);
+        }
+    }
+
+    *slashIdxsPtr = slashIdxs;
+    *quoteIdxsPtr = quoteIdxs;
 }
 
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
+    [self _runTests];
+    return;
 
     NSString *path = [[NSBundle mainBundle] pathForResource:@"citm_catalog" ofType:@"json"];
     NS_VALID_UNTIL_END_OF_SCOPE NSData *objcData = [[[NSFileManager defaultManager] contentsAtPath:path] mutableCopy];
@@ -350,39 +403,6 @@ static const char *FFOGatherCharIdxs(const char *string, NSInteger length, FFOAr
         end = CACurrentMediaTime();
         printf("memchr %lf, %zd\n", (end - start), total);*/
     //}
-}
-
-- (void)runTests
-{
-    for (NSArray <NSString *>*strings in @[@[@"abcd", @"a", @"foo"], @[@"the quick brown fox", @"o", @""]]) {
-        NSString *appleString = [strings[0] stringByReplacingOccurrencesOfString:strings[1] withString:strings[2]];
-        NSString *FFOString = [strings[0] ffo_stringByReplacingOccurrencesOfString:strings[1] withString:strings[2]];
-        NSAssert([appleString isEqual:FFOString], @"");
-    }
-
-	for (NSString *string in @[@"asdfasdf", @"AAAsafdAB", @"", @"AB"]) {
-		NSString *appleString = [string lowercaseString];
-		NSString *FFOString = [string ffo_lowercaseString];
-		NSAssert([appleString isEqual:FFOString], @"");
-	}
-
-	for (NSArray <NSString *>*pair in @[@[@"assdsd", @"s"]]) {//, @[@"", @"s"]]) {
-		NSArray <NSString *>*appleArray = [pair[0] componentsSeparatedByString:pair[1]];
-		NSArray <NSString *>*FFOArray = [pair[0] ffo_componentsSeparatedByString:pair[1]];
-		NSAssert([appleArray isEqual:FFOArray], @"");
-	}
-
-    ({
-    	NSString *longString = @"the QUICK brown FOX jumped OVER the LAZY dog";
-    	NSString *shortString = @", ";
-    	NSString *lowercaseString = @"";
-        NSArray *items = @[@"the", @"quick", @"super duper long string", @"jumped", @"over", @"the"];
-        for (NSString *string in @[longString, shortString, lowercaseString]) {
-            NSString *ffoArray = [items ffo_componentsJoinedByString:string];
-            NSString *appleArray = [items componentsJoinedByString:string];
-            NSAssert([appleArray isEqual:ffoArray], @"");
-        }
-    });
 }
 
 __used static void printVec(uint8x16_t vec) {

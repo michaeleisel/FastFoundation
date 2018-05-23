@@ -16,6 +16,7 @@
 		B38C42171E8E001700033ACD /* FFOViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C42161E8E001700033ACD /* FFOViewController.m */; };
 		B38C421C1E8E001700033ACD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B38C421B1E8E001700033ACD /* Assets.xcassets */; };
 		B38C42291E8E025200033ACD /* Launch.xib in Resources */ = {isa = PBXBuildFile; fileRef = B38C42281E8E025200033ACD /* Launch.xib */; };
+		B3C0BBA520B5F063006CCEF3 /* ConvertUTF.c in Sources */ = {isa = PBXBuildFile; fileRef = B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */; };
 		B3D753B620890F6A0090C3E2 /* rusty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D753B520890F6A0090C3E2 /* rusty.a */; };
 		B3D753B9208946A90090C3E2 /* NSString+FFOMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C422B1E8E029100033ACD /* NSString+FFOMethods.m */; };
 		B3F73C41207C383300E11E2D /* fishhook.c in Sources */ = {isa = PBXBuildFile; fileRef = B3F73C40207C383300E11E2D /* fishhook.c */; };
@@ -43,6 +44,8 @@
 		B38C422B1E8E029100033ACD /* NSString+FFOMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FFOMethods.m"; sourceTree = "<group>"; };
 		B3C0BBA220B53607006CCEF3 /* FFOArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOArray.h; sourceTree = "<group>"; };
 		B3C0BBA320B5362F006CCEF3 /* FFODefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFODefines.h; sourceTree = "<group>"; };
+		B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ConvertUTF.c; sourceTree = "<group>"; };
+		B3C0BBA620B5F0A3006CCEF3 /* ConvertUTF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConvertUTF.h; sourceTree = "<group>"; };
 		B3D753B520890F6A0090C3E2 /* rusty.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = rusty.a; sourceTree = SOURCE_ROOT; };
 		B3D753B72089249A0090C3E2 /* rust_bindings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rust_bindings.h; sourceTree = SOURCE_ROOT; };
 		B3F73C40207C383300E11E2D /* fishhook.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fishhook.c; sourceTree = "<group>"; };
@@ -143,6 +146,8 @@
 		B38C420E1E8E001700033ACD /* FastFoundation */ = {
 			isa = PBXGroup;
 			children = (
+				B3C0BBA620B5F0A3006CCEF3 /* ConvertUTF.h */,
+				B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */,
 				B3D753B520890F6A0090C3E2 /* rusty.a */,
 				B3C0BBA320B5362F006CCEF3 /* FFODefines.h */,
 				B38586DC1EEE48BA00496750 /* pcg_basic.c */,
@@ -336,6 +341,7 @@
 				B3D753B9208946A90090C3E2 /* NSString+FFOMethods.m in Sources */,
 				B3F73C41207C383300E11E2D /* fishhook.c in Sources */,
 				B38C42111E8E001700033ACD /* main.m in Sources */,
+				B3C0BBA520B5F063006CCEF3 /* ConvertUTF.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

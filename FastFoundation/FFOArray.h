@@ -15,6 +15,9 @@ typedef struct {
 } FFOArray;
 
 static FFOArray *FFOArrayWithCapacity(NSInteger capacity) {
+    if (capacity == 0) {
+        capacity++;
+    }
     // Hack to do one malloc to allocate for two pointers
     FFOArray *array = malloc(sizeof(FFOArray));
     array->elements = malloc(sizeof(array->elements[0]) * capacity);
@@ -25,7 +28,6 @@ static FFOArray *FFOArrayWithCapacity(NSInteger capacity) {
 
 static inline void FFOGrowArray(FFOArray *array, NSInteger capacity) {
     // Grow it to the smallest power of 2 that is greater than or equal to capacity
-    NSCAssert(array->capacity != 0, @"only designed for non-zero capacity");
     while (array->capacity < capacity) {
         array->capacity *= 2;
     }
@@ -41,4 +43,8 @@ static inline void FFOPushToArray(FFOArray *array, int32_t element) {
         FFOGrowArray(array, array->capacity * 2);
     }
     array->elements[array->length++] = element;
+}
+
+static BOOL FFOArraysAreEqual(FFOArray *a1, FFOArray *a2) {
+    return a1->length == a2->length && !memcmp(a1->elements, a2->elements, sizeof(*a1->elements) * a1->length);
 }
