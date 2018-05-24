@@ -32,13 +32,12 @@ static inline void FFOGrowArray(FFOArray *array, NSInteger capacity) {
         array->capacity *= 2;
     }
     uint32_t *elements = array->elements;
-    NSInteger size = sizeof(array->elements[0]) * array->capacity;
-    array->elements = malloc(size);
-    memcpy(array->elements, elements, size);
+    array->elements = malloc(sizeof(array->elements[0]) * array->capacity);
+    memcpy(array->elements, elements, sizeof(array->elements[0]) * array->length);
     free(elements);
 }
 
-static inline void FFOPushToArray(FFOArray *array, int32_t element) {
+static inline void FFOPushToArray(FFOArray *array, uint32_t element) {
     if (unlikely(array->length >= array->capacity)) {
         FFOGrowArray(array, array->capacity * 2);
     }
@@ -47,4 +46,9 @@ static inline void FFOPushToArray(FFOArray *array, int32_t element) {
 
 static BOOL FFOArraysAreEqual(FFOArray *a1, FFOArray *a2) {
     return a1->length == a2->length && !memcmp(a1->elements, a2->elements, sizeof(*a1->elements) * a1->length);
+}
+
+static void FFOFreeArray(FFOArray *array) {
+    free(array->elements);
+    free(array);
 }

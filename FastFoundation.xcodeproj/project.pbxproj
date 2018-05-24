@@ -17,6 +17,8 @@
 		B38C421C1E8E001700033ACD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B38C421B1E8E001700033ACD /* Assets.xcassets */; };
 		B38C42291E8E025200033ACD /* Launch.xib in Resources */ = {isa = PBXBuildFile; fileRef = B38C42281E8E025200033ACD /* Launch.xib */; };
 		B3C0BBA520B5F063006CCEF3 /* ConvertUTF.c in Sources */ = {isa = PBXBuildFile; fileRef = B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */; };
+		B3CF25F520B6486300C1A65E /* j1.json in Resources */ = {isa = PBXBuildFile; fileRef = B3CF25F420B6486200C1A65E /* j1.json */; };
+		B3CF25F720B6486800C1A65E /* j2.json in Resources */ = {isa = PBXBuildFile; fileRef = B3CF25F620B6486800C1A65E /* j2.json */; };
 		B3D753B620890F6A0090C3E2 /* rusty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D753B520890F6A0090C3E2 /* rusty.a */; };
 		B3D753B9208946A90090C3E2 /* NSString+FFOMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C422B1E8E029100033ACD /* NSString+FFOMethods.m */; };
 		B3F73C41207C383300E11E2D /* fishhook.c in Sources */ = {isa = PBXBuildFile; fileRef = B3F73C40207C383300E11E2D /* fishhook.c */; };
@@ -46,6 +48,9 @@
 		B3C0BBA320B5362F006CCEF3 /* FFODefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFODefines.h; sourceTree = "<group>"; };
 		B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ConvertUTF.c; sourceTree = "<group>"; };
 		B3C0BBA620B5F0A3006CCEF3 /* ConvertUTF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConvertUTF.h; sourceTree = "<group>"; };
+		B3CF25F320B63DA400C1A65E /* FFOString.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOString.h; sourceTree = "<group>"; };
+		B3CF25F420B6486200C1A65E /* j1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = j1.json; path = test_json/j1.json; sourceTree = SOURCE_ROOT; };
+		B3CF25F620B6486800C1A65E /* j2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = j2.json; path = test_json/j2.json; sourceTree = SOURCE_ROOT; };
 		B3D753B520890F6A0090C3E2 /* rusty.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = rusty.a; sourceTree = SOURCE_ROOT; };
 		B3D753B72089249A0090C3E2 /* rust_bindings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rust_bindings.h; sourceTree = SOURCE_ROOT; };
 		B3F73C40207C383300E11E2D /* fishhook.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fishhook.c; sourceTree = "<group>"; };
@@ -146,6 +151,8 @@
 		B38C420E1E8E001700033ACD /* FastFoundation */ = {
 			isa = PBXGroup;
 			children = (
+				B3CF25F420B6486200C1A65E /* j1.json */,
+				B3CF25F620B6486800C1A65E /* j2.json */,
 				B3C0BBA620B5F0A3006CCEF3 /* ConvertUTF.h */,
 				B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */,
 				B3D753B520890F6A0090C3E2 /* rusty.a */,
@@ -171,6 +178,7 @@
 				B32879F21E8E1625007E49B7 /* FFODateFormatter.m */,
 				B38586D91EEE46BD00496750 /* NSArrayFFOMethods.h */,
 				B38586DA1EEE46BD00496750 /* NSArrayFFOMethods.m */,
+				B3CF25F320B63DA400C1A65E /* FFOString.h */,
 			);
 			path = FastFoundation;
 			sourceTree = "<group>";
@@ -250,7 +258,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B38C42231E8E001700033ACD /* Build configuration list for PBXNativeTarget "FastFoundation" */;
 			buildPhases = (
-				B3D753B820892F5D0090C3E2 /* Build rust */,
 				B38C42081E8E001700033ACD /* Sources */,
 				B38C42091E8E001700033ACD /* Frameworks */,
 				B38C420A1E8E001700033ACD /* Resources */,
@@ -303,30 +310,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3CF25F720B6486800C1A65E /* j2.json in Resources */,
 				B38C42291E8E025200033ACD /* Launch.xib in Resources */,
 				B30A194620AD37A00073CFB8 /* citm_catalog.json in Resources */,
+				B3CF25F520B6486300C1A65E /* j1.json in Resources */,
 				B38C421C1E8E001700033ACD /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		B3D753B820892F5D0090C3E2 /* Build rust */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Build rust";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd ${SRCROOT} && ruby build_rust.rb";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B38C42081E8E001700033ACD /* Sources */ = {
@@ -371,7 +363,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = c11;

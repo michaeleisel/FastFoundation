@@ -11,9 +11,10 @@
 #import "pcg_basic.h"
 #import "NSArrayFFOMethods.h"
 #import "rust_bindings.h"
-#import <arm_neon.h>
-#import <arm_acle.h>
+// #import <arm_neon.h>
+// #import <arm_acle.h>
 #import "FFOArray.h"
+#import "FFOString.h"
 #import "ConvertUTF.h"
 
 @interface FFOViewController ()
@@ -88,7 +89,7 @@ NS_ENUM(NSInteger, FFOJsonTypes) {
     FFOJsonArray,
 };
 
-static void FFOGatherCharIdxs(const char *string, uint32_t length, FFOArray **quoteIdxs, FFOArray **slashIdxs);
+// static void FFOGatherCharIdxs(const char *string, uint32_t length, FFOArray **quoteIdxs, FFOArray **slashIdxs);
 
 static inline char FFOEscapeCharForChar(char origChar) {
     switch (origChar) {
@@ -171,36 +172,30 @@ static inline BOOL/*skip next slash*/ FFOProcessEscapedSequence(FFOArray *deleti
 // we could also avoid copying the largest continuous piece of the string that doesn't have any deletions
 // copy out into a scratch buffer, then copy back in
 // take http:\/\/... for instance. it's actually faster to move the "http://" part forwards than to move the rest of it backwards
-static void FFOPerformDeletions(char *string, uint32_t startIdx, uint32_t endIdx, FFOArray *deletions, FFOArray *copyBuffer) {
-    uint32_t origLen = endIdx - startIdx;
-    if (origLen > copyBuffer->capacity) {
-        FFOGrowArray(copyBuffer, origLen);
-    }
-    uint32_t *copyElements = copyBuffer->elements;
-    uint32_t *elements = deletions->elements;
+static void FFOPerformDeletions(char *string, uint32_t startIdx, uint32_t endIdx, FFOArray *deletions, FFOString *copyBuffer) {
+    copyBuffer->length = 0;
     FFOPushToArray(deletions, endIdx);
     FFOPushToArray(deletions, 0);
     uint32_t prevIdx = 0;
-    uint32_t newLen = 0;
+    uint32_t *elements = deletions->elements;
     for (NSInteger i = 0; i < deletions->length - 1; i += 2) {
         uint32_t idx = elements[i];
         uint32_t amountToDelete = elements[i + 1];
-        // note that for efficiency's sake, we don't update the length of copyBuffer here
-        memcpy(copyElements + newLen, string + prevIdx, idx - prevIdx);
+        FFOPushToString(copyBuffer, string + prevIdx, idx - prevIdx);
         prevIdx = idx + amountToDelete;
-        newLen += idx - prevIdx;
     }
-    memcpy(string + startIdx, copyElements, newLen);
-    string[startIdx +newLen] = '\0';
+    memcpy(string + startIdx, copyBuffer->chars, copyBuffer->length);
+    string[startIdx + copyBuffer->length] = '\0';
 }
 
-static void FFOJsonParse(char *string, uint32_t length) {
+static void FFOParseJson(char *string, uint32_t length) {
     FFOArray *quoteIdxsArray, *slashIdxsArray;
     FFOArray *copyBuffer = FFOArrayWithCapacity(100);
     FFOCallbacks callbacks = {
         .stringCallback = FFOGotString,
     };
-    FFOGatherCharIdxs(string, length, &quoteIdxsArray, &slashIdxsArray);
+    FFOGatherCharsNaive(string, length, &quoteIdxsArray, &slashIdxsArray);
+    // FFOGatherCharIdxs(string, length, &quoteIdxsArray, &slashIdxsArray);
     FFOPushToArray(quoteIdxsArray, UINT32_MAX);
     uint32_t *quoteIdxs = quoteIdxsArray->elements;
     uint32_t *slashIdxs = slashIdxsArray->elements;
@@ -256,9 +251,11 @@ static void FFOJsonParse(char *string, uint32_t length) {
             }
         }
     }
+
+    // todo: free the FFOArrays here
 }
 
-static const uint8x16_t sOneVec = {0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80};
+/*static const uint8x16_t sOneVec = {0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80};
 
 static void FFOPopulateVecsForChar(char c, uint8x16_t *lowVec, uint8x16_t *highVec) {
     uint8_t low = 127 - c;
@@ -268,6 +265,20 @@ static void FFOPopulateVecsForChar(char c, uint8x16_t *lowVec, uint8x16_t *highV
     uint8x16_t highVecTemp = {high, high, high, high, high, high, high, high, high, high, high, high, high, high, high, high};
     *lowVec = lowVecTemp;
     *highVec = highVecTemp;
+}*/
+
+static void FFOGatherCharsNaive(const char *string, uint32_t length, FFOArray **quoteIdxsPtr, FFOArray **slashIdxsPtr) {
+    FFOArray *quoteIdxs = FFOArrayWithCapacity(1);
+    FFOArray *slashIdxs = FFOArrayWithCapacity(1);
+    for (NSInteger i = 0; i < length; i++) {
+        if (string[i] == '"') {
+            FFOPushToArray(quoteIdxs, (uint32_t)i);
+        } else if (string[i] == '\\') {
+            FFOPushToArray(slashIdxs, (uint32_t)i);
+        }
+    }
+    *quoteIdxsPtr = quoteIdxs;
+    *slashIdxsPtr = slashIdxs;
 }
 
 - (void)_testGatherCharIdxsWithString:(const char *)string
@@ -275,7 +286,7 @@ static void FFOPopulateVecsForChar(char c, uint8x16_t *lowVec, uint8x16_t *highV
     FFOArray *testQuoteIdxs;
     FFOArray *testSlashIdxs;
     NSInteger length = strlen(string);
-    FFOGatherCharIdxs(string, (uint32_t)length, &testQuoteIdxs, &testSlashIdxs);
+    NSAssert(NO, @"");//FFOGatherCharsNaive(string, (uint32_t)length, &testQuoteIdxs, &testSlashIdxs);
     FFOArray *expectedQuoteIdxs = FFOArrayWithCapacity(1);
     FFOArray *expectedSlashIdxs = FFOArrayWithCapacity(1);
     for (NSInteger i = 0; i < length; i++) {
@@ -289,7 +300,7 @@ static void FFOPopulateVecsForChar(char c, uint8x16_t *lowVec, uint8x16_t *highV
     NSAssert(FFOArraysAreEqual(testSlashIdxs, expectedSlashIdxs), @"");
 }
 
-- (void)_runTests
+- (void)_testGatherCharIdxs
 {
     [self _testGatherCharIdxsWithString:""];
     [self _testGatherCharIdxsWithString:"\""];
@@ -301,14 +312,58 @@ static void FFOPopulateVecsForChar(char c, uint8x16_t *lowVec, uint8x16_t *highV
     [self _testGatherCharIdxsWithString:"                  \"\"   \\ \\   adsf adsf \"  \"   \\   "];
 }
 
-static void FFOGatherCharIdxs(const char *string, uint32_t length, FFOArray **quoteIdxsPtr, FFOArray **slashIdxsPtr) {
+- (void)_testPerformDeletions
+{
+    for (NSArray <id>*piece in @[
+          @[@"abcdefghijklm", @"adefklm", @[@1, @2], @[@6, @4]],
+          @[@"abcd", @"abcd"],
+          @[@"abcd", @"", @[@0, @1], @[@1, @3]],
+          @[@"", @""],
+          @[@"a", @"", @[@0, @1]],
+          @[@"abcdefghijklm", @"adefklm", @[@1, @2], @[@6, @4]]]) {
+        char *result;
+        asprintf(&result, [piece[0] UTF8String]);
+        FFOString *copyBuffer = FFOStringWithCapacity(1);
+        FFOArray *deletions = FFOArrayWithCapacity(1);
+        for (NSArray <NSNumber *>*pair in [piece subarrayWithRange:NSMakeRange(2, piece.count - 2)]) {
+            FFOPushToArray(deletions, [pair[0] unsignedIntValue]);
+            FFOPushToArray(deletions, [pair[1] unsignedIntValue]);
+        }
+        FFOPerformDeletions(result, 0, (uint32_t)strlen(result), deletions, copyBuffer);
+        NSAssert(0 == strcmp(result, [piece[1] UTF8String]), @"");
+        FFOFreeArray(deletions);
+        FFOFreeString(copyBuffer);
+        free(result);
+    }
+}
+
+- (void)_testParseJson
+{
+    FFOArray *deletions = FFOArrayWithCapacity(1);
+    for (NSInteger i = 1; i <= 2; i++) {
+        NSString *name = [NSString stringWithFormat:@"j%zd", i];
+        NSString *path = [[NSBundle mainBundle] pathForResource:name ofType:@"json"];
+        NS_VALID_UNTIL_END_OF_SCOPE NSData *objcData = [[[NSFileManager defaultManager] contentsAtPath:path] mutableCopy];
+        char *string = (char *)[objcData bytes];
+    }
+}
+
+- (void)_runTests
+{
+    // todo: test non-ascii chars
+    // [self _testGatherCharIdxs];
+    [self _testPerformDeletions];
+    [self _testParseJson];
+    NSLog(@"tests pass");
+}
+
+/*static void FFOGatherCharIdxs(const char *string, uint32_t length, FFOArray **quoteIdxsPtr, FFOArray **slashIdxsPtr) {
     FFOArray *quoteIdxs = FFOArrayWithCapacity(length / 10);
     FFOArray *slashIdxs = FFOArrayWithCapacity(length / 10);
 
     uint8x16_t lowQuoteVec, highQuoteVec, lowSlashVec, highSlashVec;
     FFOPopulateVecsForChar('"', &lowQuoteVec, &highQuoteVec);
     FFOPopulateVecsForChar('\\', &lowSlashVec, &highSlashVec);
-
 
     uint32_t total = length / sizeof(uint8x16_t);
     uint8x16_t *vectors = (uint8x16_t *)string;
@@ -364,7 +419,7 @@ static void FFOGatherCharIdxs(const char *string, uint32_t length, FFOArray **qu
 
     *slashIdxsPtr = slashIdxs;
     *quoteIdxsPtr = quoteIdxs;
-}
+}*/
 
 - (void)viewDidLoad
 {
@@ -376,7 +431,7 @@ static void FFOGatherCharIdxs(const char *string, uint32_t length, FFOArray **qu
     NS_VALID_UNTIL_END_OF_SCOPE NSData *objcData = [[[NSFileManager defaultManager] contentsAtPath:path] mutableCopy];
     char *string = (char *)[objcData bytes];
     NSInteger length = strlen(string);
-    FFOJsonParse(string, length);
+    FFOParseJson(string, (uint32_t)length);
     NSLog(@"done");
     // assert(FFOSearchMemChr(string, length) == 53210);
     // assert(FFOMemChr(string, length) == 53210);
@@ -405,12 +460,12 @@ static void FFOGatherCharIdxs(const char *string, uint32_t length, FFOArray **qu
     //}
 }
 
-__used static void printVec(uint8x16_t vec) {
+/*__used static void printVec(uint8x16_t vec) {
     for (NSInteger i = 0; i < sizeof(uint8x16_t); i++) {
         printf("%zd, ", (NSInteger)vec[i]);
     }
     printf("\n");
-}
+}*/
 
 __used static void printBinaryRep(uint64_t num) {
     for (NSInteger i = 0; i < sizeof(num) * 8; i++) {
