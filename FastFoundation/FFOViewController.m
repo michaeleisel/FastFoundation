@@ -17,6 +17,7 @@
 #import "FFORapidJsonTester.h"
 #import "FFOJsonTester.h"
 #import "FFOJsonParser.h"
+#import "FFOEnvironment.h"
 
 @interface FFOViewController ()
 
@@ -62,7 +63,7 @@
     char *string2 = NULL;
     asprintf(&string2, "%s", string1);
     uint32_t length = (uint32_t)strlen(string1);
-    if (DEBUG) {
+    if (FFOIsDebug()) {
         NSLog(@"running in debug, don't benchmark");
         FFOTestResults(string1, length);
         gooo(string2);
@@ -71,10 +72,35 @@
                 NSAssert(NO, @"");
             }
             if (sMyEvents[i].type == FFOJsonTypeString) {
-                NSAssert(0 == strcmp(sMyEvents[i].ptr, sEvents[i].ptr), @"");
+                NSAssert(0 == strcmp(sMyEvents[i].result.str, sEvents[i].result.str), @"");
+            } else if (sMyEvents[i].type == FFOJsonTypeNum) {
+                NSAssert(sMyEvents[i].result.d == sEvents[i].result.d, @"");
             }
         }
-        NSAssert(sMyEventCount == sEventCount, @"");
+        NSAssert(sMyEventCount == sEventCount || sMyEventCount == sEventCount + 1/*hack*/, @"");
+    } else {
+        NSInteger nIterations = 1e2;
+        char *myStrings[nIterations];
+        for (NSInteger i = 0; i < nIterations; i++) {
+            asprintf(&(myStrings[i]), "%s", string1);
+        }
+        char *rapStrings[nIterations];
+        for (NSInteger i = 0; i < nIterations; i++) {
+            asprintf(&(rapStrings[i]), "%s", string1);
+        }
+        CFTimeInterval start = CACurrentMediaTime();
+        for (NSInteger i = 0; i < nIterations; i++) {
+            gooo(rapStrings[i]);
+        }
+        CFTimeInterval end = CACurrentMediaTime();
+        printf("rap: %lf\n", (end - start));
+        start = CACurrentMediaTime();
+        for (NSInteger i = 0; i < nIterations; i++) {
+            FFOTestResults(myStrings[i], length);
+        }
+        end = CACurrentMediaTime();
+        printf("my: %lf\n", (end - start));
+        printf("%llu, %llu\n", sMyEventCount, sEventCount);
     }
     NSLog(@"done");
     /*FFOArray *quoteIdxsPtr, *slashIdxsPtr;

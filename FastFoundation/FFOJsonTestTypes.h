@@ -6,6 +6,13 @@
 //  Copyright © 2018 Michael Eisel. All rights reserved.
 //
 
+typedef struct {
+    double d;
+    const char *str;
+} FFOResult;
+
+static const FFOResult kNoResult = {};
+
 typedef enum {
     FFOJsonTypeNull,
     FFOJsonTypeBool,
@@ -19,5 +26,5 @@ typedef enum {
 
 typedef struct {
     FFOJsonType type;
-    void *ptr;
+    FFOResult result;
 } FFOJsonEvent;

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "FFOJsonTestTypes.h"
 #import "FFOJsonParser.h"
+#import "FFOEnvironment.h"
 
 FFOJsonEvent *sMyEvents;
 uint64_t sMyEventCount = 0;
@@ -57,58 +58,66 @@ static void FFOPrintTypeDescription(FFOJsonType type, void *ptr) {
     printf("\n");
 }
 
-static void push(FFOJsonType type, void *ptr) {
+static void push(FFOJsonType type, FFOResult result) {
+    if (!FFOIsDebug()) {
+        sMyEventCount++;
+        return;
+    }
     if (NO) {
-        FFOPrintTypeDescription(type, ptr);
+        // FFOPrintTypeDescription(type, ptr);
     }
     FFOJsonEvent event = {
         .type = type,
-        .ptr = ptr
+        .result = result,
     };
     sMyEvents[sMyEventCount++] = event;
-    if (sMyEventCount == 40) {
-        printf("");
-    }
 }
 
 static void FFOGotNull() {
-    push(FFOJsonTypeNull, NULL);
+    push(FFOJsonTypeNull, kNoResult);
 }
 
 static void FFOGotString(char *string) {
-    push(FFOJsonTypeString, string);
+    FFOResult result = {.str = string};
+    push(FFOJsonTypeString, result);
 }
 
 static void FFOGotDictionaryStart() {
-    push(FFOJsonTypeStartDict, NULL);
+    push(FFOJsonTypeStartDict, kNoResult);
 }
 
 static void FFOGotDictionaryEnd() {
-    push(FFOJsonTypeEndDict, NULL);
+    push(FFOJsonTypeEndDict, kNoResult);
 }
 
 static void FFOGotArrayStart() {
-    push(FFOJsonTypeStartArray, NULL);
+    push(FFOJsonTypeStartArray, kNoResult);
 }
 
 static void FFOGotNum(double num) {
-    push(FFOJsonTypeNum, NULL);
+    FFOResult result;
+    result.d = num;
+    push(FFOJsonTypeNum, result);
 }
 
 static void FFOGotArrayEnd() {
-    push(FFOJsonTypeEndArray, NULL);
+    push(FFOJsonTypeEndArray, kNoResult);
 }
 
+
+static FFOCallbacks sCallbacks = {
+    .stringCallback = FFOGotString,
+    .numberCallback = FFOGotNum,
+    .arrayStartCallback = FFOGotArrayStart,
+    .arrayEndCallback = FFOGotArrayEnd,
+    .dictionaryStartCallback = FFOGotDictionaryStart,
+    .dictionaryEndCallback = FFOGotDictionaryEnd,
+    .nullCallback = FFOGotNull,
+};
+
 void FFOTestResults(char *string, uint32_t length) {
-    FFOCallbacks callbacks = {
-        .stringCallback = FFOGotString,
-        .numberCallback = FFOGotNum,
-        .arrayStartCallback = FFOGotArrayStart,
-        .arrayEndCallback = FFOGotArrayEnd,
-        .dictionaryStartCallback = FFOGotDictionaryStart,
-        .dictionaryEndCallback = FFOGotDictionaryEnd,
-        .nullCallback = FFOGotNull,
-    };
-    sMyEvents = (FFOJsonEvent *)malloc(5000000 * sizeof(*sMyEvents));
-    FFOParseJson(string, length, &callbacks);
+    if (FFOIsDebug()) {
+        sMyEvents = (FFOJsonEvent *)malloc(5000000 * sizeof(*sMyEvents));
+    }
+    FFOParseJson(string, length, &sCallbacks);
 }

@@ -13,6 +13,10 @@
 #import <arm_neon.h>
 #import <arm_acle.h>
 
+#ifndef RAPIDJSON_UINT64_C2
+#define RAPIDJSON_UINT64_C2(high32, low32) (((uint64_t)(high32) << 32) | (uint64_t)(low32))
+#endif
+
 static inline char FFOEscapeCharForChar(char origChar) {
     switch (origChar) {
         case 't':
@@ -191,6 +195,38 @@ void FFOGatherCharIdxs(const char *string, uint32_t length, FFOArray **quoteIdxs
      *quoteIdxsPtr = quoteIdxs;
  }
 
+static inline BOOL FFOConsume(const char *string, uint32_t *idx, char c) {
+    if (string[*idx] == c) {
+        (*idx)++;
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+static void FFOParseError(int i, uint32_t idx) {
+    printf("fail\n");
+}
+
+static inline uint32_t FFOParseNumber(char *string, FFOCallbacks *callbacks) {
+    uint32_t endIdx = 1;
+    for (;; endIdx++) {
+        char c = string[endIdx];
+        if (isnumber(c)) {
+            continue;
+        } else if (c == '.' || c == 'e' || c == 'E' || c == 'i' || c == 'I') {
+            assert("not supported" && NO);
+        } else {
+            break;
+        }
+    }
+    int64_t num = 0;
+    for (NSInteger i = 0; i < endIdx; i++) {
+        num = num * 10 + string[i] - '0';
+    }
+    callbacks->numberCallback(num);
+    return endIdx;
+}
 
 void FFOParseJson(char *string, uint32_t length, FFOCallbacks *callbacks) {
     FFOArray *quoteIdxsArray, *slashIdxsArray;
@@ -255,15 +291,7 @@ void FFOParseJson(char *string, uint32_t length, FFOCallbacks *callbacks) {
                 // todo: deal with when null or undefined is the key
                 if (string[idx] == ',') {
                     // skip
-                } else if (isnumber(string[idx])) {
-                    // It's a number
-                    callbacks->numberCallback(-28);
-                    idx++;
-                    while (/*length check needed here, and more robust float handling*/string[idx] != '.' && isnumber(string[idx])) {
-                        idx++;
-                    }
-                    idx--;
-                } else {
+                } else if (isalpha(string[idx])) {
                     // It's a dictionary key
                     if (nextStringIsAKey) {
                         char *colonStart = memchr(string + idx + 1, ':', length - idx - 1);
@@ -277,6 +305,9 @@ void FFOParseJson(char *string, uint32_t length, FFOCallbacks *callbacks) {
                         callbacks->nullCallback();
                         idx += 4;
                     }
+                } else {
+                    // It's a number
+                    idx += FFOParseNumber(string + idx, callbacks) - 1;
                 }
             }
         }
@@ -341,7 +372,7 @@ static void FFOTestPerformDeletions()
                                  @[@"a", @"", @[@0, @1]],
                                  @[@"abcdefghijklm", @"adefklm", @[@1, @2], @[@6, @4]]]) {
         char *result;
-        asprintf(&result, [piece[0] UTF8String]);
+        asprintf(&result, "%s", [piece[0] UTF8String]);
         FFOString *copyBuffer = FFOStringWithCapacity(1);
         FFOArray *deletions = FFOArrayWithCapacity(1);
         for (NSArray <NSNumber *>*pair in [piece subarrayWithRange:NSMakeRange(2, piece.count - 2)]) {
