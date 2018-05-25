@@ -8,9 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		B30A194620AD37A00073CFB8 /* citm_catalog.json in Resources */ = {isa = PBXBuildFile; fileRef = B30A194520AD37A00073CFB8 /* citm_catalog.json */; };
+		B3178BCD20B64C9400E3076A /* FFORapidJsonTester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3178BCC20B64C9400E3076A /* FFORapidJsonTester.cpp */; };
 		B32879F31E8E1625007E49B7 /* FFODateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = B32879F21E8E1625007E49B7 /* FFODateFormatter.m */; };
 		B38586DB1EEE46BD00496750 /* NSArrayFFOMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = B38586DA1EEE46BD00496750 /* NSArrayFFOMethods.m */; };
 		B38586DE1EEE48BA00496750 /* pcg_basic.c in Sources */ = {isa = PBXBuildFile; fileRef = B38586DC1EEE48BA00496750 /* pcg_basic.c */; };
+		B38C01F620B65183002D4613 /* FFOJsonTester.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C01F520B65183002D4613 /* FFOJsonTester.m */; };
+		B38C01F920B651B7002D4613 /* FFOJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C01F820B651B7002D4613 /* FFOJsonParser.m */; };
 		B38C42111E8E001700033ACD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C42101E8E001700033ACD /* main.m */; };
 		B38C42141E8E001700033ACD /* FFOAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C42131E8E001700033ACD /* FFOAppDelegate.m */; };
 		B38C42171E8E001700033ACD /* FFOViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C42161E8E001700033ACD /* FFOViewController.m */; };
@@ -19,13 +22,14 @@
 		B3C0BBA520B5F063006CCEF3 /* ConvertUTF.c in Sources */ = {isa = PBXBuildFile; fileRef = B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */; };
 		B3CF25F520B6486300C1A65E /* j1.json in Resources */ = {isa = PBXBuildFile; fileRef = B3CF25F420B6486200C1A65E /* j1.json */; };
 		B3CF25F720B6486800C1A65E /* j2.json in Resources */ = {isa = PBXBuildFile; fileRef = B3CF25F620B6486800C1A65E /* j2.json */; };
-		B3D753B620890F6A0090C3E2 /* rusty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D753B520890F6A0090C3E2 /* rusty.a */; };
 		B3D753B9208946A90090C3E2 /* NSString+FFOMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C422B1E8E029100033ACD /* NSString+FFOMethods.m */; };
 		B3F73C41207C383300E11E2D /* fishhook.c in Sources */ = {isa = PBXBuildFile; fileRef = B3F73C40207C383300E11E2D /* fishhook.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B30A194520AD37A00073CFB8 /* citm_catalog.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = citm_catalog.json; sourceTree = SOURCE_ROOT; };
+		B3178BCC20B64C9400E3076A /* FFORapidJsonTester.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FFORapidJsonTester.cpp; sourceTree = "<group>"; };
+		B3178BCE20B64EE500E3076A /* FFOJsonTestTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOJsonTestTypes.h; sourceTree = "<group>"; };
 		B32879F11E8E1625007E49B7 /* FFODateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFODateFormatter.h; sourceTree = "<group>"; };
 		B32879F21E8E1625007E49B7 /* FFODateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFODateFormatter.m; sourceTree = "<group>"; };
 		B3486AAD20AE640000C7291B /* FastFoundation.profdata */ = {isa = PBXFileReference; lastKnownFileType = file; path = FastFoundation.profdata; sourceTree = "<group>"; };
@@ -33,6 +37,10 @@
 		B38586DA1EEE46BD00496750 /* NSArrayFFOMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSArrayFFOMethods.m; sourceTree = "<group>"; };
 		B38586DC1EEE48BA00496750 /* pcg_basic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pcg_basic.c; sourceTree = "<group>"; };
 		B38586DD1EEE48BA00496750 /* pcg_basic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pcg_basic.h; sourceTree = "<group>"; };
+		B38C01F520B65183002D4613 /* FFOJsonTester.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFOJsonTester.m; sourceTree = "<group>"; };
+		B38C01F720B651B7002D4613 /* FFOJsonParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOJsonParser.h; sourceTree = "<group>"; };
+		B38C01F820B651B7002D4613 /* FFOJsonParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFOJsonParser.m; sourceTree = "<group>"; };
+		B38C01FA20B65275002D4613 /* FFOJsonTester.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOJsonTester.h; sourceTree = "<group>"; };
 		B38C420C1E8E001700033ACD /* FastFoundation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FastFoundation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B38C42101E8E001700033ACD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B38C42121E8E001700033ACD /* FFOAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOAppDelegate.h; sourceTree = "<group>"; };
@@ -51,7 +59,43 @@
 		B3CF25F320B63DA400C1A65E /* FFOString.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOString.h; sourceTree = "<group>"; };
 		B3CF25F420B6486200C1A65E /* j1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = j1.json; path = test_json/j1.json; sourceTree = SOURCE_ROOT; };
 		B3CF25F620B6486800C1A65E /* j2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = j2.json; path = test_json/j2.json; sourceTree = SOURCE_ROOT; };
-		B3D753B520890F6A0090C3E2 /* rusty.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = rusty.a; sourceTree = SOURCE_ROOT; };
+		B3CF262020B64A1300C1A65E /* FFORapidJsonTester.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFORapidJsonTester.h; sourceTree = "<group>"; };
+		B3CF264A20B64B7000C1A65E /* fwd.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = fwd.h; sourceTree = "<group>"; };
+		B3CF264B20B64B7000C1A65E /* memorystream.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = memorystream.h; sourceTree = "<group>"; };
+		B3CF264C20B64B7000C1A65E /* reader.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = reader.h; sourceTree = "<group>"; };
+		B3CF264D20B64B7000C1A65E /* prettywriter.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = prettywriter.h; sourceTree = "<group>"; };
+		B3CF264E20B64B7000C1A65E /* ostreamwrapper.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = ostreamwrapper.h; sourceTree = "<group>"; };
+		B3CF264F20B64B7000C1A65E /* encodedstream.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = encodedstream.h; sourceTree = "<group>"; };
+		B3CF265020B64B7000C1A65E /* filereadstream.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = filereadstream.h; sourceTree = "<group>"; };
+		B3CF265120B64B7000C1A65E /* cursorstreamwrapper.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = cursorstreamwrapper.h; sourceTree = "<group>"; };
+		B3CF265220B64B7000C1A65E /* istreamwrapper.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = istreamwrapper.h; sourceTree = "<group>"; };
+		B3CF265320B64B7000C1A65E /* stringbuffer.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = stringbuffer.h; sourceTree = "<group>"; };
+		B3CF265520B64B7000C1A65E /* ieee754.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = ieee754.h; sourceTree = "<group>"; };
+		B3CF265620B64B7000C1A65E /* strtod.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = strtod.h; sourceTree = "<group>"; };
+		B3CF265720B64B7000C1A65E /* swap.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = swap.h; sourceTree = "<group>"; };
+		B3CF265820B64B7000C1A65E /* regex.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = regex.h; sourceTree = "<group>"; };
+		B3CF265920B64B7000C1A65E /* diyfp.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = diyfp.h; sourceTree = "<group>"; };
+		B3CF265A20B64B7000C1A65E /* biginteger.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = biginteger.h; sourceTree = "<group>"; };
+		B3CF265B20B64B7000C1A65E /* strfunc.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = strfunc.h; sourceTree = "<group>"; };
+		B3CF265C20B64B7000C1A65E /* itoa.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = itoa.h; sourceTree = "<group>"; };
+		B3CF265D20B64B7000C1A65E /* stack.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = stack.h; sourceTree = "<group>"; };
+		B3CF265E20B64B7000C1A65E /* dtoa.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = dtoa.h; sourceTree = "<group>"; };
+		B3CF265F20B64B7000C1A65E /* meta.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = meta.h; sourceTree = "<group>"; };
+		B3CF266020B64B7000C1A65E /* pow10.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = pow10.h; sourceTree = "<group>"; };
+		B3CF266120B64B7000C1A65E /* encodings.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = encodings.h; sourceTree = "<group>"; };
+		B3CF266220B64B7000C1A65E /* schema.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = schema.h; sourceTree = "<group>"; };
+		B3CF266320B64B7000C1A65E /* stream.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = stream.h; sourceTree = "<group>"; };
+		B3CF266420B64B7000C1A65E /* filewritestream.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = filewritestream.h; sourceTree = "<group>"; };
+		B3CF266520B64B7000C1A65E /* rapidjson.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = rapidjson.h; sourceTree = "<group>"; };
+		B3CF266620B64B7000C1A65E /* document.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = document.h; sourceTree = "<group>"; };
+		B3CF266720B64B7000C1A65E /* allocators.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = allocators.h; sourceTree = "<group>"; };
+		B3CF266820B64B7000C1A65E /* writer.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = writer.h; sourceTree = "<group>"; };
+		B3CF266A20B64B7000C1A65E /* error.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = error.h; sourceTree = "<group>"; };
+		B3CF266B20B64B7000C1A65E /* en.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = en.h; sourceTree = "<group>"; };
+		B3CF266C20B64B7000C1A65E /* memorybuffer.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = memorybuffer.h; sourceTree = "<group>"; };
+		B3CF266D20B64B7000C1A65E /* pointer.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = pointer.h; sourceTree = "<group>"; };
+		B3CF266F20B64B7000C1A65E /* inttypes.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = inttypes.h; sourceTree = "<group>"; };
+		B3CF267020B64B7000C1A65E /* stdint.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = stdint.h; sourceTree = "<group>"; };
 		B3D753B72089249A0090C3E2 /* rust_bindings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rust_bindings.h; sourceTree = SOURCE_ROOT; };
 		B3F73C40207C383300E11E2D /* fishhook.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fishhook.c; sourceTree = "<group>"; };
 		B3F73C42207C383700E11E2D /* fishhook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fishhook.h; sourceTree = "<group>"; };
@@ -115,7 +159,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3D753B620890F6A0090C3E2 /* rusty.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,34 +194,41 @@
 		B38C420E1E8E001700033ACD /* FastFoundation */ = {
 			isa = PBXGroup;
 			children = (
-				B3CF25F420B6486200C1A65E /* j1.json */,
-				B3CF25F620B6486800C1A65E /* j2.json */,
-				B3C0BBA620B5F0A3006CCEF3 /* ConvertUTF.h */,
-				B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */,
-				B3D753B520890F6A0090C3E2 /* rusty.a */,
-				B3C0BBA320B5362F006CCEF3 /* FFODefines.h */,
-				B38586DC1EEE48BA00496750 /* pcg_basic.c */,
-				B38586DD1EEE48BA00496750 /* pcg_basic.h */,
-				B3D753B72089249A0090C3E2 /* rust_bindings.h */,
+				B38C421B1E8E001700033ACD /* Assets.xcassets */,
 				B30A194520AD37A00073CFB8 /* citm_catalog.json */,
-				B3C0BBA220B53607006CCEF3 /* FFOArray.h */,
+				B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */,
+				B3C0BBA620B5F0A3006CCEF3 /* ConvertUTF.h */,
 				B38C42121E8E001700033ACD /* FFOAppDelegate.h */,
 				B38C42131E8E001700033ACD /* FFOAppDelegate.m */,
+				B3C0BBA220B53607006CCEF3 /* FFOArray.h */,
+				B32879F11E8E1625007E49B7 /* FFODateFormatter.h */,
+				B32879F21E8E1625007E49B7 /* FFODateFormatter.m */,
+				B3C0BBA320B5362F006CCEF3 /* FFODefines.h */,
+				B38C01F720B651B7002D4613 /* FFOJsonParser.h */,
+				B38C01F820B651B7002D4613 /* FFOJsonParser.m */,
+				B38C01FA20B65275002D4613 /* FFOJsonTester.h */,
+				B38C01F520B65183002D4613 /* FFOJsonTester.m */,
+				B3178BCE20B64EE500E3076A /* FFOJsonTestTypes.h */,
+				B3178BCC20B64C9400E3076A /* FFORapidJsonTester.cpp */,
+				B3CF262020B64A1300C1A65E /* FFORapidJsonTester.h */,
+				B3CF25F320B63DA400C1A65E /* FFOString.h */,
 				B38C42151E8E001700033ACD /* FFOViewController.h */,
 				B38C42161E8E001700033ACD /* FFOViewController.m */,
 				B3F73C40207C383300E11E2D /* fishhook.c */,
 				B3F73C42207C383700E11E2D /* fishhook.h */,
-				B38C421B1E8E001700033ACD /* Assets.xcassets */,
 				B38C42201E8E001700033ACD /* Info.plist */,
-				B38C420F1E8E001700033ACD /* Supporting Files */,
+				B3CF25F420B6486200C1A65E /* j1.json */,
+				B3CF25F620B6486800C1A65E /* j2.json */,
 				B38C42281E8E025200033ACD /* Launch.xib */,
-				B38C422A1E8E029100033ACD /* NSString+FFOMethods.h */,
-				B38C422B1E8E029100033ACD /* NSString+FFOMethods.m */,
-				B32879F11E8E1625007E49B7 /* FFODateFormatter.h */,
-				B32879F21E8E1625007E49B7 /* FFODateFormatter.m */,
 				B38586D91EEE46BD00496750 /* NSArrayFFOMethods.h */,
 				B38586DA1EEE46BD00496750 /* NSArrayFFOMethods.m */,
-				B3CF25F320B63DA400C1A65E /* FFOString.h */,
+				B38C422A1E8E029100033ACD /* NSString+FFOMethods.h */,
+				B38C422B1E8E029100033ACD /* NSString+FFOMethods.m */,
+				B38586DC1EEE48BA00496750 /* pcg_basic.c */,
+				B38586DD1EEE48BA00496750 /* pcg_basic.h */,
+				B3CF264920B64B7000C1A65E /* rapidjson */,
+				B3D753B72089249A0090C3E2 /* rust_bindings.h */,
+				B38C420F1E8E001700033ACD /* Supporting Files */,
 			);
 			path = FastFoundation;
 			sourceTree = "<group>";
@@ -189,6 +239,74 @@
 				B38C42101E8E001700033ACD /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B3CF264920B64B7000C1A65E /* rapidjson */ = {
+			isa = PBXGroup;
+			children = (
+				B3CF264A20B64B7000C1A65E /* fwd.h */,
+				B3CF264B20B64B7000C1A65E /* memorystream.h */,
+				B3CF264C20B64B7000C1A65E /* reader.h */,
+				B3CF264D20B64B7000C1A65E /* prettywriter.h */,
+				B3CF264E20B64B7000C1A65E /* ostreamwrapper.h */,
+				B3CF264F20B64B7000C1A65E /* encodedstream.h */,
+				B3CF265020B64B7000C1A65E /* filereadstream.h */,
+				B3CF265120B64B7000C1A65E /* cursorstreamwrapper.h */,
+				B3CF265220B64B7000C1A65E /* istreamwrapper.h */,
+				B3CF265320B64B7000C1A65E /* stringbuffer.h */,
+				B3CF265420B64B7000C1A65E /* internal */,
+				B3CF266120B64B7000C1A65E /* encodings.h */,
+				B3CF266220B64B7000C1A65E /* schema.h */,
+				B3CF266320B64B7000C1A65E /* stream.h */,
+				B3CF266420B64B7000C1A65E /* filewritestream.h */,
+				B3CF266520B64B7000C1A65E /* rapidjson.h */,
+				B3CF266620B64B7000C1A65E /* document.h */,
+				B3CF266720B64B7000C1A65E /* allocators.h */,
+				B3CF266820B64B7000C1A65E /* writer.h */,
+				B3CF266920B64B7000C1A65E /* error */,
+				B3CF266C20B64B7000C1A65E /* memorybuffer.h */,
+				B3CF266D20B64B7000C1A65E /* pointer.h */,
+				B3CF266E20B64B7000C1A65E /* msinttypes */,
+			);
+			name = rapidjson;
+			path = ../../rapidjson/include/rapidjson;
+			sourceTree = "<group>";
+		};
+		B3CF265420B64B7000C1A65E /* internal */ = {
+			isa = PBXGroup;
+			children = (
+				B3CF265520B64B7000C1A65E /* ieee754.h */,
+				B3CF265620B64B7000C1A65E /* strtod.h */,
+				B3CF265720B64B7000C1A65E /* swap.h */,
+				B3CF265820B64B7000C1A65E /* regex.h */,
+				B3CF265920B64B7000C1A65E /* diyfp.h */,
+				B3CF265A20B64B7000C1A65E /* biginteger.h */,
+				B3CF265B20B64B7000C1A65E /* strfunc.h */,
+				B3CF265C20B64B7000C1A65E /* itoa.h */,
+				B3CF265D20B64B7000C1A65E /* stack.h */,
+				B3CF265E20B64B7000C1A65E /* dtoa.h */,
+				B3CF265F20B64B7000C1A65E /* meta.h */,
+				B3CF266020B64B7000C1A65E /* pow10.h */,
+			);
+			path = internal;
+			sourceTree = "<group>";
+		};
+		B3CF266920B64B7000C1A65E /* error */ = {
+			isa = PBXGroup;
+			children = (
+				B3CF266A20B64B7000C1A65E /* error.h */,
+				B3CF266B20B64B7000C1A65E /* en.h */,
+			);
+			path = error;
+			sourceTree = "<group>";
+		};
+		B3CF266E20B64B7000C1A65E /* msinttypes */ = {
+			isa = PBXGroup;
+			children = (
+				B3CF266F20B64B7000C1A65E /* inttypes.h */,
+				B3CF267020B64B7000C1A65E /* stdint.h */,
+			);
+			path = msinttypes;
 			sourceTree = "<group>";
 		};
 		B3F73C43207C403C00E11E2D /* Frameworks */ = {
@@ -326,12 +444,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				B32879F31E8E1625007E49B7 /* FFODateFormatter.m in Sources */,
+				B3178BCD20B64C9400E3076A /* FFORapidJsonTester.cpp in Sources */,
 				B38C42171E8E001700033ACD /* FFOViewController.m in Sources */,
 				B38586DE1EEE48BA00496750 /* pcg_basic.c in Sources */,
 				B38C42141E8E001700033ACD /* FFOAppDelegate.m in Sources */,
 				B38586DB1EEE46BD00496750 /* NSArrayFFOMethods.m in Sources */,
 				B3D753B9208946A90090C3E2 /* NSString+FFOMethods.m in Sources */,
 				B3F73C41207C383300E11E2D /* fishhook.c in Sources */,
+				B38C01F920B651B7002D4613 /* FFOJsonParser.m in Sources */,
+				B38C01F620B65183002D4613 /* FFOJsonTester.m in Sources */,
 				B38C42111E8E001700033ACD /* main.m in Sources */,
 				B3C0BBA520B5F063006CCEF3 /* ConvertUTF.c in Sources */,
 			);
