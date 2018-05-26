@@ -98,21 +98,21 @@ static inline BOOL/*skip next slash*/ FFOProcessEscapedSequence(FFOArray *deleti
 // we could also avoid copying the largest continuous piece of the string that doesn't have any deletions
 // copy out into a scratch buffer, then copy back in
 // take http:\/\/... for instance. it's actually faster to move the "http://" part forwards than to move the rest of it backwards
-static void FFOPerformDeletions(char *string, uint32_t startIdx, uint32_t endIdx, FFOArray *deletions, FFOString *copyBuffer) {
-    copyBuffer->length = 0;
+static void FFOPerformDeletions(char *string, uint32_t startIdx, uint32_t endIdx, FFOArray *deletions) {
     FFOPushToArray(deletions, endIdx);
     FFOPushToArray(deletions, 0);
     uint32_t prevIdx = startIdx;
     uint32_t *elements = deletions->elements;
+    uint32_t amountCopied = 0;
     for (NSInteger i = 0; i < deletions->length - 1; i += 2) {
         uint32_t idx = elements[i];
         uint32_t amountToDelete = elements[i + 1];
-        // todo: consider just using memmove
-        FFOPushToString(copyBuffer, string + prevIdx, idx - prevIdx);
+        uint32_t length = idx - prevIdx;
+        memmove(string + amountCopied, string + prevIdx, length);
+        amountCopied += length;
         prevIdx = idx + amountToDelete;
     }
-    memcpy(string + startIdx, copyBuffer->chars, copyBuffer->length);
-    string[startIdx + copyBuffer->length] = '\0';
+    string[startIdx + amountCopied] = '\0';
 }
 
 static const uint8x16_t sOneVec = {0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80};
@@ -230,7 +230,6 @@ static inline uint32_t FFOParseNumber(char *string, FFOCallbacks *callbacks) {
 
 void FFOParseJson(char *string, uint32_t length, FFOCallbacks *callbacks) {
     FFOArray *quoteIdxsArray, *slashIdxsArray;
-    FFOString *copyBuffer = FFOStringWithCapacity(100);
     // FFOGatherCharsNaive(string, length, &quoteIdxsArray, &slashIdxsArray);
     FFOGatherCharIdxs(string, length, &quoteIdxsArray, &slashIdxsArray);
     FFOPushToArray(quoteIdxsArray, UINT32_MAX);
@@ -260,7 +259,7 @@ void FFOParseJson(char *string, uint32_t length, FFOCallbacks *callbacks) {
                     nextSlashIdx = slashIdxs[++slashIdxIdx];
                 }
                 if (deletions->length > 0) {
-                    FFOPerformDeletions(string, stringStartIdx, nextQuoteIdx, deletions, copyBuffer);
+                    FFOPerformDeletions(string, stringStartIdx, nextQuoteIdx, deletions);
                     deletions->length = 0;
                 } else {
                     string[nextQuoteIdx] = '\0';
@@ -374,16 +373,14 @@ static void FFOTestPerformDeletions()
                                  @[@"abcdefghijklm", @"adefklm", @[@1, @2], @[@6, @4]]]) {
         char *result;
         asprintf(&result, "%s", [piece[0] UTF8String]);
-        FFOString *copyBuffer = FFOStringWithCapacity(1);
         FFOArray *deletions = FFOArrayWithCapacity(1);
         for (NSArray <NSNumber *>*pair in [piece subarrayWithRange:NSMakeRange(2, piece.count - 2)]) {
             FFOPushToArray(deletions, [pair[0] unsignedIntValue]);
             FFOPushToArray(deletions, [pair[1] unsignedIntValue]);
         }
-        FFOPerformDeletions(result, 0, (uint32_t)strlen(result), deletions, copyBuffer);
+        FFOPerformDeletions(result, 0, (uint32_t)strlen(result), deletions);
         NSCAssert(0 == strcmp(result, [piece[1] UTF8String]), @"");
         FFOFreeArray(deletions);
-        FFOFreeString(copyBuffer);
         free(result);
     }
 }
