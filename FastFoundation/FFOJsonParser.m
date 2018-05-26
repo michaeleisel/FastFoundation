@@ -17,6 +17,20 @@
 #define RAPIDJSON_UINT64_C2(high32, low32) (((uint64_t)(high32) << 32) | (uint64_t)(low32))
 #endif
 
+static void FFOGatherCharsNaive(const char *string, uint32_t length, FFOArray **quoteIdxsPtr, FFOArray **slashIdxsPtr) {
+    FFOArray *quoteIdxs = FFOArrayWithCapacity(1);
+    FFOArray *slashIdxs = FFOArrayWithCapacity(1);
+    for (NSInteger i = 0; i < length; i++) {
+        if (string[i] == '"') {
+            FFOPushToArray(quoteIdxs, (uint32_t)i);
+        } else if (string[i] == '\\') {
+            FFOPushToArray(slashIdxs, (uint32_t)i);
+        }
+    }
+    *quoteIdxsPtr = quoteIdxs;
+    *slashIdxsPtr = slashIdxs;
+}
+
 static inline char FFOEscapeCharForChar(char origChar) {
     switch (origChar) {
         case 't':
@@ -228,7 +242,7 @@ static inline uint32_t FFOParseNumber(char *string, FFOCallbacks *callbacks) {
     return endIdx;
 }
 
-void FFOParseJson(char *string, uint32_t length, FFOCallbacks *callbacks) {
+__attribute__((noinline)) void FFOParseJson(char *string, uint32_t length, FFOCallbacks *callbacks) {
     FFOArray *quoteIdxsArray, *slashIdxsArray;
     // FFOGatherCharsNaive(string, length, &quoteIdxsArray, &slashIdxsArray);
     FFOGatherCharIdxs(string, length, &quoteIdxsArray, &slashIdxsArray);
@@ -314,21 +328,11 @@ void FFOParseJson(char *string, uint32_t length, FFOCallbacks *callbacks) {
         idx++;
     }
 
-    // todo: free the FFOArrays here
-}
+    FFOFreeArray(deletions);
+    FFOFreeArray(quoteIdxsArray);
+    FFOFreeArray(slashIdxsArray);
 
-static void FFOGatherCharsNaive(const char *string, uint32_t length, FFOArray **quoteIdxsPtr, FFOArray **slashIdxsPtr) {
-    FFOArray *quoteIdxs = FFOArrayWithCapacity(1);
-    FFOArray *slashIdxs = FFOArrayWithCapacity(1);
-    for (NSInteger i = 0; i < length; i++) {
-        if (string[i] == '"') {
-            FFOPushToArray(quoteIdxs, (uint32_t)i);
-        } else if (string[i] == '\\') {
-            FFOPushToArray(slashIdxs, (uint32_t)i);
-        }
-    }
-    *quoteIdxsPtr = quoteIdxs;
-    *slashIdxsPtr = slashIdxs;
+    // todo: free the FFOArrays here
 }
 
 static void FFOTestGatherCharIdxsWithString(const char *string)

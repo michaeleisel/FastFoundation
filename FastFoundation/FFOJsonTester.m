@@ -104,7 +104,6 @@ static void FFOGotArrayEnd() {
     push(FFOJsonTypeEndArray, kNoResult);
 }
 
-
 static FFOCallbacks sCallbacks = {
     .stringCallback = FFOGotString,
     .numberCallback = FFOGotNum,

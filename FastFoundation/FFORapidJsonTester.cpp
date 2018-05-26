@@ -103,7 +103,9 @@ struct MyHandler : public BaseReaderHandler<UTF8<>, MyHandler> {
 
 extern "C" void gooo(char *json) {
     bool insitu = true;
-    sEvents = (FFOJsonEvent *)malloc(5000000 * sizeof(*sEvents));
+    if (FFOIsDebug()) {
+        sEvents = (FFOJsonEvent *)malloc(5000000 * sizeof(*sEvents));
+    }
     MyHandler handler;
     Reader reader;
     if (insitu) {

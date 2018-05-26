@@ -82,25 +82,29 @@
         }
         NSAssert(sMyEventCount == sEventCount || sMyEventCount == sEventCount + 1/*hack*/, @"");
     } else {
-        NSInteger nIterations = 1e3;
-        char *myStrings[nIterations];
+        NSInteger nIterations = 1e2;
+        char *myStrs[nIterations];
+        char *rapStrs[nIterations];
+        for (NSInteger i = 0; i < nIterations; i++) {
+            myStrs[i] = malloc(length + 1);
+            rapStrs[i] = malloc(length + 1);
+            memcpy(myStrs[i], goodString, length);
+            memcpy(rapStrs[i], goodString, length);
+            rapStrs[i][length] = myStrs[i][length] = '\0';
+        }
         ({
-            //for (NSInteger i = 0; i < nIterations; i++) {
-            //asprintf(&(myStrings[i]), "%s", string1);
-            //}
             CFTimeInterval start = CACurrentMediaTime();
             for (NSInteger i = 0; i < nIterations; i++) {
-                memcpy(rapString, goodString, length);
-                gooo(rapString);
+                gooo(rapStrs[i]);
             }
             CFTimeInterval end = CACurrentMediaTime();
             printf("rap: %lf\n", (end - start));
         });
+        usleep(500000);
         ({
             CFTimeInterval start = CACurrentMediaTime();
             for (NSInteger i = 0; i < nIterations; i++) {
-                memcpy(myString, goodString, length);
-                FFOTestResults(myString, length);
+                FFOTestResults(myStrs[i], length);
             }
             CFTimeInterval end = CACurrentMediaTime();
             printf("my: %lf\n", (end - start));
@@ -108,51 +112,6 @@
         printf("%llu, %llu\n", sMyEventCount, sEventCount);
     }
     NSLog(@"done");
-    /*FFOArray *quoteIdxsPtr, *slashIdxsPtr;
-    NSInteger nIterations = 1e2;
-    CFTimeInterval startTime = CACurrentMediaTime();
-    for (NSInteger i = 0; i < nIterations; i++) {
-        FFOGatherCharIdxs(string, length, &quoteIdxsPtr, &slashIdxsPtr);
-    }
-    CFTimeInterval endTime = CACurrentMediaTime();
-    NSLog(@"%@", @(endTime - startTime));
-
-    startTime = CACurrentMediaTime();
-    for (NSInteger i = 0; i < nIterations; i++) {
-        gooo(string);
-    }
-    endTime = CACurrentMediaTime();
-    NSLog(@"%@", @(endTime - startTime));
-    NSLog(@"%llu", sTotal);*/
-    /*FFOJsonEvent *events = NULL;
-    uint64_t eventCount = 0;
-    FFOTestResults(string, (uint32_t)length, &events, &eventCount);*/
-    // FFOParseJson(string, (uint32_t)length);
-    // assert(FFOSearchMemChr(string, length) == 53210);
-    // assert(FFOMemChr(string, length) == 53210);
-    /*NSInteger total = 0;
-    NSInteger nIterations = 1e3;
-    for (NSInteger i = 0; i < 1; i++) {
-        CFTimeInterval start = CACurrentMediaTime();
-        for (NSInteger j = 0; j < nIterations; j++) {
-            NSInteger l = 0;
-            if (rand() % 1) {
-                l = length;
-            } else {
-                l = length - 1;
-            }
-            total += FFOSearchMemChr(string, l);
-        }
-        CFTimeInterval end = CACurrentMediaTime();
-        printf("arm %lf, %zd\n", (end - start), total);*/
-
-        /*start = CACurrentMediaTime();
-        for (NSInteger j = 0; j < nIterations; j++) {
-            total += FFOMemChr(string, length);
-        }
-        end = CACurrentMediaTime();
-        printf("memchr %lf, %zd\n", (end - start), total);*/
-    //}
 }
 
 @end
