@@ -59,14 +59,17 @@
 
     NSString *path = [[NSBundle mainBundle] pathForResource:@"citm_catalog" ofType:@"json"];
     NS_VALID_UNTIL_END_OF_SCOPE NSData *objcData = [[[NSFileManager defaultManager] contentsAtPath:path] mutableCopy];
-    char *string1 = (char *)[objcData bytes];
-    char *string2 = NULL;
-    asprintf(&string2, "%s", string1);
-    uint32_t length = (uint32_t)strlen(string1);
+    char *goodString = (char *)[objcData bytes];
+    uint32_t length = (uint32_t)strlen(goodString);
+    char *myString = malloc(length + 1);
+    char *rapString = malloc(length + 1);
+    myString[length] = rapString[length] = '\0';
     if (FFOIsDebug()) {
         NSLog(@"running in debug, don't benchmark");
-        FFOTestResults(string1, length);
-        gooo(string2);
+        memcpy(myString, goodString, length);
+        memcpy(rapString, goodString, length);
+        FFOTestResults(myString, length);
+        gooo(rapString);
         for (NSInteger i = 0; i < MIN(sMyEventCount, sEventCount); i++) {
             if (sMyEvents[i].type != sEvents[i].type) {
                 NSAssert(NO, @"");
@@ -79,27 +82,29 @@
         }
         NSAssert(sMyEventCount == sEventCount || sMyEventCount == sEventCount + 1/*hack*/, @"");
     } else {
-        NSInteger nIterations = 1e2;
+        NSInteger nIterations = 1e3;
         char *myStrings[nIterations];
-        for (NSInteger i = 0; i < nIterations; i++) {
-            asprintf(&(myStrings[i]), "%s", string1);
-        }
-        char *rapStrings[nIterations];
-        for (NSInteger i = 0; i < nIterations; i++) {
-            asprintf(&(rapStrings[i]), "%s", string1);
-        }
-        CFTimeInterval start = CACurrentMediaTime();
-        for (NSInteger i = 0; i < nIterations; i++) {
-            gooo(rapStrings[i]);
-        }
-        CFTimeInterval end = CACurrentMediaTime();
-        printf("rap: %lf\n", (end - start));
-        start = CACurrentMediaTime();
-        for (NSInteger i = 0; i < nIterations; i++) {
-            FFOTestResults(myStrings[i], length);
-        }
-        end = CACurrentMediaTime();
-        printf("my: %lf\n", (end - start));
+        ({
+            //for (NSInteger i = 0; i < nIterations; i++) {
+            //asprintf(&(myStrings[i]), "%s", string1);
+            //}
+            CFTimeInterval start = CACurrentMediaTime();
+            for (NSInteger i = 0; i < nIterations; i++) {
+                memcpy(rapString, goodString, length);
+                gooo(rapString);
+            }
+            CFTimeInterval end = CACurrentMediaTime();
+            printf("rap: %lf\n", (end - start));
+        });
+        ({
+            CFTimeInterval start = CACurrentMediaTime();
+            for (NSInteger i = 0; i < nIterations; i++) {
+                memcpy(myString, goodString, length);
+                FFOTestResults(myString, length);
+            }
+            CFTimeInterval end = CACurrentMediaTime();
+            printf("my: %lf\n", (end - start));
+        });
         printf("%llu, %llu\n", sMyEventCount, sEventCount);
     }
     NSLog(@"done");

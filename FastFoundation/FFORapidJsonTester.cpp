@@ -8,7 +8,14 @@
 
 #include <stdio.h>
 
-#import "reader.h"
+#if defined(__SSE4_2__)
+#  define RAPIDJSON_SSE42
+#elif defined(__SSE2__)
+#  define RAPIDJSON_SSE2
+#elif defined(__ARM_NEON)
+#  define RAPIDJSON_NEON
+#endif
+    #import "reader.h" // make sure to have the defines before this
 #import <iostream>
 #import "FFOJsonTestTypes.h"
 #import "FFOEnvironment.h"
@@ -20,15 +27,27 @@ FFOJsonEvent *sEvents;
 uint64_t sEventCount = 0;
 
 static void pushResult(FFOJsonType type, FFOResult result) {
+    if (!FFOIsDebug()) {
+        sEventCount++;
+        return;
+    }
     FFOJsonEvent event = {.type = type, .result = result};
     sEvents[sEventCount++] = event;
 }
 
 static void push(FFOJsonType type) {
+    if (!FFOIsDebug()) {
+        sEventCount++;
+        return;
+    }
     pushResult(type, kNoResult);
 }
 
 static void pushNum(FFOJsonType type, double d) {
+    if (!FFOIsDebug()) {
+        sEventCount++;
+        return;
+    }
     FFOResult result = {.d = d};
     pushResult(type, result);
 }
@@ -83,9 +102,15 @@ struct MyHandler : public BaseReaderHandler<UTF8<>, MyHandler> {
 };
 
 extern "C" void gooo(char *json) {
+    bool insitu = true;
     sEvents = (FFOJsonEvent *)malloc(5000000 * sizeof(*sEvents));
     MyHandler handler;
     Reader reader;
-    StringStream ss(json);
-    reader.Parse(ss, handler);
+    if (insitu) {
+        InsituStringStream ss(json);
+        reader.Parse<kParseInsituFlag>(ss, handler);
+    } else {
+        StringStream ss(json);
+        reader.Parse(ss, handler);
+    }
 }

@@ -243,7 +243,8 @@ void FFOParseJson(char *string, uint32_t length, FFOCallbacks *callbacks) {
     FFOArray *deletions = FFOArrayWithCapacity(10);
     BOOL nextStringIsAKey = NO;
     while (idx < length) {
-        switch (string[idx]) {
+        char c = string[idx];
+        switch (c) {
             case '"':
                 quoteIdxIdx++;
                 uint32_t stringStartIdx = idx + 1;
@@ -289,9 +290,9 @@ void FFOParseJson(char *string, uint32_t length, FFOCallbacks *callbacks) {
                 break;
             default: {
                 // todo: deal with when null or undefined is the key
-                if (string[idx] == ',') {
+                if (c == ',') {
                     // skip
-                } else if (isalpha(string[idx])) {
+                } else if (('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z')) {
                     // It's a dictionary key
                     if (nextStringIsAKey) {
                         char *colonStart = memchr(string + idx + 1, ':', length - idx - 1);
