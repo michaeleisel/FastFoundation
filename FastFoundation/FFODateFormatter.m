@@ -10,6 +10,7 @@
 #import <pthread.h>
 // #import "rust_bindings.h"
 #import "jemalloc.h"
+#import "FFOThreadLocalMemory.h"
 
 struct FFODateComponent {
     NSCalendarUnit unit;
@@ -36,6 +37,7 @@ struct FFODateComponent {
     self = [super init];
     if (self) {
         _lock = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
+        _format = NULL;
     }
     return self;
 }
@@ -77,9 +79,12 @@ struct FFODateComponent {
 
 - (void)dealloc
 {
-    free(_format);
+    if (_format) {
+        je_free(_format);
+    }
     [_dateFormat autorelease];
-    pthread_mutex_destroy(&_lock); // necessary?
+    // If the mutex is locked at this point, then this is undefined behavior, but that shouldn't be true at this point
+    pthread_mutex_destroy(&_lock);
 
     [super dealloc];
 }
@@ -95,11 +100,61 @@ struct FFODateComponent {
         struct tm components;
         strptime(buf, _format, &components);
         time_t time = mktime(&components);
+        // todo: error handling
         date = CFDateCreate(kCFAllocatorDefault, time);
     });
     pthread_mutex_unlock(&_lock);
 
     return CFBridgingRelease(date);
+}
+
+static inline void FFOFree(void *buffer, BOOL usesMalloc) {
+    if (usesMalloc) {
+        je_free(buffer);
+    } else {
+        FFOUnreserveBuffer(buffer);
+    }
+}
+
+/*static inline void FFOGrowBufferNoCopy(void *buffer, NSInteger size, BOOL usesMalloc) {
+    FFOFree(buffer, usesMalloc);
+    NSInteger newSize = size * 2;
+    je_malloc(newSize);
+}*/
+
+- (NSString *)stringFromDate:(NSDate *)date
+{
+    void *buffer = FFOReserveBuffer();
+    NSInteger size = kFFOBufferSize;
+    BOOL usesMalloc = buffer == NULL;
+    if (usesMalloc) {
+        buffer = je_malloc(size);
+    }
+
+    struct tm timeinfo = {0};
+    NSTimeInterval time = date.timeIntervalSince1970;
+    time_t timeWithoutMillis = (time_t)time;
+    localtime_r(&timeWithoutMillis, &timeinfo);
+    NSInteger formatLength = 0;
+    while (YES) {
+        NSInteger bytesWritten = strftime(buffer, size, "%Y-%m-%dT%H:%M:%S.000", &timeinfo);
+        if (bytesWritten > 0) { // This is almost always true, since the buffer is large to begin with
+            break;
+        }
+        if (formatLength == 0) {
+            formatLength = strlen(_format);
+        }
+        // If the size seems way larger than what the format string could generate, assume that some other issue has occurred, and that we shouldn't simply keep growing the buffer
+        NSAssert(size < formatLength * 10, @"An error occurred, perhaps the format string is malformed?");
+        FFOFree(buffer, usesMalloc);
+        size *= 2;
+        buffer = je_malloc(size);
+        usesMalloc = YES;
+    }
+
+    CFStringRef string = CFStringCreateWithCString(kCFAllocatorDefault, buffer, kCFStringEncodingUTF8);
+    FFOFree(buffer, usesMalloc);
+    return CFBridgingRelease(string);
 }
 
 - (NSCalendar *)calendar

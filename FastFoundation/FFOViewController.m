@@ -58,26 +58,40 @@
 	[super viewDidLoad];
 
     printf("zz %d\n\n\n", getpagesize());
+    NSInteger length = 1e4;
+    NSMutableArray <NSDate *>*dates = [[[NSMutableArray alloc] initWithCapacity:length] autorelease];
+    for (NSInteger i = 0; i < length; i++) {
+        NSTimeInterval interval = arc4random_uniform(60 * 60 * 24 * 365 * 20);
+        NSDate *date = [[NSDate dateWithTimeIntervalSince1970:interval] autorelease];
+        [dates addObject:date];
+    }
     if (FFOIsDebug()) {
         NSLog(@"running in debug, don't benchmark");
     } else {
         NSInteger nIterations = 1e6;
         ({
+            NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
+            formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
             CFTimeInterval start = CACurrentMediaTime();
-            for (NSInteger i = 0; i < nIterations; i++) {
-                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-                formatter.dateFormat = @"hh";
-            }
+            ({
+                for (NSInteger i = 0; i < nIterations; i++) {
+                    [formatter stringFromDate:dates[i % dates.count]];
+                }
+            });
             CFTimeInterval end = CACurrentMediaTime();
             printf("apple: %lf\n", (end - start));
         });
         usleep(500000);
         ({
+            FFODateFormatter *formatter = [[[FFODateFormatter alloc] init] autorelease];
+            formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
             CFTimeInterval start = CACurrentMediaTime();
-            for (NSInteger i = 0; i < nIterations; i++) {
-                FFODateFormatter *formatter = [[FFODateFormatter alloc ] init];
-                formatter.dateFormat = @"hh";
-            }
+            ({
+                for (NSInteger i = 0; i < nIterations; i++) {
+                    /*NSString *string = */[formatter stringFromDate:dates[i % dates.count]];
+                    // NSLog(@"%@", string);
+                }
+            });
             CFTimeInterval end = CACurrentMediaTime();
             printf("my: %lf\n", (end - start));
         });

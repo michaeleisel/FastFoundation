@@ -24,6 +24,9 @@
 
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 
+- (NSString *)stringFromDate:(NSDate *)date;
+- (nullable NSDate *)dateFromString:(NSString *)string;
+
 @property (null_resettable, copy) NSString *dateFormat;
 /*@property NSDateFormatterStyle dateStyle;
 @property NSDateFormatterStyle timeStyle;

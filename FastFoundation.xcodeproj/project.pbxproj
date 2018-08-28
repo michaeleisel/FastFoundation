@@ -20,6 +20,7 @@
 		B38C421C1E8E001700033ACD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B38C421B1E8E001700033ACD /* Assets.xcassets */; };
 		B38C42291E8E025200033ACD /* Launch.xib in Resources */ = {isa = PBXBuildFile; fileRef = B38C42281E8E025200033ACD /* Launch.xib */; };
 		B3B954EE2135CE56001B5B93 /* jemalloc_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3B954ED2135CE56001B5B93 /* jemalloc_ios.a */; };
+		B3B954F22135D4D3001B5B93 /* FFOThreadLocalMemory.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B954F12135D4D3001B5B93 /* FFOThreadLocalMemory.m */; };
 		B3C0BBA520B5F063006CCEF3 /* ConvertUTF.c in Sources */ = {isa = PBXBuildFile; fileRef = B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */; };
 		B3CF25F520B6486300C1A65E /* j1.json in Resources */ = {isa = PBXBuildFile; fileRef = B3CF25F420B6486200C1A65E /* j1.json */; };
 		B3CF25F720B6486800C1A65E /* j2.json in Resources */ = {isa = PBXBuildFile; fileRef = B3CF25F620B6486800C1A65E /* j2.json */; };
@@ -59,6 +60,8 @@
 		B3B954D62135AAE9001B5B93 /* rusty.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = rusty.a; path = rusty/rusty.a; sourceTree = SOURCE_ROOT; };
 		B3B954ED2135CE56001B5B93 /* jemalloc_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = jemalloc_ios.a; sourceTree = "<group>"; };
 		B3B954EF2135CE7F001B5B93 /* jemalloc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = jemalloc.h; sourceTree = "<group>"; };
+		B3B954F02135D4D3001B5B93 /* FFOThreadLocalMemory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOThreadLocalMemory.h; sourceTree = "<group>"; };
+		B3B954F12135D4D3001B5B93 /* FFOThreadLocalMemory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFOThreadLocalMemory.m; sourceTree = "<group>"; };
 		B3C0BBA220B53607006CCEF3 /* FFOArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOArray.h; sourceTree = "<group>"; };
 		B3C0BBA320B5362F006CCEF3 /* FFODefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFODefines.h; sourceTree = "<group>"; };
 		B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ConvertUTF.c; sourceTree = "<group>"; };
@@ -184,6 +187,8 @@
 		B38C42031E8E001700033ACD = {
 			isa = PBXGroup;
 			children = (
+				B3B954F02135D4D3001B5B93 /* FFOThreadLocalMemory.h */,
+				B3B954F12135D4D3001B5B93 /* FFOThreadLocalMemory.m */,
 				B38C420E1E8E001700033ACD /* FastFoundation */,
 				B38C420D1E8E001700033ACD /* Products */,
 				B3F73C43207C403C00E11E2D /* Frameworks */,
@@ -466,6 +471,7 @@
 				B38586DB1EEE46BD00496750 /* NSArrayFFOMethods.m in Sources */,
 				B3D753B9208946A90090C3E2 /* NSString+FFOMethods.m in Sources */,
 				B3F73C41207C383300E11E2D /* fishhook.c in Sources */,
+				B3B954F22135D4D3001B5B93 /* FFOThreadLocalMemory.m in Sources */,
 				B38C01F620B65183002D4613 /* FFOJsonTester.m in Sources */,
 				B38C42111E8E001700033ACD /* main.m in Sources */,
 				B3C0BBA520B5F063006CCEF3 /* ConvertUTF.c in Sources */,
