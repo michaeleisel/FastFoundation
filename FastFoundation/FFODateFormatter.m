@@ -137,7 +137,8 @@ static inline void FFOFree(void *buffer, BOOL usesMalloc) {
     localtime_r(&timeWithoutMillis, &timeinfo);
     NSInteger formatLength = 0;
     while (YES) {
-        NSInteger bytesWritten = strftime(buffer, size, "%Y-%m-%dT%H:%M:%S.000", &timeinfo);
+        const char *posixFormat = "%Y-%m-%dT%H:%M:%S.000Z";// "%Y-%m-%dT%H:%M:%S.000";
+        NSInteger bytesWritten = strftime(buffer, size, posixFormat, &timeinfo);
         if (bytesWritten > 0) { // This is almost always true, since the buffer is large to begin with
             break;
         }

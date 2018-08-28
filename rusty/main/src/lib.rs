@@ -17,12 +17,15 @@ pub extern fn FFORustDeallocate(ptr: *mut c_void, info: *mut c_void) {
     }
 }
 
-#[no_mangle]
+/*#[no_mangle]
 pub extern fn FFOMalloc(size: usize) -> *mut u8 {
     let layout = Layout::from_size_align(size, 16).unwrap();
     let j = Jemalloc{};
     unsafe { j.alloc(layout) }
-}
+}*/
+
+#[no_mangle]
+pub extern fn FFOStrP
 
 /*extern {
     CFStringGetCStringPtr(string: *const c_void, encoding: CFStringEncoding)

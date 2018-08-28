@@ -62,6 +62,7 @@
     NSMutableArray <NSDate *>*dates = [[[NSMutableArray alloc] initWithCapacity:length] autorelease];
     for (NSInteger i = 0; i < length; i++) {
         NSTimeInterval interval = arc4random_uniform(60 * 60 * 24 * 365 * 20);
+        interval += arc4random_uniform(1000) / 1000.0;
         NSDate *date = [[NSDate dateWithTimeIntervalSince1970:interval] autorelease];
         [dates addObject:date];
     }
@@ -72,6 +73,7 @@
         ({
             NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
             formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
+            // NSISO8601DateFormatter *formatter = [[NSISO8601DateFormatter alloc] init];
             CFTimeInterval start = CACurrentMediaTime();
             ({
                 for (NSInteger i = 0; i < nIterations; i++) {
