@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B301A39020BCC1CF00AF3378 /* twitter.json in Resources */ = {isa = PBXBuildFile; fileRef = B301A38F20BCC1CE00AF3378 /* twitter.json */; };
 		B30A194620AD37A00073CFB8 /* citm_catalog.json in Resources */ = {isa = PBXBuildFile; fileRef = B30A194520AD37A00073CFB8 /* citm_catalog.json */; };
 		B3178BCD20B64C9400E3076A /* FFORapidJsonTester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3178BCC20B64C9400E3076A /* FFORapidJsonTester.cpp */; };
 		B32879F31E8E1625007E49B7 /* FFODateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = B32879F21E8E1625007E49B7 /* FFODateFormatter.m */; };
@@ -29,6 +30,7 @@
 /* Begin PBXFileReference section */
 		B301A38D20B8BD7700AF3378 /* FFOEnvironment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOEnvironment.h; sourceTree = "<group>"; };
 		B301A38E20B8CB0700AF3378 /* FFONumberParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFONumberParser.h; sourceTree = "<group>"; };
+		B301A38F20BCC1CE00AF3378 /* twitter.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = twitter.json; sourceTree = SOURCE_ROOT; };
 		B30A194520AD37A00073CFB8 /* citm_catalog.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = citm_catalog.json; sourceTree = SOURCE_ROOT; };
 		B3178BCC20B64C9400E3076A /* FFORapidJsonTester.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FFORapidJsonTester.cpp; sourceTree = "<group>"; };
 		B3178BCE20B64EE500E3076A /* FFOJsonTestTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOJsonTestTypes.h; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 			children = (
 				B38C421B1E8E001700033ACD /* Assets.xcassets */,
 				B30A194520AD37A00073CFB8 /* citm_catalog.json */,
+				B301A38F20BCC1CE00AF3378 /* twitter.json */,
 				B301A38D20B8BD7700AF3378 /* FFOEnvironment.h */,
 				B301A38E20B8CB0700AF3378 /* FFONumberParser.h */,
 				B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */,
@@ -437,6 +440,7 @@
 				B30A194620AD37A00073CFB8 /* citm_catalog.json in Resources */,
 				B3CF25F520B6486300C1A65E /* j1.json in Resources */,
 				B38C421C1E8E001700033ACD /* Assets.xcassets in Resources */,
+				B301A39020BCC1CF00AF3378 /* twitter.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -494,7 +498,7 @@
 				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -510,6 +514,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Debug;
 		};

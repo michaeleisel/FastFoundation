@@ -11,6 +11,7 @@
 
 typedef void (*FFOStringCallback)(char *);
 typedef void (*FFONumberCallback)(double);
+typedef void (*FFOBoolCallback)(bool);
 typedef void (*FFONotificationCallback)();
 
 typedef struct {
@@ -21,6 +22,7 @@ typedef struct {
     FFONotificationCallback dictionaryStartCallback;
     FFONotificationCallback dictionaryEndCallback;
     FFONotificationCallback nullCallback;
+    FFOBoolCallback boolCallback;
 } FFOCallbacks;
 
 

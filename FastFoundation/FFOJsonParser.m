@@ -45,6 +45,8 @@ static inline char FFOEscapeCharForChar(char origChar) {
             return '\f';
         case 'n':
             return '\n';
+        case 'r':
+            return '\r';
         default:
             NSCAssert(NO, @"invalid/unsupported escape char");
             return '?';
@@ -122,7 +124,7 @@ static void FFOPerformDeletions(char *string, uint32_t startIdx, uint32_t endIdx
         uint32_t idx = elements[i];
         uint32_t amountToDelete = elements[i + 1];
         uint32_t length = idx - prevIdx;
-        memmove(string + amountCopied, string + prevIdx, length);
+        memmove(string + startIdx + amountCopied, string + prevIdx, length);
         amountCopied += length;
         prevIdx = idx + amountToDelete;
     }
@@ -141,72 +143,73 @@ static void FFOPopulateVecsForChar(char c, uint8x16_t *lowVec, uint8x16_t *highV
     *highVec = highVecTemp;
 }
 
+static inline void FFOGatherForVec(FFOArray *idxs, uint32_t offset, uint64_t low, uint64_t high) {
+    while (low != 0) {
+        int lz =__builtin_clzll(low);
+        FFOPushToArray(idxs, offset + (lz >> 3));
+        low &= low == 255 ? 0 : (~0ULL) >> (lz + 8);
+        // char shiftWidth = (64 - lz + 8);
+        // low = (low << shiftWidth) >> shiftWidth;
+    }
+    while (high != 0) {
+        int lz =__builtin_clzll(high);
+        FFOPushToArray(idxs, offset + 8 + (lz >> 3));
+        high &= high == 255 ? 0 : ((~0ULL) >> (lz + 8));
+        // char shiftWidth = (64 - lz + 8);
+        // high = (high << shiftWidth) >> shiftWidth;
+    }
+}
+
 void FFOGatherCharIdxs(const char *string, uint32_t length, FFOArray **quoteIdxsPtr, FFOArray **slashIdxsPtr) {
     FFOArray *quoteIdxs = FFOArrayWithCapacity(length / 10);
     FFOArray *slashIdxs = FFOArrayWithCapacity(length / 10);
+    *slashIdxsPtr = slashIdxs;
+    *quoteIdxsPtr = quoteIdxs;
 
-    uint8x16_t lowQuoteVec, highQuoteVec, lowSlashVec, highSlashVec;
-    FFOPopulateVecsForChar('"', &lowQuoteVec, &highQuoteVec);
-    FFOPopulateVecsForChar('\\', &lowSlashVec, &highSlashVec);
+    const uint8x16_t quotes = vmovq_n_u8('"');
+    const uint8x16_t slashes = vmovq_n_u8('\\');
 
-    uint32_t total = length / sizeof(uint8x16_t);
-    uint8x16_t *vectors = (uint8x16_t *)string;
-    uint8x16_t *end = vectors + total;
-    uint8x16_t vector;
-    for (; vectors != end; vectors++) {
-        vector = *vectors;
-        uint8x16_t quoteResult = sOneVec & ((vmvnq_u8(vector + lowQuoteVec)) & (vector + highQuoteVec));
-        uint8_t max = vmaxvq_u8(quoteResult);
-        if (max != 0) {
-            uint64x2_t chunks = vreinterpretq_u64_u8(quoteResult);
-            uint64_t chunk = __rbitll(vgetq_lane_u64(chunks, 0));
-            while (chunk != 0) {
-                uint64_t lead = __clzll(chunk);
-                uint32_t idx =  (uint32_t)(((const char *)vectors - string) + lead / 8);
-                FFOPushToArray(quoteIdxs, idx);
-                chunk &= ~(1ULL << (63 - lead));
-            }
-            chunk = __rbitll(vgetq_lane_u64(chunks, 1));
-            while (chunk != 0) {
-                uint64_t lead = __clzll(chunk);
-                uint32_t idx =  (uint32_t)(((const char *)vectors - string) + 8 + lead / 8);
-                FFOPushToArray(quoteIdxs, idx);
-                chunk &= ~(1ULL << (63 - lead));
-            }
+    const char *end = string + length;
+    const char *alignStart = ((ptrdiff_t)string % 16 == 0) ? string : (string - ((ptrdiff_t)string % 16) + 16);
+    const char *alignEnd = end - ((ptrdiff_t)end % 16);
+    if (alignEnd < alignStart) {
+        alignEnd = alignStart;
+    }
+    const char *p = NULL;
+    for (p = string; p < alignStart && p < end; p++) {
+        if (*p == '"') {
+            FFOPushToArray(quoteIdxs, (uint32_t)(p - string));
+        } else if (*p == '\\'){
+            FFOPushToArray(slashIdxs, (uint32_t)(p - string));
         }
+    }
+    if (p == end) {
+        return;
+    }
+    for (const char *p = alignStart; p != alignEnd; p += 16) {
+        const uint8x16_t s = vld1q_u8((const uint8_t *)(p));
+        uint8x16_t x = vceqq_u8(s, quotes);
+        uint8x16_t y = vceqq_u8(s, slashes);
 
-        uint8x16_t slashResult = sOneVec & ((vmvnq_u8(vector + lowSlashVec)) & (vector + highSlashVec));
-        max = vmaxvq_u8(slashResult);
-        if (max != 0) {
-            uint64x2_t chunks = vreinterpretq_u64_u8(slashResult);
-            uint64_t chunk = __rbitll(vgetq_lane_u64(chunks, 0));
-            while (chunk != 0) {
-                uint64_t lead = __clzll(chunk);
-                uint32_t idx =  (uint32_t)(((const char *)vectors - string) + lead / 8);
-                FFOPushToArray(slashIdxs, idx);
-                chunk &= ~(1ULL << (63 - lead));
-            }
-            chunk = __rbitll(vgetq_lane_u64(chunks, 1));
-            while (chunk != 0) {
-                uint64_t lead = __clzll(chunk);
-                uint32_t idx =  (uint32_t)(((const char *)vectors - string) + 8 + lead / 8);
-                FFOPushToArray(slashIdxs, idx);
-                chunk &= ~(1ULL << (63 - lead));
-            }
-        }
+        x = vrev64q_u8(x);                     // Rev in 64
+        y = vrev64q_u8(y);                     // Rev in 64
+        uint64_t lowQuotes = vgetq_lane_u64((uint64x2_t)x, 0);   // extract
+        uint64_t highQuotes = vgetq_lane_u64((uint64x2_t)x, 1);  // extract
+        uint64_t lowSlashes = vgetq_lane_u64((uint64x2_t)y, 0);   // extract
+        uint64_t highSlashes = vgetq_lane_u64((uint64x2_t)y, 1);  // extract
+
+        FFOGatherForVec(quoteIdxs, (uint32_t)(p - string), lowQuotes, highQuotes);
+        FFOGatherForVec(slashIdxs, (uint32_t)(p - string), lowSlashes, highSlashes);
     }
 
      // Do the bit at the end
-     for (uint32_t i = length - length % sizeof(uint8x16_t); i < length; i++) {
-         if (string[i] == '"') {
-             FFOPushToArray(quoteIdxs, i);
-         } else if (string [i] == '\\'){
-             FFOPushToArray(slashIdxs, i);
-         }
-     }
-
-     *slashIdxsPtr = slashIdxs;
-     *quoteIdxsPtr = quoteIdxs;
+    for (p = alignEnd; p != end; p++) {
+        if (*p == '"') {
+            FFOPushToArray(quoteIdxs, (uint32_t)(p - string));
+        } else if (*p == '\\'){
+            FFOPushToArray(slashIdxs, (uint32_t)(p - string));
+        }
+    }
  }
 
 static inline BOOL FFOConsume(const char *string, uint32_t *idx, char c) {
@@ -229,24 +232,41 @@ static inline uint32_t FFOParseNumber(char *string, FFOCallbacks *callbacks) {
         if (isnumber(c)) {
             continue;
         } else if (c == '.' || c == 'e' || c == 'E' || c == 'i' || c == 'I') {
+            continue;
             assert("not supported" && NO);
         } else {
             break;
         }
     }
-    int64_t num = 0;
+    /*int64_t num = 0;
     for (NSInteger i = 0; i < endIdx; i++) {
         num = num * 10 + string[i] - '0';
-    }
-    callbacks->numberCallback(num);
+    }*/
+    callbacks->numberCallback(0);
     return endIdx;
+}
+
+static void FFORemoveDoubleSlashIdxs(FFOArray *slashIdxs) {
+    uint32_t end = (uint32_t)(slashIdxs->length - 1);
+    uint32_t *idxs = slashIdxs->elements;
+    uint32_t amountToDelete = 0;
+    for (uint32_t i = 0; i < end; i++) {
+        idxs[i - amountToDelete] = idxs[i];
+        if (idxs[i] + 1 == idxs[i + 1]) {
+            amountToDelete++;
+            i++;
+        }
+    }
+    idxs[end - amountToDelete] = idxs[end];
+    slashIdxs->length -= amountToDelete;
 }
 
 __attribute__((noinline)) void FFOParseJson(char *string, uint32_t length, FFOCallbacks *callbacks) {
     FFOArray *quoteIdxsArray, *slashIdxsArray;
     // FFOGatherCharsNaive(string, length, &quoteIdxsArray, &slashIdxsArray);
     FFOGatherCharIdxs(string, length, &quoteIdxsArray, &slashIdxsArray);
-    FFOPushToArray(quoteIdxsArray, UINT32_MAX);
+    FFORemoveDoubleSlashIdxs(slashIdxsArray);
+    /*FFOPushToArray(quoteIdxsArray, UINT32_MAX);
     uint32_t *quoteIdxs = quoteIdxsArray->elements;
     uint32_t *slashIdxs = slashIdxsArray->elements;
     uint32_t idx = 0;
@@ -313,6 +333,14 @@ __attribute__((noinline)) void FFOParseJson(char *string, uint32_t length, FFOCa
                         callbacks->stringCallback(string + idx);
                         // *colonStart = ':'
                         idx = (uint32_t)(colonStart - string);
+                    } else if (c == 'f') {
+                        assert(0 == memcmp(string + idx, "false", 5) && !isalnum(string[idx + 5]));
+                        callbacks->boolCallback(false);
+                        idx += 5;
+                    } else if (c == 't') {
+                        assert(0 == memcmp(string + idx, "true", 4) && !isalnum(string[idx + 4]));
+                        callbacks->boolCallback(true);
+                        idx += 4;
                     } else {
                         // It's null
                         assert(0 == memcmp(string + idx, "null", 4) && !isalnum(string[idx + 4]));
@@ -328,7 +356,7 @@ __attribute__((noinline)) void FFOParseJson(char *string, uint32_t length, FFOCa
         idx++;
     }
 
-    FFOFreeArray(deletions);
+    FFOFreeArray(deletions);*/
     FFOFreeArray(quoteIdxsArray);
     FFOFreeArray(slashIdxsArray);
 
@@ -350,20 +378,22 @@ static void FFOTestGatherCharIdxsWithString(const char *string)
             FFOPushToArray(expectedSlashIdxs, (uint32_t)i);
         }
     }
+    /*printf(<#const char *restrict, ...#>)
+    printf("%d, %d, %d", testQuoteIdxs->length, expectedQuoteIdxs->length)*/
     NSCAssert(FFOArraysAreEqual(testQuoteIdxs, expectedQuoteIdxs), @"");
     NSCAssert(FFOArraysAreEqual(testSlashIdxs, expectedSlashIdxs), @"");
 }
 
 static void FFOTestGatherCharIdxs()
 {
+    FFOTestGatherCharIdxsWithString("                  \"\"   \\ \\   adsf adsf \"  \"   \\   ");
+    FFOTestGatherCharIdxsWithString("\"");
     FFOTestGatherCharIdxsWithString("\"\"              ");
     FFOTestGatherCharIdxsWithString("");
-    FFOTestGatherCharIdxsWithString("\"");
     FFOTestGatherCharIdxsWithString("\"\\");
     FFOTestGatherCharIdxsWithString(" \"");
     FFOTestGatherCharIdxsWithString(" \" ");
     FFOTestGatherCharIdxsWithString("                  \"\"");
-    FFOTestGatherCharIdxsWithString("                  \"\"   \\ \\   adsf adsf \"  \"   \\   ");
 }
 
 static void FFOTestPerformDeletions()

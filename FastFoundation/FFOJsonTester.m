@@ -90,6 +90,10 @@ static void FFOGotDictionaryEnd() {
     push(FFOJsonTypeEndDict, kNoResult);
 }
 
+static void FFOGotBool(bool b) {
+    push(FFOJsonTypeBool, kNoResult);
+}
+
 static void FFOGotArrayStart() {
     push(FFOJsonTypeStartArray, kNoResult);
 }
@@ -112,6 +116,7 @@ static FFOCallbacks sCallbacks = {
     .dictionaryStartCallback = FFOGotDictionaryStart,
     .dictionaryEndCallback = FFOGotDictionaryEnd,
     .nullCallback = FFOGotNull,
+    .boolCallback = FFOGotBool,
 };
 
 void FFOTestResults(char *string, uint32_t length) {
