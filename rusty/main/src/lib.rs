@@ -1,9 +1,13 @@
 extern crate libc;
+extern crate jemallocator;
 
 use std::os::raw::{c_void, c_char};
 use std::ffi::CString;
 use std::slice;
 use libc::strlen;
+use std::alloc::GlobalAlloc;
+use jemallocator::Jemalloc;
+use std::alloc::Layout;
 
 #[no_mangle]
 #[allow(unused_variables)]
@@ -11,6 +15,13 @@ pub extern fn FFORustDeallocate(ptr: *mut c_void, info: *mut c_void) {
     unsafe {
         CString::from_raw(ptr as *mut c_char);
     }
+}
+
+#[no_mangle]
+pub extern fn FFOMalloc(size: usize) -> *mut u8 {
+    let layout = Layout::from_size_align(size, 16).unwrap();
+    let j = Jemalloc{};
+    unsafe { j.alloc(layout) }
 }
 
 /*extern {

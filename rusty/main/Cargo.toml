@@ -11,3 +11,4 @@ debug = true # generate debug symbols for the dSYM file
 
 [dependencies]
 libc = "*"
+jemallocator = "*"

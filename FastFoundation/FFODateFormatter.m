@@ -7,6 +7,9 @@
 //
 
 #import "FFODateFormatter.h"
+#import <pthread.h>
+// #import "rust_bindings.h"
+#import "jemalloc.h"
 
 struct FFODateComponent {
     NSCalendarUnit unit;
@@ -17,31 +20,86 @@ struct FFODateComponent {
 @throw [NSException exceptionWithName:@"FFODateFormatter exception" reason:@"FFODateFormatter only supports en_us, so methods related to locales are not supported" userInfo:nil]*/
 
 @implementation FFODateFormatter {
-    const char *_format;
+    NSString *_dateFormat;
+    char *_format;
+    pthread_mutex_t _lock;
 }
 
 @dynamic calendar;
 
-- (instancetype)initWithFormatString:(NSString *)formatString
+@synthesize dateFormat = _dateFormat;
+
+// const char *FFOCStringCopyFromString(NSString )
+
+-(id)init
 {
     self = [super init];
-    if (!self) {
-        return nil;
+    if (self) {
+        _lock = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
     }
-    _formatString = formatString; // This is just to retain it so we can use the inner buffer
-    _format = formatString.UTF8String;
-    NSAssert(_format, @"The string passed in must be well-formed unicode");
     return self;
+}
+
+#define FFO_SYNCHRONIZE(...) \
+
+- (NSString *)dateFormat
+{
+    __block NSString *dateFormat = nil;
+
+    pthread_mutex_lock(&_lock);
+    ({
+        dateFormat = _dateFormat;
+    });
+    pthread_mutex_unlock(&_lock);
+
+    return dateFormat;
+}
+
+- (void)setDateFormat:(NSString *)dateFormat
+{
+    pthread_mutex_lock(&_lock);
+    ({
+        if (_format) {
+            free(_format);
+        }
+
+        const char *format = dateFormat.UTF8String;
+        NSInteger lengthPlusTerminator = strlen(format) + 1;
+        _format = je_malloc(lengthPlusTerminator);
+        memcpy(_format, format, lengthPlusTerminator);
+
+        _dateFormat = [dateFormat retain];
+
+        NSAssert(_format, @"The string passed in must be well-formed unicode");
+    });
+    pthread_mutex_unlock(&_lock);
+}
+
+- (void)dealloc
+{
+    free(_format);
+    [_dateFormat autorelease];
+    pthread_mutex_destroy(&_lock); // necessary?
+
+    [super dealloc];
 }
 
 - (NSDate *)dateFromString:(NSString *)string
 {
-    const char *buf = string.UTF8String;
-    NSAssert(buf, @"The string passed in must be well-formed unicode");
-    struct tm components;
-    strptime(buf, _format, &components);
-    time_t time = mktime(&components);
-    return CFBridgingRelease(CFDateCreate(kCFAllocatorDefault, time));
+    CFDateRef date = NULL;
+
+    pthread_mutex_lock(&_lock);
+    ({
+        const char *buf = string.UTF8String;
+        NSAssert(buf, @"The string passed in must be well-formed unicode");
+        struct tm components;
+        strptime(buf, _format, &components);
+        time_t time = mktime(&components);
+        date = CFDateCreate(kCFAllocatorDefault, time);
+    });
+    pthread_mutex_unlock(&_lock);
+
+    return CFBridgingRelease(date);
 }
 
 - (NSCalendar *)calendar

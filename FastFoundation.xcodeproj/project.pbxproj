@@ -14,12 +14,12 @@
 		B38586DB1EEE46BD00496750 /* NSArrayFFOMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = B38586DA1EEE46BD00496750 /* NSArrayFFOMethods.m */; };
 		B38586DE1EEE48BA00496750 /* pcg_basic.c in Sources */ = {isa = PBXBuildFile; fileRef = B38586DC1EEE48BA00496750 /* pcg_basic.c */; };
 		B38C01F620B65183002D4613 /* FFOJsonTester.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C01F520B65183002D4613 /* FFOJsonTester.m */; };
-		B38C01F920B651B7002D4613 /* FFOJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C01F820B651B7002D4613 /* FFOJsonParser.m */; };
 		B38C42111E8E001700033ACD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C42101E8E001700033ACD /* main.m */; };
 		B38C42141E8E001700033ACD /* FFOAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C42131E8E001700033ACD /* FFOAppDelegate.m */; };
 		B38C42171E8E001700033ACD /* FFOViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C42161E8E001700033ACD /* FFOViewController.m */; };
 		B38C421C1E8E001700033ACD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B38C421B1E8E001700033ACD /* Assets.xcassets */; };
 		B38C42291E8E025200033ACD /* Launch.xib in Resources */ = {isa = PBXBuildFile; fileRef = B38C42281E8E025200033ACD /* Launch.xib */; };
+		B3B954EE2135CE56001B5B93 /* jemalloc_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3B954ED2135CE56001B5B93 /* jemalloc_ios.a */; };
 		B3C0BBA520B5F063006CCEF3 /* ConvertUTF.c in Sources */ = {isa = PBXBuildFile; fileRef = B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */; };
 		B3CF25F520B6486300C1A65E /* j1.json in Resources */ = {isa = PBXBuildFile; fileRef = B3CF25F420B6486200C1A65E /* j1.json */; };
 		B3CF25F720B6486800C1A65E /* j2.json in Resources */ = {isa = PBXBuildFile; fileRef = B3CF25F620B6486800C1A65E /* j2.json */; };
@@ -56,6 +56,9 @@
 		B38C42281E8E025200033ACD /* Launch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Launch.xib; sourceTree = "<group>"; };
 		B38C422A1E8E029100033ACD /* NSString+FFOMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FFOMethods.h"; sourceTree = "<group>"; };
 		B38C422B1E8E029100033ACD /* NSString+FFOMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FFOMethods.m"; sourceTree = "<group>"; };
+		B3B954D62135AAE9001B5B93 /* rusty.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = rusty.a; path = rusty/rusty.a; sourceTree = SOURCE_ROOT; };
+		B3B954ED2135CE56001B5B93 /* jemalloc_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = jemalloc_ios.a; sourceTree = "<group>"; };
+		B3B954EF2135CE7F001B5B93 /* jemalloc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = jemalloc.h; sourceTree = "<group>"; };
 		B3C0BBA220B53607006CCEF3 /* FFOArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOArray.h; sourceTree = "<group>"; };
 		B3C0BBA320B5362F006CCEF3 /* FFODefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFODefines.h; sourceTree = "<group>"; };
 		B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ConvertUTF.c; sourceTree = "<group>"; };
@@ -163,6 +166,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3B954EE2135CE56001B5B93 /* jemalloc_ios.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,8 +207,11 @@
 				B301A38F20BCC1CE00AF3378 /* twitter.json */,
 				B301A38D20B8BD7700AF3378 /* FFOEnvironment.h */,
 				B301A38E20B8CB0700AF3378 /* FFONumberParser.h */,
+				B3B954EF2135CE7F001B5B93 /* jemalloc.h */,
+				B3B954D62135AAE9001B5B93 /* rusty.a */,
 				B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */,
 				B3C0BBA620B5F0A3006CCEF3 /* ConvertUTF.h */,
+				B3B954ED2135CE56001B5B93 /* jemalloc_ios.a */,
 				B38C42121E8E001700033ACD /* FFOAppDelegate.h */,
 				B38C42131E8E001700033ACD /* FFOAppDelegate.m */,
 				B3C0BBA220B53607006CCEF3 /* FFOArray.h */,
@@ -459,7 +466,6 @@
 				B38586DB1EEE46BD00496750 /* NSArrayFFOMethods.m in Sources */,
 				B3D753B9208946A90090C3E2 /* NSString+FFOMethods.m in Sources */,
 				B3F73C41207C383300E11E2D /* fishhook.c in Sources */,
-				B38C01F920B651B7002D4613 /* FFOJsonParser.m in Sources */,
 				B38C01F620B65183002D4613 /* FFOJsonTester.m in Sources */,
 				B38C42111E8E001700033ACD /* main.m in Sources */,
 				B3C0BBA520B5F063006CCEF3 /* ConvertUTF.c in Sources */,
@@ -573,6 +579,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/rusty",
+					"$(PROJECT_DIR)/FastFoundation",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.eisel.michael.FastFoundation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -591,6 +599,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/rusty",
+					"$(PROJECT_DIR)/FastFoundation",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.eisel.michael.FastFoundation;

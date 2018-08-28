@@ -5,12 +5,16 @@ ENV.delete_if do |var|
   var != "PATH"
 end
 ENV["PATH"] += ":~/.cargo/bin"
-release_flag = is_release ? "--release" : ""
+release_flag = is_release ? "--release" : "" # aarch64-apple-ios
+dir = "rusty/main"
+lib_path = "../rusty.a"
+`rm #{dir}/#{lib_path}`
+target = "x86_64-apple-ios"
 success = system(
 	"""
-	cd rusty/main \
-	&& #{cargo_root}/cargo build #{release_flag} --target aarch64-apple-ios \
-	&& cp target/aarch64-apple-ios/release/librusty.a ../rusty.a \
+	cd #{dir} \
+	&& #{cargo_root}/cargo build --release --target #{target} \
+	&& cp target/#{target}/release/librusty.a #{lib_path} \
   && cd ../headergen \
   && #{cargo_root}/cargo run --release
 """)

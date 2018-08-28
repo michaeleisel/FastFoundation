@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface FFODateFormatter : NSDateFormatter // todo: change
+@interface FFODateFormatter : NSObject // todo: change
 
 // todo: relative date formatting
 
@@ -20,11 +20,12 @@
 
 // todo: thread safety
 
-@property (strong, atomic) NSString *formatString;
 @property (strong, nonatomic, readonly) NSCalendar *calendar; // This is read-only because this only supports the gregorian calendar
 
-/*@property (null_resettable, copy) NSString *dateFormat;
-@property NSDateFormatterStyle dateStyle;
+- (instancetype)init NS_DESIGNATED_INITIALIZER;
+
+@property (null_resettable, copy) NSString *dateFormat;
+/*@property NSDateFormatterStyle dateStyle;
 @property NSDateFormatterStyle timeStyle;
 @property (null_resettable, copy) NSLocale *locale;
 @property BOOL generatesCalendarDates;

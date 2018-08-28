@@ -56,19 +56,12 @@
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-    FFORunTests();
 
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"twitter" ofType:@"json"];
-    NS_VALID_UNTIL_END_OF_SCOPE NSData *objcData = [[[NSFileManager defaultManager] contentsAtPath:path] mutableCopy];
-    char *goodString = (char *)[objcData bytes];
-    uint32_t length = (uint32_t)strlen(goodString);
-    char *myString = malloc(length + 1);
-    char *rapString = malloc(length + 1);
-    myString[length] = rapString[length] = '\0';
+    printf("zz %d\n\n\n", getpagesize());
     if (FFOIsDebug()) {
         NSLog(@"running in debug, don't benchmark");
     } else {
-        NSInteger nIterations = 1e2;
+        NSInteger nIterations = 1e6;
         ({
             CFTimeInterval start = CACurrentMediaTime();
             for (NSInteger i = 0; i < nIterations; i++) {
@@ -76,7 +69,7 @@
                 formatter.dateFormat = @"hh";
             }
             CFTimeInterval end = CACurrentMediaTime();
-            printf("rap: %lf\n", (end - start));
+            printf("apple: %lf\n", (end - start));
         });
         usleep(500000);
         ({
