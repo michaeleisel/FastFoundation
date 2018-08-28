@@ -30,14 +30,14 @@ struct FFODateComponent {
     }
     _formatString = formatString; // This is just to retain it so we can use the inner buffer
     _format = formatString.UTF8String;
-    NSAssert(_format, @"The string passed must be well-formed unicode");
+    NSAssert(_format, @"The string passed in must be well-formed unicode");
     return self;
 }
 
 - (NSDate *)dateFromString:(NSString *)string
 {
     const char *buf = string.UTF8String;
-    NSAssert(buf, @"The string passed must be well-formed unicode");
+    NSAssert(buf, @"The string passed in must be well-formed unicode");
     struct tm components;
     strptime(buf, _format, &components);
     time_t time = mktime(&components);
@@ -49,7 +49,7 @@ struct FFODateComponent {
     return [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
 }
 
-+ (NSString *)localizedStringFromDate:(NSDate *)date dateStyle:(NSDateFormatterStyle)dstyle timeStyle:(NSDateFormatterStyle)tstyle
+/*+ (NSString *)localizedStringFromDate:(NSDate *)date dateStyle:(NSDateFormatterStyle)dstyle timeStyle:(NSDateFormatterStyle)tstyle
 {
     // todo
 }
@@ -57,6 +57,6 @@ struct FFODateComponent {
 - (BOOL)getObjectValue:(out id  _Nullable *)obj forString:(NSString *)string range:(inout NSRange *)rangep error:(out NSError * _Nullable *)error
 {
     // todo
-}
+}*/
 
 @end

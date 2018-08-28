@@ -17,6 +17,7 @@
 #import "FFORapidJsonTester.h"
 #import "FFOJsonTester.h"
 #import "FFOJsonParser.h"
+#import "FFODateFormatter.h"
 #import "FFOEnvironment.h"
 
 @interface FFOViewController ()
@@ -66,36 +67,13 @@
     myString[length] = rapString[length] = '\0';
     if (FFOIsDebug()) {
         NSLog(@"running in debug, don't benchmark");
-        memcpy(myString, goodString, length);
-        memcpy(rapString, goodString, length);
-        FFOTestResults(myString, length);
-        gooo(rapString);
-        for (NSInteger i = 0; i < MIN(sMyEventCount, sEventCount); i++) {
-            if (sMyEvents[i].type != sEvents[i].type) {
-                NSAssert(NO, @"");
-            }
-            if (sMyEvents[i].type == FFOJsonTypeString) {
-                NSAssert(0 == strcmp(sMyEvents[i].result.str, sEvents[i].result.str), @"");
-            } else if (sMyEvents[i].type == FFOJsonTypeNum) {
-                // NSAssert(sMyEvents[i].result.d == sEvents[i].result.d, @"");
-            }
-        }
-        NSAssert(sMyEventCount == sEventCount || sMyEventCount == sEventCount + 1/*hack*/, @"");
     } else {
         NSInteger nIterations = 1e2;
-        char *myStrs[nIterations];
-        char *rapStrs[nIterations];
-        for (NSInteger i = 0; i < nIterations; i++) {
-            myStrs[i] = malloc(length + 1);
-            rapStrs[i] = malloc(length + 1);
-            memcpy(myStrs[i], goodString, length);
-            memcpy(rapStrs[i], goodString, length);
-            rapStrs[i][length] = myStrs[i][length] = '\0';
-        }
         ({
             CFTimeInterval start = CACurrentMediaTime();
             for (NSInteger i = 0; i < nIterations; i++) {
-                gooo(rapStrs[i]);
+                NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+                formatter.dateFormat = @"hh";
             }
             CFTimeInterval end = CACurrentMediaTime();
             printf("rap: %lf\n", (end - start));
@@ -104,7 +82,8 @@
         ({
             CFTimeInterval start = CACurrentMediaTime();
             for (NSInteger i = 0; i < nIterations; i++) {
-                FFOTestResults(myStrs[i], length);
+                FFODateFormatter *formatter = [[FFODateFormatter alloc ] init];
+                formatter.dateFormat = @"hh";
             }
             CFTimeInterval end = CACurrentMediaTime();
             printf("my: %lf\n", (end - start));
