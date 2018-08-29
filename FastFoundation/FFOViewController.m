@@ -78,17 +78,19 @@
             buffer[i] = 'a' + arc4random_uniform(26);
         }
         buffer[bufferLength - 1] = '\0';
+        usleep(500000);
         ({
             NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
             formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
             // NSISO8601DateFormatter *formatter = [[NSISO8601DateFormatter alloc] init];
             CFTimeInterval start = CACurrentMediaTime();
             ({
-                @autoreleasepool {
+                NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+                ({
                     NSInteger index = 0;
                     char letter = 'a';
                     for (NSInteger i = 0; i < nIterations; i++) {
-                        index = (index + 1) % bufferLength;
+                        index = (index + 1) % (bufferLength + 1);
                         letter++;
                         if (letter > 'z') {
                             letter = 'a';
@@ -96,9 +98,10 @@
                         buffer[index] = letter;
                         // char *newBuffer = CFAllocatorAllocate(kCFAllocatorDefault, bufferLength, 0);
                         // memcpy(buffer, newBuffer, 50);
-                        CFBridgingRelease(CFStringCreateWithCString(kCFAllocatorDefault, buffer, kCFStringEncodingUTF8));
+                        CFRelease(CFStringCreateWithCString(kCFAllocatorDefault, buffer, kCFStringEncodingUTF8));
                     }
-                }
+                });
+                [pool release];
             });
             CFTimeInterval end = CACurrentMediaTime();
             printf("apple: %lf\n", (end - start));
@@ -109,11 +112,12 @@
             formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
             CFTimeInterval start = CACurrentMediaTime();
             ({
-                @autoreleasepool {
+                NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+                ({
                     NSInteger index = 0;
                     char letter = 'a';
                     for (NSInteger i = 0; i < nIterations; i++) {
-                        index = (index + 1) % bufferLength;
+                        index = (index + 1) % (bufferLength + 1);
                         letter++;
                         if (letter > 'z') {
                             letter = 'a';
@@ -122,10 +126,12 @@
                         // /*NSString *string = */[formatter stringFromDate:dates[i % dates.count]];
                         // NSLog(@"%@", string);
                         char *newBuffer = je_malloc(bufferLength);
-                        memcpy(buffer, newBuffer, 50);
-                        CFBridgingRelease(CFStringCreateWithCStringNoCopy(kCFAllocatorDefault, newBuffer, kCFStringEncodingUTF8, FFOJemallocAllocator()));
+                        memcpy(buffer, newBuffer, bufferLength);
+                        CFRelease(CFStringCreateWithCStringNoCopy(kCFAllocatorDefault, newBuffer, kCFStringEncodingUTF8, FFOJemallocAllocator()));
+                        // CFBridgingRelease(CFStringCreateWithCString(kCFAllocatorDefault, buffer, kCFStringEncodingUTF8));
                     }
-                }
+                });
+                [pool release];
             });
             CFTimeInterval end = CACurrentMediaTime();
             printf("my: %lf\n", (end - start));
