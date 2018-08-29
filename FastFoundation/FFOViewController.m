@@ -21,6 +21,7 @@
 #import "FFOEnvironment.h"
 #import "jemalloc.h"
 #import "FFOJemallocAllocator.h"
+#import "udat.h"
 
 @interface FFOViewController ()
 
@@ -125,7 +126,7 @@
                         char *newBuffer = je_malloc(bufferLength);
                         memcpy(buffer, newBuffer, bufferLength);
                         CFAutorelease(CFStringCreateWithCStringNoCopy(kCFAllocatorDefault, newBuffer, kCFStringEncodingUTF8, FFOJemallocAllocator()));
-                        // CFBridgingRelease(CFStringCreateWithCString(kCFAllocatorDefault, buffer, kCFStringEncodingUTF8));
+                        // CFAutorelease(CFStringCreateWithCString(FFOJemallocAllocator(), buffer, kCFStringEncodingUTF8));
                     }
                 }
             });
