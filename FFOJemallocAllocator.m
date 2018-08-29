@@ -14,9 +14,7 @@ static CFAllocatorRef sJemallocAllocator;
 // static NSMutableSet *sSet;
 
 void *FFOContextMalloc(CFIndex allocSize, CFOptionFlags hint, void *info) {
-    // For some reason (???) just doing "return je_malloc(allocSize);" doesn't allow the memory to be freed
-    void *ptr = je_malloc(allocSize);
-    return ptr;
+    return je_malloc(allocSize);
 }
 
 void * FFOContextRealloc(void *ptr, CFIndex newsize, CFOptionFlags hint, void *info) {
