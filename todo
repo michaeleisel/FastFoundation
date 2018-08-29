@@ -5,3 +5,4 @@ do benchmarks for:
     RFC 2822
 compare against swift
 figure out if something needs to be done about the page size limit of 16kb for the way i compiled jemalloc
+fix that issue where it can't call system

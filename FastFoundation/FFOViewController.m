@@ -19,6 +19,8 @@
 #import "FFOJsonParser.h"
 #import "FFODateFormatter.h"
 #import "FFOEnvironment.h"
+#import "jemalloc.h"
+#import "FFOJemallocAllocator.h"
 
 @interface FFOViewController ()
 
@@ -61,23 +63,41 @@
     NSInteger length = 1e4;
     NSMutableArray <NSDate *>*dates = [[[NSMutableArray alloc] initWithCapacity:length] autorelease];
     for (NSInteger i = 0; i < length; i++) {
-        NSTimeInterval interval = arc4random_uniform(60 * 60 * 24 * 365 * 20);
+        NSTimeInterval interval = arc4random_uniform(60 * 60 * 24 * 365 * 2);
         interval += arc4random_uniform(1000) / 1000.0;
-        NSDate *date = [[NSDate dateWithTimeIntervalSince1970:interval] autorelease];
+        NSDate *date = [NSDate dateWithTimeIntervalSinceNow:-interval];
         [dates addObject:date];
     }
-    if (FFOIsDebug()) {
+    if (NO && FFOIsDebug()) {
         NSLog(@"running in debug, don't benchmark");
     } else {
-        NSInteger nIterations = 3e5;
+        NSInteger nIterations = 3e6;
+        NSInteger bufferLength = 50;
+        char buffer[bufferLength];
+        for (NSInteger i = 0; i < bufferLength - 1; i++) {
+            buffer[i] = 'a' + arc4random_uniform(26);
+        }
+        buffer[bufferLength - 1] = '\0';
         ({
             NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
             formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
             // NSISO8601DateFormatter *formatter = [[NSISO8601DateFormatter alloc] init];
             CFTimeInterval start = CACurrentMediaTime();
             ({
-                for (NSInteger i = 0; i < nIterations; i++) {
-                    [formatter stringFromDate:dates[i % dates.count]];
+                @autoreleasepool {
+                    NSInteger index = 0;
+                    char letter = 'a';
+                    for (NSInteger i = 0; i < nIterations; i++) {
+                        index = (index + 1) % bufferLength;
+                        letter++;
+                        if (letter > 'z') {
+                            letter = 'a';
+                        }
+                        buffer[index] = letter;
+                        // char *newBuffer = CFAllocatorAllocate(kCFAllocatorDefault, bufferLength, 0);
+                        // memcpy(buffer, newBuffer, 50);
+                        CFBridgingRelease(CFStringCreateWithCString(kCFAllocatorDefault, buffer, kCFStringEncodingUTF8));
+                    }
                 }
             });
             CFTimeInterval end = CACurrentMediaTime();
@@ -89,9 +109,22 @@
             formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
             CFTimeInterval start = CACurrentMediaTime();
             ({
-                for (NSInteger i = 0; i < nIterations; i++) {
-                    /*NSString *string = */[formatter stringFromDate:dates[i % dates.count]];
-                    // NSLog(@"%@", string);
+                @autoreleasepool {
+                    NSInteger index = 0;
+                    char letter = 'a';
+                    for (NSInteger i = 0; i < nIterations; i++) {
+                        index = (index + 1) % bufferLength;
+                        letter++;
+                        if (letter > 'z') {
+                            letter = 'a';
+                        }
+                        buffer[index] = letter;
+                        // /*NSString *string = */[formatter stringFromDate:dates[i % dates.count]];
+                        // NSLog(@"%@", string);
+                        char *newBuffer = je_malloc(bufferLength);
+                        memcpy(buffer, newBuffer, 50);
+                        CFBridgingRelease(CFStringCreateWithCStringNoCopy(kCFAllocatorDefault, newBuffer, kCFStringEncodingUTF8, FFOJemallocAllocator()));
+                    }
                 }
             });
             CFTimeInterval end = CACurrentMediaTime();

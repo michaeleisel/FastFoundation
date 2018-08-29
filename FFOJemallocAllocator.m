@@ -11,8 +11,12 @@
 
 static CFAllocatorRef sJemallocAllocator;
 
+// static NSMutableSet *sSet;
+
 void *FFOContextMalloc(CFIndex allocSize, CFOptionFlags hint, void *info) {
-    return je_malloc(allocSize);
+    // For some reason (???) just doing "return je_malloc(allocSize);" doesn't allow the memory to be freed
+    void *ptr = je_malloc(allocSize);
+    return ptr;
 }
 
 void * FFOContextRealloc(void *ptr, CFIndex newsize, CFOptionFlags hint, void *info) {
@@ -48,6 +52,7 @@ CFAllocatorRef FFOJemallocAllocator() {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sJemallocAllocator = CFAllocatorCreate(kCFAllocatorDefault, &sJemallocContext);
+        // sSet = [NSMutableSet set];
     });
     return sJemallocAllocator;
 }
