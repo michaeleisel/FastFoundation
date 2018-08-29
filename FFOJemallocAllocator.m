@@ -24,6 +24,7 @@ void FFOContextDealloc(void *ptr, void *info) {
 }
 
 CFIndex FFOContextPreferredSize(CFIndex size, CFOptionFlags hint, void *info) {
+    // Round up to the next multiple of 16 to copy what jemalloc does it allocates, since it's 16-byte aligned
     NSInteger remainder = size & 0xFF; // remainder = size % 16
     if (remainder == 0) {
         return size;
