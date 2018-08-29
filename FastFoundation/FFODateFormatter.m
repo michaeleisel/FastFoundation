@@ -11,6 +11,7 @@
 // #import "rust_bindings.h"
 #import "jemalloc.h"
 #import "FFOThreadLocalMemory.h"
+#import "FFOJemallocAllocator.h"
 
 struct FFODateComponent {
     NSCalendarUnit unit;
@@ -136,9 +137,10 @@ static inline void FFOFree(void *buffer, BOOL usesMalloc) {
     time_t timeWithoutMillis = (time_t)time;
     localtime_r(&timeWithoutMillis, &timeinfo);
     NSInteger formatLength = 0;
+    NSInteger bytesWritten = 0;
     while (YES) {
         const char *posixFormat = "%Y-%m-%dT%H:%M:%S.000Z";// "%Y-%m-%dT%H:%M:%S.000";
-        NSInteger bytesWritten = strftime(buffer, size, posixFormat, &timeinfo);
+        bytesWritten = strftime(buffer, size, posixFormat, &timeinfo);
         if (bytesWritten > 0) { // This is almost always true, since the buffer is large to begin with
             break;
         }
@@ -153,7 +155,11 @@ static inline void FFOFree(void *buffer, BOOL usesMalloc) {
         usesMalloc = YES;
     }
 
+    /*char *stringBuffer = je_malloc(bytesWritten);
+    memcpy(stringBuffer, buffer, bytesWritten);
+    CFStringRef string = CFStringCreateWithCStringNoCopy(FFOJemallocAllocator(), stringBuffer, kCFStringEncodingUTF8, FFOJemallocAllocator());*/
     CFStringRef string = CFStringCreateWithCString(kCFAllocatorDefault, buffer, kCFStringEncodingUTF8);
+    // CFStringRef string = CFStringCreateWithCString(kCFAllocatorDefault, buffer, kCFStringEncodingUTF8);
     FFOFree(buffer, usesMalloc);
     return CFBridgingRelease(string);
 }

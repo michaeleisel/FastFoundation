@@ -69,7 +69,7 @@
     if (FFOIsDebug()) {
         NSLog(@"running in debug, don't benchmark");
     } else {
-        NSInteger nIterations = 1e6;
+        NSInteger nIterations = 3e5;
         ({
             NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
             formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
@@ -97,7 +97,6 @@
             CFTimeInterval end = CACurrentMediaTime();
             printf("my: %lf\n", (end - start));
         });
-        printf("%llu, %llu\n", sMyEventCount, sEventCount);
     }
     NSLog(@"done");
 }

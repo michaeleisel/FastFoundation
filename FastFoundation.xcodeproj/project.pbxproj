@@ -9,11 +9,9 @@
 /* Begin PBXBuildFile section */
 		B301A39020BCC1CF00AF3378 /* twitter.json in Resources */ = {isa = PBXBuildFile; fileRef = B301A38F20BCC1CE00AF3378 /* twitter.json */; };
 		B30A194620AD37A00073CFB8 /* citm_catalog.json in Resources */ = {isa = PBXBuildFile; fileRef = B30A194520AD37A00073CFB8 /* citm_catalog.json */; };
-		B3178BCD20B64C9400E3076A /* FFORapidJsonTester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3178BCC20B64C9400E3076A /* FFORapidJsonTester.cpp */; };
 		B32879F31E8E1625007E49B7 /* FFODateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = B32879F21E8E1625007E49B7 /* FFODateFormatter.m */; };
 		B38586DB1EEE46BD00496750 /* NSArrayFFOMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = B38586DA1EEE46BD00496750 /* NSArrayFFOMethods.m */; };
 		B38586DE1EEE48BA00496750 /* pcg_basic.c in Sources */ = {isa = PBXBuildFile; fileRef = B38586DC1EEE48BA00496750 /* pcg_basic.c */; };
-		B38C01F620B65183002D4613 /* FFOJsonTester.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C01F520B65183002D4613 /* FFOJsonTester.m */; };
 		B38C42111E8E001700033ACD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C42101E8E001700033ACD /* main.m */; };
 		B38C42141E8E001700033ACD /* FFOAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C42131E8E001700033ACD /* FFOAppDelegate.m */; };
 		B38C42171E8E001700033ACD /* FFOViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C42161E8E001700033ACD /* FFOViewController.m */; };
@@ -21,6 +19,8 @@
 		B38C42291E8E025200033ACD /* Launch.xib in Resources */ = {isa = PBXBuildFile; fileRef = B38C42281E8E025200033ACD /* Launch.xib */; };
 		B3B954EE2135CE56001B5B93 /* jemalloc_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3B954ED2135CE56001B5B93 /* jemalloc_ios.a */; };
 		B3B954F22135D4D3001B5B93 /* FFOThreadLocalMemory.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B954F12135D4D3001B5B93 /* FFOThreadLocalMemory.m */; };
+		B3B954F42135F24D001B5B93 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B3B954F32135F24D001B5B93 /* libicucore.tbd */; };
+		B3B954F721363608001B5B93 /* FFOJemallocAllocator.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B954F621363608001B5B93 /* FFOJemallocAllocator.m */; };
 		B3C0BBA520B5F063006CCEF3 /* ConvertUTF.c in Sources */ = {isa = PBXBuildFile; fileRef = B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */; };
 		B3CF25F520B6486300C1A65E /* j1.json in Resources */ = {isa = PBXBuildFile; fileRef = B3CF25F420B6486200C1A65E /* j1.json */; };
 		B3CF25F720B6486800C1A65E /* j2.json in Resources */ = {isa = PBXBuildFile; fileRef = B3CF25F620B6486800C1A65E /* j2.json */; };
@@ -62,6 +62,9 @@
 		B3B954EF2135CE7F001B5B93 /* jemalloc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = jemalloc.h; sourceTree = "<group>"; };
 		B3B954F02135D4D3001B5B93 /* FFOThreadLocalMemory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOThreadLocalMemory.h; sourceTree = "<group>"; };
 		B3B954F12135D4D3001B5B93 /* FFOThreadLocalMemory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFOThreadLocalMemory.m; sourceTree = "<group>"; };
+		B3B954F32135F24D001B5B93 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		B3B954F521363608001B5B93 /* FFOJemallocAllocator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOJemallocAllocator.h; sourceTree = "<group>"; };
+		B3B954F621363608001B5B93 /* FFOJemallocAllocator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFOJemallocAllocator.m; sourceTree = "<group>"; };
 		B3C0BBA220B53607006CCEF3 /* FFOArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOArray.h; sourceTree = "<group>"; };
 		B3C0BBA320B5362F006CCEF3 /* FFODefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFODefines.h; sourceTree = "<group>"; };
 		B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ConvertUTF.c; sourceTree = "<group>"; };
@@ -169,6 +172,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3B954F42135F24D001B5B93 /* libicucore.tbd in Frameworks */,
 				B3B954EE2135CE56001B5B93 /* jemalloc_ios.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -187,6 +191,8 @@
 		B38C42031E8E001700033ACD = {
 			isa = PBXGroup;
 			children = (
+				B3B954F521363608001B5B93 /* FFOJemallocAllocator.h */,
+				B3B954F621363608001B5B93 /* FFOJemallocAllocator.m */,
 				B3B954F02135D4D3001B5B93 /* FFOThreadLocalMemory.h */,
 				B3B954F12135D4D3001B5B93 /* FFOThreadLocalMemory.m */,
 				B38C420E1E8E001700033ACD /* FastFoundation */,
@@ -331,6 +337,7 @@
 		B3F73C43207C403C00E11E2D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B3B954F32135F24D001B5B93 /* libicucore.tbd */,
 				B3F73C52207C403E00E11E2D /* Accounts.framework */,
 				B3F73C60207C403E00E11E2D /* AddressBook.framework */,
 				B3F73C61207C403E00E11E2D /* AddressBookUI.framework */,
@@ -464,7 +471,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B32879F31E8E1625007E49B7 /* FFODateFormatter.m in Sources */,
-				B3178BCD20B64C9400E3076A /* FFORapidJsonTester.cpp in Sources */,
 				B38C42171E8E001700033ACD /* FFOViewController.m in Sources */,
 				B38586DE1EEE48BA00496750 /* pcg_basic.c in Sources */,
 				B38C42141E8E001700033ACD /* FFOAppDelegate.m in Sources */,
@@ -472,8 +478,8 @@
 				B3D753B9208946A90090C3E2 /* NSString+FFOMethods.m in Sources */,
 				B3F73C41207C383300E11E2D /* fishhook.c in Sources */,
 				B3B954F22135D4D3001B5B93 /* FFOThreadLocalMemory.m in Sources */,
-				B38C01F620B65183002D4613 /* FFOJsonTester.m in Sources */,
 				B38C42111E8E001700033ACD /* main.m in Sources */,
+				B3B954F721363608001B5B93 /* FFOJemallocAllocator.m in Sources */,
 				B3C0BBA520B5F063006CCEF3 /* ConvertUTF.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

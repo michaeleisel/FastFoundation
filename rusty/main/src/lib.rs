@@ -25,7 +25,7 @@ pub extern fn FFOMalloc(size: usize) -> *mut u8 {
 }*/
 
 #[no_mangle]
-pub extern fn FFOStrP
+pub extern fn FFOStrFTime(buffer: *mut i8, size: usize, 
 
 /*extern {
     CFStringGetCStringPtr(string: *const c_void, encoding: CFStringEncoding)

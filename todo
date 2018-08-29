@@ -1,1 +1,7 @@
 do we need to worry about the locale changing during the operation of strptime
+do benchmarks for:
+    ISO 8601, which should compare against ISO8601DateFormatter
+    RFC 3339
+    RFC 2822
+compare against swift
+figure out if something needs to be done about the page size limit of 16kb for the way i compiled jemalloc
