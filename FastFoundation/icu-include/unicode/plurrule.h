@@ -18,7 +18,7 @@
 #ifndef PLURRULE
 #define PLURRULE
 
-#include "unicode/utypes.h"
+#include "utypes.h"
 
 /**
  * \file
@@ -27,8 +27,8 @@
 
 #if !UCONFIG_NO_FORMATTING
 
-#include "unicode/format.h"
-#include "unicode/upluralrules.h"
+#include "format.h"
+#include "upluralrules.h"
 
 /**
  * Value returned by PluralRules::getUniqueKeywordValue() when there is no

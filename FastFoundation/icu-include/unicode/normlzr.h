@@ -11,7 +11,7 @@
 #ifndef NORMLZR_H
 #define NORMLZR_H
 
-#include "unicode/utypes.h"
+#include "utypes.h"
 
 /**
  * \file 
@@ -20,11 +20,11 @@
  
 #if !UCONFIG_NO_NORMALIZATION
 
-#include "unicode/chariter.h"
-#include "unicode/normalizer2.h"
-#include "unicode/unistr.h"
-#include "unicode/unorm.h"
-#include "unicode/uobject.h"
+#include "chariter.h"
+#include "normalizer2.h"
+#include "unistr.h"
+#include "unorm.h"
+#include "uobject.h"
 
 U_NAMESPACE_BEGIN
 /**

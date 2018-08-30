@@ -19,11 +19,11 @@
 #ifndef __UENUM_H
 #define __UENUM_H
 
-#include "unicode/utypes.h"
-#include "unicode/localpointer.h"
+#include "utypes.h"
+#include "localpointer.h"
 
 #if U_SHOW_CPLUSPLUS_API
-#include "unicode/strenum.h"
+#include "strenum.h"
 #endif
 
 /**

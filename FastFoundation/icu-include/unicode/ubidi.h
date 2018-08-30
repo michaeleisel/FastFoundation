@@ -19,9 +19,9 @@
 #ifndef UBIDI_H
 #define UBIDI_H
 
-#include "unicode/utypes.h"
-#include "unicode/uchar.h"
-#include "unicode/localpointer.h"
+#include "utypes.h"
+#include "uchar.h"
+#include "localpointer.h"
 
 /**
  *\file

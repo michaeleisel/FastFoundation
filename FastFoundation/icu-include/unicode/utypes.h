@@ -35,9 +35,9 @@
 #define UTYPES_H
 
 
-#include "unicode/umachine.h"
-#include "unicode/uversion.h"
-#include "unicode/uconfig.h"
+#include "umachine.h"
+#include "uversion.h"
+#include "uconfig.h"
 #include <float.h>
 
 #if !U_NO_DEFAULT_INCLUDE_UTF_HEADERS

@@ -56,6 +56,25 @@
     sShouldStop = NO; \
 })
 
+char *FFOConvertBack(UChar *buffer, NSInteger length) {
+    char *str = je_malloc(length * sizeof(char) + 1);
+    for (NSInteger i = 0; i < length; i++) {
+        // NSCAssert(buffer[i] < 128, @"");
+        str[i] = (char)buffer[i];
+    }
+    str[length] = '\0';
+    return str;
+}
+
+UChar *FFOConvert(const char *str) {
+    NSInteger len = strlen(str);
+    UChar *uStr = malloc(len * sizeof(UChar));
+    for (NSInteger i = 0; i < len; i++) {
+        uStr[i] = str[i];
+    }
+    return uStr;
+}
+
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
@@ -72,7 +91,7 @@
     if (NO && FFOIsDebug()) {
         NSLog(@"running in debug, don't benchmark");
     } else {
-        NSInteger nIterations = 3e6;
+        NSInteger nIterations = 1e5;
         NSInteger bufferLength = 50;
         char buffer[bufferLength];
         for (NSInteger i = 0; i < bufferLength - 1; i++) {
@@ -87,18 +106,10 @@
             CFTimeInterval start = CACurrentMediaTime();
             ({
                 @autoreleasepool {
-                    NSInteger index = 0;
-                    char letter = 'a';
+                    int index = 0;
                     for (NSInteger i = 0; i < nIterations; i++) {
-                        index = (index + 1) % (bufferLength - 1);
-                        letter++;
-                        if (letter > 'z') {
-                            letter = 'a';
-                        }
-                        buffer[index] = letter;
-                        // char *newBuffer = CFAllocatorAllocate(kCFAllocatorDefault, bufferLength, 0);
-                        // memcpy(buffer, newBuffer, 50);
-                        CFAutorelease(CFStringCreateWithCString(kCFAllocatorDefault, buffer, kCFStringEncodingUTF8));
+                        index = (index + 1) % (dates.count);
+                        [formatter stringFromDate:dates[index]]; // autorelease?
                     }
                 }
             });
@@ -107,26 +118,25 @@
         });
         usleep(500000);
         ({
-            FFODateFormatter *formatter = [[[FFODateFormatter alloc] init] autorelease];
-            formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
+            // FFODateFormatter *formatter = [[[FFODateFormatter alloc] init] autorelease];
+            // formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
+            UErrorCode code = U_ZERO_ERROR;
+            UDateFormat *format = udat_open_57(UDAT_PATTERN, UDAT_PATTERN, "en_US_POSIX", FFOConvert("GMT"), -1, FFOConvert("yyyy-MM-dd'T'HH:mm:ssZZZZZ"), -1, &code);
+            NSAssert(code == U_ZERO_ERROR || code == U_USING_FALLBACK_WARNING, @"");
+            code = U_ZERO_ERROR;
+            int32_t dateSize = 500 * sizeof(UChar);
+            UChar *dateBuffer = je_malloc(dateSize);
+            NSAssert(code == U_ZERO_ERROR, @"");
             CFTimeInterval start = CACurrentMediaTime();
             ({
                 @autoreleasepool {
-                    NSInteger index = 0;
-                    char letter = 'a';
+                    int index = 0;
                     for (NSInteger i = 0; i < nIterations; i++) {
-                        index = (index + 1) % (bufferLength - 1);
-                        letter++;
-                        if (letter > 'z') {
-                            letter = 'a';
-                        }
-                        buffer[index] = letter;
-                        // /*NSString *string = */[formatter stringFromDate:dates[i % dates.count]];
-                        // NSLog(@"%@", string);
-                        char *newBuffer = je_malloc(bufferLength);
-                        memcpy(buffer, newBuffer, bufferLength);
-                        CFAutorelease(CFStringCreateWithCStringNoCopy(kCFAllocatorDefault, newBuffer, kCFStringEncodingUTF8, FFOJemallocAllocator()));
-                        // CFAutorelease(CFStringCreateWithCString(FFOJemallocAllocator(), buffer, kCFStringEncodingUTF8));
+                        index = (index + 1) % (dates.count);
+                        double interval = dates[index].timeIntervalSince1970 * 1000;
+                        int len = udat_format_57(format, interval, dateBuffer, dateSize, NULL, &code);
+                        char *finalStr = FFOConvertBack(dateBuffer, len);
+                        CFAutorelease(CFStringCreateWithCStringNoCopy(kCFAllocatorDefault, finalStr, kCFStringEncodingUTF8, FFOJemallocAllocator()));
                     }
                 }
             });

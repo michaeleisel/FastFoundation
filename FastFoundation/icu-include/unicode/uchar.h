@@ -25,7 +25,7 @@
 #ifndef UCHAR_H
 #define UCHAR_H
 
-#include "unicode/utypes.h"
+#include "utypes.h"
 
 U_CDECL_BEGIN
 

@@ -30,9 +30,9 @@
  * For more details see the Normalizer2 C++ class.
  */
 
-#include "unicode/utypes.h"
-#include "unicode/localpointer.h"
-#include "unicode/uset.h"
+#include "utypes.h"
+#include "localpointer.h"
+#include "uset.h"
 
 /**
  * Constants for normalization modes.

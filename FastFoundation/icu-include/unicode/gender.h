@@ -18,13 +18,13 @@
 #ifndef _GENDER
 #define _GENDER
 
-#include "unicode/utypes.h"
+#include "utypes.h"
 
 #if !UCONFIG_NO_FORMATTING
 
-#include "unicode/locid.h"
-#include "unicode/ugender.h"
-#include "unicode/uobject.h"
+#include "locid.h"
+#include "ugender.h"
+#include "uobject.h"
 
 class GenderInfoTest;
 

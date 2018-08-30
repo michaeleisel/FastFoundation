@@ -19,9 +19,9 @@
 #ifndef __UDATPG_H__
 #define __UDATPG_H__
 
-#include "unicode/utypes.h"
-#include "unicode/uenum.h"
-#include "unicode/localpointer.h"
+#include "utypes.h"
+#include "uenum.h"
+#include "localpointer.h"
 
 /**
  * \file

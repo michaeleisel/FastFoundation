@@ -12,9 +12,9 @@
 #ifndef INDEXCHARS_H
 #define INDEXCHARS_H
 
-#include "unicode/utypes.h"
-#include "unicode/uobject.h"
-#include "unicode/locid.h"
+#include "utypes.h"
+#include "uobject.h"
+#include "locid.h"
 
 #if !UCONFIG_NO_COLLATION
 

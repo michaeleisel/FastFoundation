@@ -24,7 +24,7 @@
 #define NUMFMT_H
 
 
-#include "unicode/utypes.h"
+#include "utypes.h"
 
 /**
  * \file
@@ -33,13 +33,13 @@
 
 #if !UCONFIG_NO_FORMATTING
 
-#include "unicode/unistr.h"
-#include "unicode/format.h"
-#include "unicode/unum.h" // UNumberFormatStyle
-#include "unicode/locid.h"
-#include "unicode/stringpiece.h"
-#include "unicode/curramt.h"
-#include "unicode/udisplaycontext.h"
+#include "unistr.h"
+#include "format.h"
+#include "unum.h" // UNumberFormatStyle
+#include "locid.h"
+#include "stringpiece.h"
+#include "curramt.h"
+#include "udisplaycontext.h"
 
 class NumberFormatTest;
 

@@ -6,3 +6,5 @@ do benchmarks for:
 compare against swift
 figure out if something needs to be done about the page size limit of 16kb for the way i compiled jemalloc
 fix that issue where it can't call system
+maybe recompile jemalloc with all the settings from ~/tricks
+make sure that that utf-8 #define was done for building icu

@@ -10,7 +10,7 @@
 #ifndef LOCDSPNM_H
 #define LOCDSPNM_H
 
-#include "unicode/utypes.h"
+#include "utypes.h"
 
 /**
  * \file
@@ -19,10 +19,10 @@
 
 #if !UCONFIG_NO_FORMATTING
 
-#include "unicode/locid.h"
-#include "unicode/uscript.h"
-#include "unicode/uldnames.h"
-#include "unicode/udisplaycontext.h"
+#include "locid.h"
+#include "uscript.h"
+#include "uldnames.h"
+#include "udisplaycontext.h"
 
 U_NAMESPACE_BEGIN
 

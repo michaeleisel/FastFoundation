@@ -16,7 +16,7 @@
 #ifndef RBBI_H
 #define RBBI_H
 
-#include "unicode/utypes.h"
+#include "utypes.h"
 
 /**
  * \file
@@ -25,11 +25,11 @@
 
 #if !UCONFIG_NO_BREAK_ITERATION
 
-#include "unicode/brkiter.h"
-#include "unicode/udata.h"
-#include "unicode/parseerr.h"
-#include "unicode/schriter.h"
-#include "unicode/uchriter.h"
+#include "brkiter.h"
+#include "udata.h"
+#include "parseerr.h"
+#include "schriter.h"
+#include "uchriter.h"
 
 
 struct UTrie;

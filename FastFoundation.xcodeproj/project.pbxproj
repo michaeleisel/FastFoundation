@@ -17,12 +17,15 @@
 		B38C42171E8E001700033ACD /* FFOViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C42161E8E001700033ACD /* FFOViewController.m */; };
 		B38C421C1E8E001700033ACD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B38C421B1E8E001700033ACD /* Assets.xcassets */; };
 		B38C42291E8E025200033ACD /* Launch.xib in Resources */ = {isa = PBXBuildFile; fileRef = B38C42281E8E025200033ACD /* Launch.xib */; };
-		B3B954EE2135CE56001B5B93 /* jemalloc_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3B954ED2135CE56001B5B93 /* jemalloc_ios.a */; };
 		B3B954F22135D4D3001B5B93 /* FFOThreadLocalMemory.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B954F12135D4D3001B5B93 /* FFOThreadLocalMemory.m */; };
-		B3B954F42135F24D001B5B93 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B3B954F32135F24D001B5B93 /* libicucore.tbd */; };
 		B3B954F721363608001B5B93 /* FFOJemallocAllocator.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B954F621363608001B5B93 /* FFOJemallocAllocator.m */; };
-		B3B954F921373A9B001B5B93 /* libicui18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3B954F821373A9B001B5B93 /* libicui18n.a */; };
 		B3C0BBA520B5F063006CCEF3 /* ConvertUTF.c in Sources */ = {isa = PBXBuildFile; fileRef = B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */; };
+		B3C5126A21375F3C00EDC507 /* jemalloc_universal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3B955A821375E8C001B5B93 /* jemalloc_universal.a */; };
+		B3C5127821377E5C00EDC507 /* libicuuc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3C5127321377E5700EDC507 /* libicuuc.a */; };
+		B3C5127921377E5C00EDC507 /* libicui18n.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3C5127421377E5800EDC507 /* libicui18n.a */; };
+		B3C5127A21377E5C00EDC507 /* libicuio.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3C5127521377E5800EDC507 /* libicuio.a */; };
+		B3C5127B21377E5C00EDC507 /* libicudata.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3C5127621377E5B00EDC507 /* libicudata.a */; };
+		B3C5127C21377E5C00EDC507 /* libicutu.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3C5127721377E5B00EDC507 /* libicutu.a */; };
 		B3CF25F520B6486300C1A65E /* j1.json in Resources */ = {isa = PBXBuildFile; fileRef = B3CF25F420B6486200C1A65E /* j1.json */; };
 		B3CF25F720B6486800C1A65E /* j2.json in Resources */ = {isa = PBXBuildFile; fileRef = B3CF25F620B6486800C1A65E /* j2.json */; };
 		B3D753B9208946A90090C3E2 /* NSString+FFOMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C422B1E8E029100033ACD /* NSString+FFOMethods.m */; };
@@ -59,14 +62,12 @@
 		B38C422A1E8E029100033ACD /* NSString+FFOMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FFOMethods.h"; sourceTree = "<group>"; };
 		B38C422B1E8E029100033ACD /* NSString+FFOMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FFOMethods.m"; sourceTree = "<group>"; };
 		B3B954D62135AAE9001B5B93 /* rusty.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = rusty.a; path = rusty/rusty.a; sourceTree = SOURCE_ROOT; };
-		B3B954ED2135CE56001B5B93 /* jemalloc_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = jemalloc_ios.a; sourceTree = "<group>"; };
 		B3B954EF2135CE7F001B5B93 /* jemalloc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = jemalloc.h; sourceTree = "<group>"; };
 		B3B954F02135D4D3001B5B93 /* FFOThreadLocalMemory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOThreadLocalMemory.h; sourceTree = "<group>"; };
 		B3B954F12135D4D3001B5B93 /* FFOThreadLocalMemory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFOThreadLocalMemory.m; sourceTree = "<group>"; };
 		B3B954F32135F24D001B5B93 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		B3B954F521363608001B5B93 /* FFOJemallocAllocator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOJemallocAllocator.h; sourceTree = "<group>"; };
 		B3B954F621363608001B5B93 /* FFOJemallocAllocator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFOJemallocAllocator.m; sourceTree = "<group>"; };
-		B3B954F821373A9B001B5B93 /* libicui18n.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libicui18n.a; sourceTree = "<group>"; };
 		B3B954FC21373B1D001B5B93 /* translit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = translit.h; sourceTree = "<group>"; };
 		B3B954FD21373B1D001B5B93 /* ustdio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ustdio.h; sourceTree = "<group>"; };
 		B3B954FE21373B1D001B5B93 /* utf_old.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utf_old.h; sourceTree = "<group>"; };
@@ -239,10 +240,16 @@
 		B3B955A521373B1D001B5B93 /* ulistformatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ulistformatter.h; sourceTree = "<group>"; };
 		B3B955A621373B1D001B5B93 /* measfmt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = measfmt.h; sourceTree = "<group>"; };
 		B3B955A721373B1D001B5B93 /* unifilt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unifilt.h; sourceTree = "<group>"; };
+		B3B955A821375E8C001B5B93 /* jemalloc_universal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = jemalloc_universal.a; sourceTree = "<group>"; };
 		B3C0BBA220B53607006CCEF3 /* FFOArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOArray.h; sourceTree = "<group>"; };
 		B3C0BBA320B5362F006CCEF3 /* FFODefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFODefines.h; sourceTree = "<group>"; };
 		B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ConvertUTF.c; sourceTree = "<group>"; };
 		B3C0BBA620B5F0A3006CCEF3 /* ConvertUTF.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ConvertUTF.h; sourceTree = "<group>"; };
+		B3C5127321377E5700EDC507 /* libicuuc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libicuuc.a; sourceTree = "<group>"; };
+		B3C5127421377E5800EDC507 /* libicui18n.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libicui18n.a; sourceTree = "<group>"; };
+		B3C5127521377E5800EDC507 /* libicuio.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libicuio.a; sourceTree = "<group>"; };
+		B3C5127621377E5B00EDC507 /* libicudata.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libicudata.a; sourceTree = "<group>"; };
+		B3C5127721377E5B00EDC507 /* libicutu.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libicutu.a; sourceTree = "<group>"; };
 		B3CF25F320B63DA400C1A65E /* FFOString.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOString.h; sourceTree = "<group>"; };
 		B3CF25F420B6486200C1A65E /* j1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = j1.json; path = test_json/j1.json; sourceTree = SOURCE_ROOT; };
 		B3CF25F620B6486800C1A65E /* j2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = j2.json; path = test_json/j2.json; sourceTree = SOURCE_ROOT; };
@@ -346,9 +353,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3B954F921373A9B001B5B93 /* libicui18n.a in Frameworks */,
-				B3B954F42135F24D001B5B93 /* libicucore.tbd in Frameworks */,
-				B3B954EE2135CE56001B5B93 /* jemalloc_ios.a in Frameworks */,
+				B3C5127921377E5C00EDC507 /* libicui18n.a in Frameworks */,
+				B3C5127A21377E5C00EDC507 /* libicuio.a in Frameworks */,
+				B3C5127C21377E5C00EDC507 /* libicutu.a in Frameworks */,
+				B3C5126A21375F3C00EDC507 /* jemalloc_universal.a in Frameworks */,
+				B3C5127B21377E5C00EDC507 /* libicudata.a in Frameworks */,
+				B3C5127821377E5C00EDC507 /* libicuuc.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,7 +398,6 @@
 		B38C420E1E8E001700033ACD /* FastFoundation */ = {
 			isa = PBXGroup;
 			children = (
-				B3B954F821373A9B001B5B93 /* libicui18n.a */,
 				B3B954FA21373B1D001B5B93 /* icu-include */,
 				B38C421B1E8E001700033ACD /* Assets.xcassets */,
 				B30A194520AD37A00073CFB8 /* citm_catalog.json */,
@@ -399,7 +408,12 @@
 				B3B954D62135AAE9001B5B93 /* rusty.a */,
 				B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */,
 				B3C0BBA620B5F0A3006CCEF3 /* ConvertUTF.h */,
-				B3B954ED2135CE56001B5B93 /* jemalloc_ios.a */,
+				B3B955A821375E8C001B5B93 /* jemalloc_universal.a */,
+				B3C5127621377E5B00EDC507 /* libicudata.a */,
+				B3C5127421377E5800EDC507 /* libicui18n.a */,
+				B3C5127521377E5800EDC507 /* libicuio.a */,
+				B3C5127721377E5B00EDC507 /* libicutu.a */,
+				B3C5127321377E5700EDC507 /* libicuuc.a */,
 				B38C42121E8E001700033ACD /* FFOAppDelegate.h */,
 				B38C42131E8E001700033ACD /* FFOAppDelegate.m */,
 				B3C0BBA220B53607006CCEF3 /* FFOArray.h */,
@@ -895,6 +909,10 @@
 				LLVM_LTO = NO;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-stdlib=libc++",
+					"-lstdc++",
+				);
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
 			};
@@ -938,6 +956,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LLVM_LTO = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = (
+					"-stdlib=libc++",
+					"-lstdc++",
+				);
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

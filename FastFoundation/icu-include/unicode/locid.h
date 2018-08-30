@@ -31,12 +31,12 @@
 #ifndef LOCID_H
 #define LOCID_H
 
-#include "unicode/utypes.h"
-#include "unicode/uobject.h"
-#include "unicode/unistr.h"
-#include "unicode/putil.h"
-#include "unicode/uloc.h"
-#include "unicode/strenum.h"
+#include "utypes.h"
+#include "uobject.h"
+#include "unistr.h"
+#include "putil.h"
+#include "uloc.h"
+#include "strenum.h"
 
 /**
  * \file

@@ -84,7 +84,7 @@
  *  This value will change in the subsequent releases of ICU
  *  @stable ICU 2.6
  */
-#define U_ICU_VERSION_SUFFIX _58
+#define U_ICU_VERSION_SUFFIX _57
 
 /**
  * \def U_DEF2_ICU_ENTRY_POINT_RENAME

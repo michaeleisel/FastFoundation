@@ -49,9 +49,9 @@
 #ifndef UCNV_H
 #define UCNV_H
 
-#include "unicode/ucnv_err.h"
-#include "unicode/uenum.h"
-#include "unicode/localpointer.h"
+#include "ucnv_err.h"
+#include "uenum.h"
+#include "localpointer.h"
 
 #ifndef __USET_H__
 
