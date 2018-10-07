@@ -10,6 +10,8 @@
 
 @interface NSString (FFOMethods)
 
+CFStringRef FFOStringFromCString(const char *cString, NSInteger length);
+
 - (NSArray <NSString *>*)ffo_componentsSeparatedByString:(NSString *)separator;
 - (NSString *)ffo_lowercaseString;
 - (NSString *)ffo_stringByReplacingOccurrencesOfString:(NSString *)target withString:(NSString *)replacement;

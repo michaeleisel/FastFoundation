@@ -8,4 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 CFAllocatorRef FFOJemallocAllocator();
+
+#ifdef __cplusplus
+}
+#endif

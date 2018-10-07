@@ -155,10 +155,10 @@ static inline void FFOFree(void *buffer, BOOL usesMalloc) {
         usesMalloc = YES;
     }
 
-    char *stringBuffer = je_malloc(bytesWritten);
+    /*char *stringBuffer = je_malloc(bytesWritten);
     memcpy(stringBuffer, buffer, bytesWritten);
-    CFStringRef string = CFStringCreateWithCStringNoCopy(FFOJemallocAllocator(), stringBuffer, kCFStringEncodingUTF8, FFOJemallocAllocator());
-    // CFStringRef string = CFStringCreateWithCString(kCFAllocatorDefault, buffer, kCFStringEncodingUTF8);
+    CFStringRef string = CFStringCreateWithCStringNoCopy(FFOJemallocAllocator(), stringBuffer, kCFStringEncodingUTF8, FFOJemallocAllocator());*/
+    CFStringRef string = CFStringCreateWithCString(kCFAllocatorDefault, buffer, kCFStringEncodingUTF8);
     FFOFree(buffer, usesMalloc);
     return CFBridgingRelease(string);
 }

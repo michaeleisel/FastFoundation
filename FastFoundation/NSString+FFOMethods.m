@@ -7,7 +7,9 @@
 //
 
 #import "NSString+FFOMethods.h"
+#import "jemalloc.h"
 #import <pthread.h>
+#import "FFOJemallocAllocator.h"
 
 typedef struct {
 	char *string;
@@ -25,6 +27,13 @@ static const NSInteger kFFOBufferArrayCapacity = 100;
 static FFOBuffer sBuffers[kFFOBufferCount];
 
 @implementation NSString (FFOMethods)
+
+// length does not include nil terminator
+CFStringRef FFOStringFromCString(const char *cString, NSInteger length) {
+    char *newCString = je_malloc(length + 1);
+    memcpy(newCString, cString, length + 1);
+    return CFStringCreateWithCStringNoCopy(kCFAllocatorDefault, newCString, kCFStringEncodingUTF8, FFOJemallocAllocator());
+}
 
 // todo: make certain strings valid until end of scope
 - (NSArray <NSString *>*)ffo_componentsSeparatedByString:(NSString *)separator
@@ -46,7 +55,7 @@ static FFOBuffer sBuffers[kFFOBufferCount];
 		nextMatch = (char *)(strstr(remainingStr, sepStr) ?: &buffer->string[originalStrLength]);
 		char prevValue = *nextMatch;
 		*nextMatch = '\0';
-		CFStringRef component = CFStringCreateWithCString(kCFAllocatorDefault, remainingStr, kCFStringEncodingUTF8);
+        CFStringRef component = FFOStringFromCString(remainingStr, strlen(remainingStr));
 		*nextMatch = prevValue;
 		buffer->array[buffer->arrayLength++] = component;
 		remainingStr = nextMatch + sepLength;
