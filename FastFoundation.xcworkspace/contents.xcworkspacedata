@@ -4,7 +4,4 @@
    <FileRef
       location = "group:FastFoundation.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:../icuXcode/icuXcode.xcodeproj">
-   </FileRef>
 </Workspace>

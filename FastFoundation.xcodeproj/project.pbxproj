@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		B301A39020BCC1CF00AF3378 /* twitter.json in Resources */ = {isa = PBXBuildFile; fileRef = B301A38F20BCC1CE00AF3378 /* twitter.json */; };
 		B30A194620AD37A00073CFB8 /* citm_catalog.json in Resources */ = {isa = PBXBuildFile; fileRef = B30A194520AD37A00073CFB8 /* citm_catalog.json */; };
-		B32126AE213ECDB2007929FA /* libicuXcode.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B32126AD213ECDB2007929FA /* libicuXcode.a */; };
-		B321275F213ECEEA007929FA /* a.rb in Resources */ = {isa = PBXBuildFile; fileRef = B321275E213ECEE9007929FA /* a.rb */; };
 		B32879F31E8E1625007E49B7 /* FFODateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = B32879F21E8E1625007E49B7 /* FFODateFormatter.m */; };
 		B3405E7821399CBD00F8723A /* libjemalloc.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B3405E7721399CBD00F8723A /* libjemalloc.2.dylib */; };
 		B3405E7921399CC000F8723A /* libjemalloc.2.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = B3405E7721399CBD00F8723A /* libjemalloc.2.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -28,7 +26,6 @@
 		B3CF25F520B6486300C1A65E /* j1.json in Resources */ = {isa = PBXBuildFile; fileRef = B3CF25F420B6486200C1A65E /* j1.json */; };
 		B3CF25F720B6486800C1A65E /* j2.json in Resources */ = {isa = PBXBuildFile; fileRef = B3CF25F620B6486800C1A65E /* j2.json */; };
 		B3D753B9208946A90090C3E2 /* NSString+FFOMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C422B1E8E029100033ACD /* NSString+FFOMethods.m */; };
-		B3F39169214ADBC9005E2776 /* icudt57l in Resources */ = {isa = PBXBuildFile; fileRef = B3F39168214ADBC9005E2776 /* icudt57l */; };
 		B3F73C41207C383300E11E2D /* fishhook.c in Sources */ = {isa = PBXBuildFile; fileRef = B3F73C40207C383300E11E2D /* fishhook.c */; };
 /* End PBXBuildFile section */
 
@@ -54,179 +51,6 @@
 		B3178BCC20B64C9400E3076A /* FFORapidJsonTester.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FFORapidJsonTester.cpp; sourceTree = "<group>"; };
 		B3178BCE20B64EE500E3076A /* FFOJsonTestTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOJsonTestTypes.h; sourceTree = "<group>"; };
 		B32126AD213ECDB2007929FA /* libicuXcode.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libicuXcode.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		B32126B2213ECEE9007929FA /* translit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = translit.h; sourceTree = "<group>"; };
-		B32126B3213ECEE9007929FA /* ustdio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ustdio.h; sourceTree = "<group>"; };
-		B32126B4213ECEE9007929FA /* utf_old.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utf_old.h; sourceTree = "<group>"; };
-		B32126B5213ECEE9007929FA /* ucsdet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ucsdet.h; sourceTree = "<group>"; };
-		B32126B6213ECEE9007929FA /* tzfmt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tzfmt.h; sourceTree = "<group>"; };
-		B32126B7213ECEE9007929FA /* ubrk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ubrk.h; sourceTree = "<group>"; };
-		B32126B8213ECEE9007929FA /* ufieldpositer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ufieldpositer.h; sourceTree = "<group>"; };
-		B32126B9213ECEE9007929FA /* stringpiece.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringpiece.h; sourceTree = "<group>"; };
-		B32126BA213ECEE9007929FA /* ucat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ucat.h; sourceTree = "<group>"; };
-		B32126BB213ECEE9007929FA /* tblcoll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tblcoll.h; sourceTree = "<group>"; };
-		B32126BC213ECEE9007929FA /* dtfmtsym.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtfmtsym.h; sourceTree = "<group>"; };
-		B32126BD213ECEE9007929FA /* unirepl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unirepl.h; sourceTree = "<group>"; };
-		B32126BE213ECEE9007929FA /* ptypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ptypes.h; sourceTree = "<group>"; };
-		B32126BF213ECEE9007929FA /* fmtable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fmtable.h; sourceTree = "<group>"; };
-		B32126C0213ECEE9007929FA /* dtitvfmt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtitvfmt.h; sourceTree = "<group>"; };
-		B32126C1213ECEE9007929FA /* choicfmt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = choicfmt.h; sourceTree = "<group>"; };
-		B32126C2213ECEE9007929FA /* usetiter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = usetiter.h; sourceTree = "<group>"; };
-		B32126C3213ECEE9007929FA /* errorcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = errorcode.h; sourceTree = "<group>"; };
-		B32126C4213ECEE9007929FA /* tznames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tznames.h; sourceTree = "<group>"; };
-		B32126C5213ECEE9007929FA /* dtintrv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtintrv.h; sourceTree = "<group>"; };
-		B32126C6213ECEE9007929FA /* ucurr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ucurr.h; sourceTree = "<group>"; };
-		B32126C7213ECEE9007929FA /* icuplug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = icuplug.h; sourceTree = "<group>"; };
-		B32126C8213ECEE9007929FA /* uregion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uregion.h; sourceTree = "<group>"; };
-		B32126C9213ECEE9007929FA /* utext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utext.h; sourceTree = "<group>"; };
-		B32126CA213ECEE9007929FA /* parsepos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parsepos.h; sourceTree = "<group>"; };
-		B32126CB213ECEE9007929FA /* ucal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ucal.h; sourceTree = "<group>"; };
-		B32126CC213ECEE9007929FA /* fpositer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fpositer.h; sourceTree = "<group>"; };
-		B32126CD213ECEE9007929FA /* dtitvinf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtitvinf.h; sourceTree = "<group>"; };
-		B32126CE213ECEE9007929FA /* rbnf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rbnf.h; sourceTree = "<group>"; };
-		B32126CF213ECEE9007929FA /* udat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = udat.h; sourceTree = "<group>"; };
-		B32126D0213ECEE9007929FA /* urep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = urep.h; sourceTree = "<group>"; };
-		B32126D1213ECEE9007929FA /* utf32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utf32.h; sourceTree = "<group>"; };
-		B32126D2213ECEE9007929FA /* vtzone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vtzone.h; sourceTree = "<group>"; };
-		B32126D3213ECEE9007929FA /* ustring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ustring.h; sourceTree = "<group>"; };
-		B32126D4213ECEE9007929FA /* ubiditransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ubiditransform.h; sourceTree = "<group>"; };
-		B32126D5213ECEE9007929FA /* uenum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uenum.h; sourceTree = "<group>"; };
-		B32126D6213ECEE9007929FA /* appendable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = appendable.h; sourceTree = "<group>"; };
-		B32126D7213ECEE9007929FA /* usearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = usearch.h; sourceTree = "<group>"; };
-		B32126D8213ECEE9007929FA /* numsys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = numsys.h; sourceTree = "<group>"; };
-		B32126D9213ECEE9007929FA /* timezone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = timezone.h; sourceTree = "<group>"; };
-		B32126DA213ECEE9007929FA /* uset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uset.h; sourceTree = "<group>"; };
-		B32126DB213ECEE9007929FA /* coleitr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coleitr.h; sourceTree = "<group>"; };
-		B32126DC213ECEE9007929FA /* schriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = schriter.h; sourceTree = "<group>"; };
-		B32126DD213ECEE9007929FA /* msgfmt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = msgfmt.h; sourceTree = "<group>"; };
-		B32126DE213ECEE9007929FA /* fieldpos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fieldpos.h; sourceTree = "<group>"; };
-		B32126DF213ECEE9007929FA /* simpletz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simpletz.h; sourceTree = "<group>"; };
-		B32126E0213ECEE9007929FA /* uldnames.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uldnames.h; sourceTree = "<group>"; };
-		B32126E1213ECEE9007929FA /* uiter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uiter.h; sourceTree = "<group>"; };
-		B32126E2213ECEE9007929FA /* umsg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = umsg.h; sourceTree = "<group>"; };
-		B32126E3213ECEE9007929FA /* sortkey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sortkey.h; sourceTree = "<group>"; };
-		B32126E4213ECEE9007929FA /* docmain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = docmain.h; sourceTree = "<group>"; };
-		B32126E5213ECEE9007929FA /* uniset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uniset.h; sourceTree = "<group>"; };
-		B32126E6213ECEE9007929FA /* basictz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = basictz.h; sourceTree = "<group>"; };
-		B32126E7213ECEE9007929FA /* udata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = udata.h; sourceTree = "<group>"; };
-		B32126E8213ECEE9007929FA /* stringtriebuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stringtriebuilder.h; sourceTree = "<group>"; };
-		B32126E9213ECEE9007929FA /* chariter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chariter.h; sourceTree = "<group>"; };
-		B32126EA213ECEE9007929FA /* umisc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = umisc.h; sourceTree = "<group>"; };
-		B32126EB213ECEE9007929FA /* reldatefmt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = reldatefmt.h; sourceTree = "<group>"; };
-		B32126EC213ECEE9007929FA /* uloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uloc.h; sourceTree = "<group>"; };
-		B32126ED213ECEE9007929FA /* plurrule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = plurrule.h; sourceTree = "<group>"; };
-		B32126EE213ECEE9007929FA /* bytestriebuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bytestriebuilder.h; sourceTree = "<group>"; };
-		B32126EF213ECEE9007929FA /* measunit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = measunit.h; sourceTree = "<group>"; };
-		B32126F0213ECEE9007929FA /* utrace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utrace.h; sourceTree = "<group>"; };
-		B32126F1213ECEE9007929FA /* locdspnm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = locdspnm.h; sourceTree = "<group>"; };
-		B32126F2213ECEE9007929FA /* gregocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gregocal.h; sourceTree = "<group>"; };
-		B32126F3213ECEE9007929FA /* uchriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uchriter.h; sourceTree = "<group>"; };
-		B32126F4213ECEE9007929FA /* enumset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = enumset.h; sourceTree = "<group>"; };
-		B32126F5213ECEE9007929FA /* utf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utf.h; sourceTree = "<group>"; };
-		B32126F6213ECEE9007929FA /* measure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = measure.h; sourceTree = "<group>"; };
-		B32126F7213ECEE9007929FA /* tzrule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tzrule.h; sourceTree = "<group>"; };
-		B32126F8213ECEE9007929FA /* strenum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = strenum.h; sourceTree = "<group>"; };
-		B32126F9213ECEE9007929FA /* regex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = regex.h; sourceTree = "<group>"; };
-		B32126FA213ECEE9007929FA /* gender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gender.h; sourceTree = "<group>"; };
-		B32126FB213ECEE9007929FA /* dcfmtsym.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dcfmtsym.h; sourceTree = "<group>"; };
-		B32126FC213ECEE9007929FA /* ucnv_err.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ucnv_err.h; sourceTree = "<group>"; };
-		B32126FD213ECEE9007929FA /* decimfmt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = decimfmt.h; sourceTree = "<group>"; };
-		B32126FE213ECEE9007929FA /* bytestrie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bytestrie.h; sourceTree = "<group>"; };
-		B32126FF213ECEE9007929FA /* udatpg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = udatpg.h; sourceTree = "<group>"; };
-		B3212700213ECEE9007929FA /* listformatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = listformatter.h; sourceTree = "<group>"; };
-		B3212701213ECEE9007929FA /* uobject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uobject.h; sourceTree = "<group>"; };
-		B3212702213ECEE9007929FA /* calendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = calendar.h; sourceTree = "<group>"; };
-		B3212703213ECEE9007929FA /* ures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ures.h; sourceTree = "<group>"; };
-		B3212704213ECEE9007929FA /* normlzr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = normlzr.h; sourceTree = "<group>"; };
-		B3212705213ECEE9007929FA /* usprep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = usprep.h; sourceTree = "<group>"; };
-		B3212706213ECEE9007929FA /* urename.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = urename.h; sourceTree = "<group>"; };
-		B3212707213ECEE9007929FA /* caniter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = caniter.h; sourceTree = "<group>"; };
-		B3212708213ECEE9007929FA /* ucol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ucol.h; sourceTree = "<group>"; };
-		B3212709213ECEE9007929FA /* upluralrules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = upluralrules.h; sourceTree = "<group>"; };
-		B321270A213ECEE9007929FA /* ucharstrie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ucharstrie.h; sourceTree = "<group>"; };
-		B321270B213ECEE9007929FA /* tmunit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tmunit.h; sourceTree = "<group>"; };
-		B321270C213ECEE9007929FA /* unistr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unistr.h; sourceTree = "<group>"; };
-		B321270D213ECEE9007929FA /* rbbi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rbbi.h; sourceTree = "<group>"; };
-		B321270E213ECEE9007929FA /* ulocdata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ulocdata.h; sourceTree = "<group>"; };
-		B321270F213ECEE9007929FA /* idna.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = idna.h; sourceTree = "<group>"; };
-		B3212710213ECEE9007929FA /* unorm2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unorm2.h; sourceTree = "<group>"; };
-		B3212711213ECEE9007929FA /* dtptngen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtptngen.h; sourceTree = "<group>"; };
-		B3212712213ECEE9007929FA /* dbbi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dbbi.h; sourceTree = "<group>"; };
-		B3212713213ECEE9007929FA /* bytestream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bytestream.h; sourceTree = "<group>"; };
-		B3212714213ECEE9007929FA /* uversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uversion.h; sourceTree = "<group>"; };
-		B3212715213ECEE9007929FA /* messagepattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = messagepattern.h; sourceTree = "<group>"; };
-		B3212716213ECEE9007929FA /* uidna.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uidna.h; sourceTree = "<group>"; };
-		B3212717213ECEE9007929FA /* filteredbrk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = filteredbrk.h; sourceTree = "<group>"; };
-		B3212718213ECEE9007929FA /* tmutamt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tmutamt.h; sourceTree = "<group>"; };
-		B3212719213ECEE9007929FA /* symtable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = symtable.h; sourceTree = "<group>"; };
-		B321271A213ECEE9007929FA /* ucasemap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ucasemap.h; sourceTree = "<group>"; };
-		B321271B213ECEE9007929FA /* ucoleitr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ucoleitr.h; sourceTree = "<group>"; };
-		B321271C213ECEE9007929FA /* compactdecimalformat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = compactdecimalformat.h; sourceTree = "<group>"; };
-		B321271D213ECEE9007929FA /* unum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unum.h; sourceTree = "<group>"; };
-		B321271E213ECEE9007929FA /* udisplaycontext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = udisplaycontext.h; sourceTree = "<group>"; };
-		B321271F213ECEE9007929FA /* tztrans.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tztrans.h; sourceTree = "<group>"; };
-		B3212720213ECEE9007929FA /* umachine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = umachine.h; sourceTree = "<group>"; };
-		B3212721213ECEE9007929FA /* datefmt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = datefmt.h; sourceTree = "<group>"; };
-		B3212722213ECEE9007929FA /* utmscale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utmscale.h; sourceTree = "<group>"; };
-		B3212723213ECEE9007929FA /* coll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coll.h; sourceTree = "<group>"; };
-		B3212724213ECEE9007929FA /* currpinf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = currpinf.h; sourceTree = "<group>"; };
-		B3212725213ECEE9007929FA /* uregex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uregex.h; sourceTree = "<group>"; };
-		B3212726213ECEE9007929FA /* tmutfmt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tmutfmt.h; sourceTree = "<group>"; };
-		B3212727213ECEE9007929FA /* plurfmt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = plurfmt.h; sourceTree = "<group>"; };
-		B3212728213ECEE9007929FA /* ustringtrie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ustringtrie.h; sourceTree = "<group>"; };
-		B3212729213ECEE9007929FA /* smpdtfmt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smpdtfmt.h; sourceTree = "<group>"; };
-		B321272A213ECEE9007929FA /* icudataver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = icudataver.h; sourceTree = "<group>"; };
-		B321272B213ECEE9007929FA /* uchar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uchar.h; sourceTree = "<group>"; };
-		B321272C213ECEE9007929FA /* unorm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unorm.h; sourceTree = "<group>"; };
-		B321272D213ECEE9007929FA /* ushape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ushape.h; sourceTree = "<group>"; };
-		B321272E213ECEE9007929FA /* unifunct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unifunct.h; sourceTree = "<group>"; };
-		B321272F213ECEE9007929FA /* ugender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ugender.h; sourceTree = "<group>"; };
-		B3212730213ECEE9007929FA /* selfmt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = selfmt.h; sourceTree = "<group>"; };
-		B3212731213ECEE9007929FA /* uformattable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uformattable.h; sourceTree = "<group>"; };
-		B3212732213ECEE9007929FA /* ustream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ustream.h; sourceTree = "<group>"; };
-		B3212733213ECEE9007929FA /* simpleformatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = simpleformatter.h; sourceTree = "<group>"; };
-		B3212734213ECEE9007929FA /* ucnv_cb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ucnv_cb.h; sourceTree = "<group>"; };
-		B3212735213ECEE9007929FA /* curramt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curramt.h; sourceTree = "<group>"; };
-		B3212736213ECEE9007929FA /* locid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = locid.h; sourceTree = "<group>"; };
-		B3212737213ECEE9007929FA /* udateintervalformat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = udateintervalformat.h; sourceTree = "<group>"; };
-		B3212738213ECEE9007929FA /* resbund.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = resbund.h; sourceTree = "<group>"; };
-		B3212739213ECEE9007929FA /* ubidi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ubidi.h; sourceTree = "<group>"; };
-		B321273A213ECEE9007929FA /* stsearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stsearch.h; sourceTree = "<group>"; };
-		B321273B213ECEE9007929FA /* alphaindex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = alphaindex.h; sourceTree = "<group>"; };
-		B321273C213ECEE9007929FA /* uvernum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uvernum.h; sourceTree = "<group>"; };
-		B321273D213ECEE9007929FA /* unimatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unimatch.h; sourceTree = "<group>"; };
-		B321273E213ECEE9007929FA /* rbtz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rbtz.h; sourceTree = "<group>"; };
-		B321273F213ECEE9007929FA /* ucnvsel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ucnvsel.h; sourceTree = "<group>"; };
-		B3212740213ECEE9007929FA /* uspoof.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uspoof.h; sourceTree = "<group>"; };
-		B3212741213ECEE9007929FA /* region.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = region.h; sourceTree = "<group>"; };
-		B3212742213ECEE9007929FA /* ureldatefmt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ureldatefmt.h; sourceTree = "<group>"; };
-		B3212743213ECEE9007929FA /* utrans.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utrans.h; sourceTree = "<group>"; };
-		B3212744213ECEE9007929FA /* parseerr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parseerr.h; sourceTree = "<group>"; };
-		B3212745213ECEE9007929FA /* putil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = putil.h; sourceTree = "<group>"; };
-		B3212746213ECEE9007929FA /* format.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = format.h; sourceTree = "<group>"; };
-		B3212747213ECEE9007929FA /* scientificnumberformatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scientificnumberformatter.h; sourceTree = "<group>"; };
-		B3212748213ECEE9007929FA /* normalizer2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = normalizer2.h; sourceTree = "<group>"; };
-		B3212749213ECEE9007929FA /* dtrule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dtrule.h; sourceTree = "<group>"; };
-		B321274A213ECEE9007929FA /* ucnv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ucnv.h; sourceTree = "<group>"; };
-		B321274B213ECEE9007929FA /* ucharstriebuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ucharstriebuilder.h; sourceTree = "<group>"; };
-		B321274C213ECEE9007929FA /* search.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = search.h; sourceTree = "<group>"; };
-		B321274D213ECEE9007929FA /* unumsys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unumsys.h; sourceTree = "<group>"; };
-		B321274E213ECEE9007929FA /* uconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uconfig.h; sourceTree = "<group>"; };
-		B321274F213ECEE9007929FA /* utf16.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utf16.h; sourceTree = "<group>"; };
-		B3212750213ECEE9007929FA /* brkiter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = brkiter.h; sourceTree = "<group>"; };
-		B3212751213ECEE9007929FA /* platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = platform.h; sourceTree = "<group>"; };
-		B3212752213ECEE9007929FA /* rep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rep.h; sourceTree = "<group>"; };
-		B3212753213ECEE9007929FA /* std_string.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = std_string.h; sourceTree = "<group>"; };
-		B3212754213ECEE9007929FA /* utf8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utf8.h; sourceTree = "<group>"; };
-		B3212755213ECEE9007929FA /* localpointer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = localpointer.h; sourceTree = "<group>"; };
-		B3212756213ECEE9007929FA /* uclean.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uclean.h; sourceTree = "<group>"; };
-		B3212757213ECEE9007929FA /* uscript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uscript.h; sourceTree = "<group>"; };
-		B3212758213ECEE9007929FA /* numfmt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = numfmt.h; sourceTree = "<group>"; };
-		B3212759213ECEE9007929FA /* currunit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = currunit.h; sourceTree = "<group>"; };
-		B321275A213ECEE9007929FA /* utypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utypes.h; sourceTree = "<group>"; };
-		B321275B213ECEE9007929FA /* ulistformatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ulistformatter.h; sourceTree = "<group>"; };
-		B321275C213ECEE9007929FA /* measfmt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = measfmt.h; sourceTree = "<group>"; };
-		B321275D213ECEE9007929FA /* unifilt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unifilt.h; sourceTree = "<group>"; };
-		B321275E213ECEE9007929FA /* a.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = a.rb; sourceTree = "<group>"; };
 		B32879F11E8E1625007E49B7 /* FFODateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFODateFormatter.h; sourceTree = "<group>"; };
 		B32879F21E8E1625007E49B7 /* FFODateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFODateFormatter.m; sourceTree = "<group>"; };
 		B3405E7721399CBD00F8723A /* libjemalloc.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libjemalloc.2.dylib; sourceTree = "<group>"; };
@@ -304,7 +128,6 @@
 		B3CF266F20B64B7000C1A65E /* inttypes.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = inttypes.h; sourceTree = "<group>"; };
 		B3CF267020B64B7000C1A65E /* stdint.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = stdint.h; sourceTree = "<group>"; };
 		B3D753B72089249A0090C3E2 /* rust_bindings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rust_bindings.h; sourceTree = SOURCE_ROOT; };
-		B3F39168214ADBC9005E2776 /* icudt57l */ = {isa = PBXFileReference; lastKnownFileType = folder; path = icudt57l; sourceTree = "<group>"; };
 		B3F73C40207C383300E11E2D /* fishhook.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fishhook.c; sourceTree = "<group>"; };
 		B3F73C42207C383700E11E2D /* fishhook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fishhook.h; sourceTree = "<group>"; };
 		B3F73C44207C403D00E11E2D /* ARKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ARKit.framework; path = System/Library/Frameworks/ARKit.framework; sourceTree = SDKROOT; };
@@ -368,201 +191,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B3405E7821399CBD00F8723A /* libjemalloc.2.dylib in Frameworks */,
-				B32126AE213ECDB2007929FA /* libicuXcode.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B32126B0213ECEE9007929FA /* icu-include */ = {
-			isa = PBXGroup;
-			children = (
-				B32126B1213ECEE9007929FA /* unicode */,
-				B321275E213ECEE9007929FA /* a.rb */,
-			);
-			path = "icu-include";
-			sourceTree = "<group>";
-		};
-		B32126B1213ECEE9007929FA /* unicode */ = {
-			isa = PBXGroup;
-			children = (
-				B32126B2213ECEE9007929FA /* translit.h */,
-				B32126B3213ECEE9007929FA /* ustdio.h */,
-				B32126B4213ECEE9007929FA /* utf_old.h */,
-				B32126B5213ECEE9007929FA /* ucsdet.h */,
-				B32126B6213ECEE9007929FA /* tzfmt.h */,
-				B32126B7213ECEE9007929FA /* ubrk.h */,
-				B32126B8213ECEE9007929FA /* ufieldpositer.h */,
-				B32126B9213ECEE9007929FA /* stringpiece.h */,
-				B32126BA213ECEE9007929FA /* ucat.h */,
-				B32126BB213ECEE9007929FA /* tblcoll.h */,
-				B32126BC213ECEE9007929FA /* dtfmtsym.h */,
-				B32126BD213ECEE9007929FA /* unirepl.h */,
-				B32126BE213ECEE9007929FA /* ptypes.h */,
-				B32126BF213ECEE9007929FA /* fmtable.h */,
-				B32126C0213ECEE9007929FA /* dtitvfmt.h */,
-				B32126C1213ECEE9007929FA /* choicfmt.h */,
-				B32126C2213ECEE9007929FA /* usetiter.h */,
-				B32126C3213ECEE9007929FA /* errorcode.h */,
-				B32126C4213ECEE9007929FA /* tznames.h */,
-				B32126C5213ECEE9007929FA /* dtintrv.h */,
-				B32126C6213ECEE9007929FA /* ucurr.h */,
-				B32126C7213ECEE9007929FA /* icuplug.h */,
-				B32126C8213ECEE9007929FA /* uregion.h */,
-				B32126C9213ECEE9007929FA /* utext.h */,
-				B32126CA213ECEE9007929FA /* parsepos.h */,
-				B32126CB213ECEE9007929FA /* ucal.h */,
-				B32126CC213ECEE9007929FA /* fpositer.h */,
-				B32126CD213ECEE9007929FA /* dtitvinf.h */,
-				B32126CE213ECEE9007929FA /* rbnf.h */,
-				B32126CF213ECEE9007929FA /* udat.h */,
-				B32126D0213ECEE9007929FA /* urep.h */,
-				B32126D1213ECEE9007929FA /* utf32.h */,
-				B32126D2213ECEE9007929FA /* vtzone.h */,
-				B32126D3213ECEE9007929FA /* ustring.h */,
-				B32126D4213ECEE9007929FA /* ubiditransform.h */,
-				B32126D5213ECEE9007929FA /* uenum.h */,
-				B32126D6213ECEE9007929FA /* appendable.h */,
-				B32126D7213ECEE9007929FA /* usearch.h */,
-				B32126D8213ECEE9007929FA /* numsys.h */,
-				B32126D9213ECEE9007929FA /* timezone.h */,
-				B32126DA213ECEE9007929FA /* uset.h */,
-				B32126DB213ECEE9007929FA /* coleitr.h */,
-				B32126DC213ECEE9007929FA /* schriter.h */,
-				B32126DD213ECEE9007929FA /* msgfmt.h */,
-				B32126DE213ECEE9007929FA /* fieldpos.h */,
-				B32126DF213ECEE9007929FA /* simpletz.h */,
-				B32126E0213ECEE9007929FA /* uldnames.h */,
-				B32126E1213ECEE9007929FA /* uiter.h */,
-				B32126E2213ECEE9007929FA /* umsg.h */,
-				B32126E3213ECEE9007929FA /* sortkey.h */,
-				B32126E4213ECEE9007929FA /* docmain.h */,
-				B32126E5213ECEE9007929FA /* uniset.h */,
-				B32126E6213ECEE9007929FA /* basictz.h */,
-				B32126E7213ECEE9007929FA /* udata.h */,
-				B32126E8213ECEE9007929FA /* stringtriebuilder.h */,
-				B32126E9213ECEE9007929FA /* chariter.h */,
-				B32126EA213ECEE9007929FA /* umisc.h */,
-				B32126EB213ECEE9007929FA /* reldatefmt.h */,
-				B32126EC213ECEE9007929FA /* uloc.h */,
-				B32126ED213ECEE9007929FA /* plurrule.h */,
-				B32126EE213ECEE9007929FA /* bytestriebuilder.h */,
-				B32126EF213ECEE9007929FA /* measunit.h */,
-				B32126F0213ECEE9007929FA /* utrace.h */,
-				B32126F1213ECEE9007929FA /* locdspnm.h */,
-				B32126F2213ECEE9007929FA /* gregocal.h */,
-				B32126F3213ECEE9007929FA /* uchriter.h */,
-				B32126F4213ECEE9007929FA /* enumset.h */,
-				B32126F5213ECEE9007929FA /* utf.h */,
-				B32126F6213ECEE9007929FA /* measure.h */,
-				B32126F7213ECEE9007929FA /* tzrule.h */,
-				B32126F8213ECEE9007929FA /* strenum.h */,
-				B32126F9213ECEE9007929FA /* regex.h */,
-				B32126FA213ECEE9007929FA /* gender.h */,
-				B32126FB213ECEE9007929FA /* dcfmtsym.h */,
-				B32126FC213ECEE9007929FA /* ucnv_err.h */,
-				B32126FD213ECEE9007929FA /* decimfmt.h */,
-				B32126FE213ECEE9007929FA /* bytestrie.h */,
-				B32126FF213ECEE9007929FA /* udatpg.h */,
-				B3212700213ECEE9007929FA /* listformatter.h */,
-				B3212701213ECEE9007929FA /* uobject.h */,
-				B3212702213ECEE9007929FA /* calendar.h */,
-				B3212703213ECEE9007929FA /* ures.h */,
-				B3212704213ECEE9007929FA /* normlzr.h */,
-				B3212705213ECEE9007929FA /* usprep.h */,
-				B3212706213ECEE9007929FA /* urename.h */,
-				B3212707213ECEE9007929FA /* caniter.h */,
-				B3212708213ECEE9007929FA /* ucol.h */,
-				B3212709213ECEE9007929FA /* upluralrules.h */,
-				B321270A213ECEE9007929FA /* ucharstrie.h */,
-				B321270B213ECEE9007929FA /* tmunit.h */,
-				B321270C213ECEE9007929FA /* unistr.h */,
-				B321270D213ECEE9007929FA /* rbbi.h */,
-				B321270E213ECEE9007929FA /* ulocdata.h */,
-				B321270F213ECEE9007929FA /* idna.h */,
-				B3212710213ECEE9007929FA /* unorm2.h */,
-				B3212711213ECEE9007929FA /* dtptngen.h */,
-				B3212712213ECEE9007929FA /* dbbi.h */,
-				B3212713213ECEE9007929FA /* bytestream.h */,
-				B3212714213ECEE9007929FA /* uversion.h */,
-				B3212715213ECEE9007929FA /* messagepattern.h */,
-				B3212716213ECEE9007929FA /* uidna.h */,
-				B3212717213ECEE9007929FA /* filteredbrk.h */,
-				B3212718213ECEE9007929FA /* tmutamt.h */,
-				B3212719213ECEE9007929FA /* symtable.h */,
-				B321271A213ECEE9007929FA /* ucasemap.h */,
-				B321271B213ECEE9007929FA /* ucoleitr.h */,
-				B321271C213ECEE9007929FA /* compactdecimalformat.h */,
-				B321271D213ECEE9007929FA /* unum.h */,
-				B321271E213ECEE9007929FA /* udisplaycontext.h */,
-				B321271F213ECEE9007929FA /* tztrans.h */,
-				B3212720213ECEE9007929FA /* umachine.h */,
-				B3212721213ECEE9007929FA /* datefmt.h */,
-				B3212722213ECEE9007929FA /* utmscale.h */,
-				B3212723213ECEE9007929FA /* coll.h */,
-				B3212724213ECEE9007929FA /* currpinf.h */,
-				B3212725213ECEE9007929FA /* uregex.h */,
-				B3212726213ECEE9007929FA /* tmutfmt.h */,
-				B3212727213ECEE9007929FA /* plurfmt.h */,
-				B3212728213ECEE9007929FA /* ustringtrie.h */,
-				B3212729213ECEE9007929FA /* smpdtfmt.h */,
-				B321272A213ECEE9007929FA /* icudataver.h */,
-				B321272B213ECEE9007929FA /* uchar.h */,
-				B321272C213ECEE9007929FA /* unorm.h */,
-				B321272D213ECEE9007929FA /* ushape.h */,
-				B321272E213ECEE9007929FA /* unifunct.h */,
-				B321272F213ECEE9007929FA /* ugender.h */,
-				B3212730213ECEE9007929FA /* selfmt.h */,
-				B3212731213ECEE9007929FA /* uformattable.h */,
-				B3212732213ECEE9007929FA /* ustream.h */,
-				B3212733213ECEE9007929FA /* simpleformatter.h */,
-				B3212734213ECEE9007929FA /* ucnv_cb.h */,
-				B3212735213ECEE9007929FA /* curramt.h */,
-				B3212736213ECEE9007929FA /* locid.h */,
-				B3212737213ECEE9007929FA /* udateintervalformat.h */,
-				B3212738213ECEE9007929FA /* resbund.h */,
-				B3212739213ECEE9007929FA /* ubidi.h */,
-				B321273A213ECEE9007929FA /* stsearch.h */,
-				B321273B213ECEE9007929FA /* alphaindex.h */,
-				B321273C213ECEE9007929FA /* uvernum.h */,
-				B321273D213ECEE9007929FA /* unimatch.h */,
-				B321273E213ECEE9007929FA /* rbtz.h */,
-				B321273F213ECEE9007929FA /* ucnvsel.h */,
-				B3212740213ECEE9007929FA /* uspoof.h */,
-				B3212741213ECEE9007929FA /* region.h */,
-				B3212742213ECEE9007929FA /* ureldatefmt.h */,
-				B3212743213ECEE9007929FA /* utrans.h */,
-				B3212744213ECEE9007929FA /* parseerr.h */,
-				B3212745213ECEE9007929FA /* putil.h */,
-				B3212746213ECEE9007929FA /* format.h */,
-				B3212747213ECEE9007929FA /* scientificnumberformatter.h */,
-				B3212748213ECEE9007929FA /* normalizer2.h */,
-				B3212749213ECEE9007929FA /* dtrule.h */,
-				B321274A213ECEE9007929FA /* ucnv.h */,
-				B321274B213ECEE9007929FA /* ucharstriebuilder.h */,
-				B321274C213ECEE9007929FA /* search.h */,
-				B321274D213ECEE9007929FA /* unumsys.h */,
-				B321274E213ECEE9007929FA /* uconfig.h */,
-				B321274F213ECEE9007929FA /* utf16.h */,
-				B3212750213ECEE9007929FA /* brkiter.h */,
-				B3212751213ECEE9007929FA /* platform.h */,
-				B3212752213ECEE9007929FA /* rep.h */,
-				B3212753213ECEE9007929FA /* std_string.h */,
-				B3212754213ECEE9007929FA /* utf8.h */,
-				B3212755213ECEE9007929FA /* localpointer.h */,
-				B3212756213ECEE9007929FA /* uclean.h */,
-				B3212757213ECEE9007929FA /* uscript.h */,
-				B3212758213ECEE9007929FA /* numfmt.h */,
-				B3212759213ECEE9007929FA /* currunit.h */,
-				B321275A213ECEE9007929FA /* utypes.h */,
-				B321275B213ECEE9007929FA /* ulistformatter.h */,
-				B321275C213ECEE9007929FA /* measfmt.h */,
-				B321275D213ECEE9007929FA /* unifilt.h */,
-			);
-			path = unicode;
-			sourceTree = "<group>";
-		};
 		B3486AAC20AE640000C7291B /* OptimizationProfiles */ = {
 			isa = PBXGroup;
 			children = (
@@ -596,12 +230,10 @@
 		B38C420E1E8E001700033ACD /* FastFoundation */ = {
 			isa = PBXGroup;
 			children = (
-				B3F39168214ADBC9005E2776 /* icudt57l */,
 				B38C421B1E8E001700033ACD /* Assets.xcassets */,
 				B30A194520AD37A00073CFB8 /* citm_catalog.json */,
 				B301A38F20BCC1CE00AF3378 /* twitter.json */,
 				B3405E7721399CBD00F8723A /* libjemalloc.2.dylib */,
-				B32126B0213ECEE9007929FA /* icu-include */,
 				B301A38D20B8BD7700AF3378 /* FFOEnvironment.h */,
 				B301A38E20B8CB0700AF3378 /* FFONumberParser.h */,
 				B3B954EF2135CE7F001B5B93 /* jemalloc.h */,
@@ -844,8 +476,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B3CF25F720B6486800C1A65E /* j2.json in Resources */,
-				B3F39169214ADBC9005E2776 /* icudt57l in Resources */,
-				B321275F213ECEEA007929FA /* a.rb in Resources */,
 				B38C42291E8E025200033ACD /* Launch.xib in Resources */,
 				B30A194620AD37A00073CFB8 /* citm_catalog.json in Resources */,
 				B3CF25F520B6486300C1A65E /* j1.json in Resources */,
