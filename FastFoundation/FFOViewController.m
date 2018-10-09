@@ -23,6 +23,7 @@
 #import "FFOJemallocAllocator.h"
 #import <malloc/malloc.h>
 #import <execinfo.h>
+#import <mach-o/dyld.h>
 
 @interface FFOViewController ()
 
@@ -104,68 +105,49 @@ void FFORunTests() {
 void FFOInitialSetup() {
 }
 
+extern char ***_NSGetArgv(void);
+
+void     free(void *ptr) {
+    je_free(ptr);
+}
+
+__alloc_size(1) void    *malloc(size_t __size) {
+    return je_malloc(__size);
+}
+
+extern void cool();
+
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
+    cool();
     FFOInitialSetup();
     FFORunTests();
-
-    printf("zz %d\n\n\n", getpagesize());
-    /*malloc_zone_t *zone = malloc_default_zone();
-    // We want to prevent the original free getting called with memory that was not malloc'd by us
-    zone->free = FFOZoneFree;
-    __sync_synchronize();
-    zone->malloc = FFOZoneMalloc;
-    zone->calloc = FFOZoneCalloc;
-    zone->valloc = FFOZoneValloc;
-    zone->size = FFOZoneSize;*/
-    char *asdf = malloc(20);
-    char *asdf2 = je_malloc(20);
-    NSInteger length = 1e4;
-    NSMutableArray <NSDate *>*dates = [[[NSMutableArray alloc] initWithCapacity:length] autorelease];
-    for (NSInteger i = 0; i < length; i++) {
-        NSTimeInterval interval = arc4random_uniform(60 * 60 * 24 * 365 * 2);
-        interval += arc4random_uniform(1000) / 1000.0;
-        NSDate *date = [NSDate dateWithTimeIntervalSinceNow:-interval];
-        [dates addObject:date];
-    }
     if (NO && FFOIsDebug()) {
         NSLog(@"running in debug, don't benchmark");
     } else {
-        NSInteger nIterations = 1e5;
-        NSInteger bufferLength = 50;
-        char buffer[bufferLength];
-        for (NSInteger i = 0; i < bufferLength - 1; i++) {
-            buffer[i] = 'a' + arc4random_uniform(26);
-        }
-        buffer[bufferLength - 1] = '\0';
-        usleep(500000);
+        NSInteger nIterations = 1e7;
+        NSInteger bytes = 16;
         ({
-            NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
-            formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
-            // NSISO8601DateFormatter *formatter = [[NSISO8601DateFormatter alloc] init];
             CFTimeInterval start = CACurrentMediaTime();
-            ({
-                @autoreleasepool {
-                    int index = 0;
-                    for (NSInteger i = 0; i < nIterations; i++) {
-                    }
+            @autoreleasepool {
+                for (NSInteger i = 0; i < nIterations; i++) {
+                    void *ptr = malloc(bytes);
+                    free(ptr);
                 }
-            });
+            }
             CFTimeInterval end = CACurrentMediaTime();
             printf("apple: %lf\n", (end - start));
         });
         usleep(500000);
         ({
-            // FFODateFormatter *formatter = [[[FFODateFormatter alloc] init] autorelease];
-            // formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
             CFTimeInterval start = CACurrentMediaTime();
-            ({
-                @autoreleasepool {
-                    for (NSInteger i = 0; i < nIterations; i++) {
-                    }
+            @autoreleasepool {
+                for (NSInteger i = 0; i < nIterations; i++) {
+                    void *ptr = je_malloc(bytes); // je_malloc(bytes);
+                    je_free(ptr);
                 }
-            });
+            }
             CFTimeInterval end = CACurrentMediaTime();
             printf("my: %lf\n", (end - start));
         });
