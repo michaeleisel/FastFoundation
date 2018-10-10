@@ -52,10 +52,16 @@
     sShouldStop = NO; \
 })
 
+process_chars(char *str, int32_t length, uint16_t *data);
+
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
     FFORunTests();
+
+    uint16_t a = 0x1234;
+    char *c = (char *)&a;
+    printf("%#x, %#x", c[0], c[1]);
 
     NSString *path = [[NSBundle mainBundle] pathForResource:@"citm_catalog" ofType:@"json"];
     NS_VALID_UNTIL_END_OF_SCOPE NSData *objcData = [[[NSFileManager defaultManager] contentsAtPath:path] mutableCopy];

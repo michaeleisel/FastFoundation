@@ -24,6 +24,7 @@
 		B3CF25F720B6486800C1A65E /* j2.json in Resources */ = {isa = PBXBuildFile; fileRef = B3CF25F620B6486800C1A65E /* j2.json */; };
 		B3D753B9208946A90090C3E2 /* NSString+FFOMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C422B1E8E029100033ACD /* NSString+FFOMethods.m */; };
 		B3F73C41207C383300E11E2D /* fishhook.c in Sources */ = {isa = PBXBuildFile; fileRef = B3F73C40207C383300E11E2D /* fishhook.c */; };
+		B3F9CA26216E866400148A8F /* vectorizer.s in Sources */ = {isa = PBXBuildFile; fileRef = B3F9CA25216E866400148A8F /* vectorizer.s */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -154,6 +155,7 @@
 		B3F73C76207C403F00E11E2D /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		B3F73C77207C403F00E11E2D /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		B3F73C78207C403F00E11E2D /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		B3F9CA25216E866400148A8F /* vectorizer.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = vectorizer.s; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,6 +235,7 @@
 				B3CF264920B64B7000C1A65E /* rapidjson */,
 				B3D753B72089249A0090C3E2 /* rust_bindings.h */,
 				B38C420F1E8E001700033ACD /* Supporting Files */,
+				B3F9CA25216E866400148A8F /* vectorizer.s */,
 			);
 			path = FastFoundation;
 			sourceTree = "<group>";
@@ -453,6 +456,7 @@
 				B38586DE1EEE48BA00496750 /* pcg_basic.c in Sources */,
 				B38C42141E8E001700033ACD /* FFOAppDelegate.m in Sources */,
 				B38586DB1EEE46BD00496750 /* NSArrayFFOMethods.m in Sources */,
+				B3F9CA26216E866400148A8F /* vectorizer.s in Sources */,
 				B3D753B9208946A90090C3E2 /* NSString+FFOMethods.m in Sources */,
 				B3F73C41207C383300E11E2D /* fishhook.c in Sources */,
 				B38C01F920B651B7002D4613 /* FFOJsonParser.m in Sources */,
@@ -559,6 +563,7 @@
 		B38C42241E8E001700033ACD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = arm64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_USE_OPTIMIZATION_PROFILE = NO;
 				DEVELOPMENT_TEAM = LE4EC4296K;
@@ -577,6 +582,7 @@
 		B38C42251E8E001700033ACD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = arm64;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_USE_OPTIMIZATION_PROFILE = NO;
 				DEVELOPMENT_TEAM = LE4EC4296K;
