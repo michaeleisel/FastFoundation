@@ -18,12 +18,12 @@
 #define halfmask_raw v8
 #define adder_scratch v9
 // #define halfmask halfmask_raw##.16b
+#define cc ;
 
 #define string x0
 #define length x1
 #define out x2
-#define end x3
-#define scratch_reg x4
+#define scratch_reg x3
 
 .section    __TEXT,__text,regular,pure_instructions
 .build_version ios, 12, 0
@@ -44,45 +44,37 @@ mov scratch_reg, 0xffff
 movk scratch_reg, 0xffff, lsl 16
 movk scratch_reg, 0xffff, lsl 32
 movk scratch_reg, 0xffff, lsl 48
-// ldr q8, [scratch_reg, x31]
-//ins halfmask_raw.d[0], x0
-//ins halfmask_raw.d[1], x31 // hope this is zero
 
 ins halfmask_raw.d[0], x31 // hope this is zero
 ins halfmask_raw.d[1], scratch_reg
 
-add end, string, length
 iter:
-cmp string, end
-b.ge _end
-// ld4 {vchrs0, vchrs1, vchrs2, vchrs3}, [string]
+subs length, length, #16
+cc a1:
 ldur q2, [string]
 
 cmeq vchrs0, vchrs0, vrepquote
+cc a2:
 and vchrs0, vchrs0, stepmask
-/*cmeq vchrs1, vchrs1, vrepquote
-and vchrs1, vchrs1, stepmask
-cmeq vchrs2, vchrs2, vrepquote
-and vchrs2, vchrs2, stepmask
-cmeq vchrs3, vchrs3, vrepquote
-and vchrs3, vchrs3, stepmask*/
+cc a3:
 
 movi.16b vadds_raw, #0
-// no ins needed for very first one
+cc a4:
 addv b0, vchrs0_raw.8b
+cc a5:
 and vchrs0, vchrs0, halfmask_raw.16b
+cc a6:
 addv b9, vchrs0
+cc a7:
 ins vadds_raw.b[1], adder_scratch.b[0]
 
-// shift
-// addv b0, v0.8b
-// addv b5, vres1
-// addv b6, vres2
-// addv b7, vres3
-
+cc a8:
 str h0, [out]
+cc a9:
 add out, out, #2
+cc a10:
 add string, string, #16
-b iter
-_end:
+cc a11:
+b.hi iter
+cc a12:
 ret

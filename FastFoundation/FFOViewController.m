@@ -55,7 +55,7 @@
 BOOL sHasGone = NO;
 BOOL sShouldStop = NO;
 volatile NSInteger sResult = 0;
-extern int64_t process_chars(char *str, int64_t length, void *dest);
+extern __attribute__((noinline)) int64_t process_chars(char *str, int64_t length, void *dest);
 
 static void FFOTestProcessChars(char *string, char *dest, NSInteger length) {
     process_chars(string, length, dest);
@@ -77,8 +77,6 @@ static void FFOTestProcessChars(char *string, char *dest, NSInteger length) {
 
     char str[5000];
     char dest[sizeof(str) / 8] = {0};
-    char idxs[sizeof(str)] = {0};
-    NSInteger idxsLength = 0;
     NSInteger alignment = 16;
     NSInteger mod = (NSUInteger)str % alignment;
     char *start = mod == 0 ? str : (str + alignment - mod);
@@ -87,11 +85,13 @@ static void FFOTestProcessChars(char *string, char *dest, NSInteger length) {
     for (NSInteger i = 0; i < sizeof(str); i++) {
         str[i] = i % 16 == 0 ? '"' : 'a' + rand() % 26;
     }
+    // process_chars(start, end - start, dest);
     FFOTestProcessChars(start, dest, end - start);
     // It's ok if end < start, that will be checked for
     BENCH("mine", ({
         process_chars(start, end - start, dest);
     }));
+    return;
     BENCH("sum", (int64_t)({
         NSInteger sum = 0;
         for (NSInteger i = 0; i < sizeof(str); i++) {
