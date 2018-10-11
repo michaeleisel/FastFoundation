@@ -49,9 +49,9 @@ ins halfmask_raw.d[0], x31 // hope this is zero
 ins halfmask_raw.d[1], scratch_reg
 
 iter:
-subs length, length, #16
+subs length, length, #32
 cc a1:
-ldur q2, [string]
+ldp q2, q3, [string], #32
 
 cmeq vchrs0, vchrs0, vrepquote
 cc a2:
@@ -69,12 +69,19 @@ cc a7:
 ins vadds_raw.b[1], adder_scratch.b[0]
 
 cc a8:
-str h0, [out]
+str h0, [out], #2
 cc a9:
-add out, out, #2
-cc a10:
-add string, string, #16
-cc a11:
+
+cmeq vchrs1, vchrs1, vrepquote
+and vchrs1, vchrs1, stepmask
+
+movi.16b vadds_raw, #0
+addv b0, vchrs1_raw.8b
+and vchrs1, vchrs1, halfmask_raw.16b
+addv b9, vchrs1
+ins vadds_raw.b[1], adder_scratch.b[0]
+
+str h0, [out], #2
 b.hi iter
 cc a12:
 ret
