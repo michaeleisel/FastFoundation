@@ -56,7 +56,7 @@ iter:
 cmp string, end
 b.ge _end
 // ld4 {vchrs0, vchrs1, vchrs2, vchrs3}, [string]
-ld1 {vchrs0}, [string]
+ldur q2, [string]
 
 cmeq vchrs0, vchrs0, vrepquote
 and vchrs0, vchrs0, stepmask
