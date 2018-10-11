@@ -30,6 +30,7 @@
 /* Begin PBXFileReference section */
 		B301A38D20B8BD7700AF3378 /* FFOEnvironment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOEnvironment.h; sourceTree = "<group>"; };
 		B301A38E20B8CB0700AF3378 /* FFONumberParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFONumberParser.h; sourceTree = "<group>"; };
+		B304B627216F8BA000023153 /* process_chars.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = process_chars.h; sourceTree = "<group>"; };
 		B30A194520AD37A00073CFB8 /* citm_catalog.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = citm_catalog.json; sourceTree = SOURCE_ROOT; };
 		B3178BCC20B64C9400E3076A /* FFORapidJsonTester.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FFORapidJsonTester.cpp; sourceTree = "<group>"; };
 		B3178BCE20B64EE500E3076A /* FFOJsonTestTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOJsonTestTypes.h; sourceTree = "<group>"; };
@@ -202,6 +203,7 @@
 				B30A194520AD37A00073CFB8 /* citm_catalog.json */,
 				B301A38D20B8BD7700AF3378 /* FFOEnvironment.h */,
 				B301A38E20B8CB0700AF3378 /* FFONumberParser.h */,
+				B304B627216F8BA000023153 /* process_chars.h */,
 				B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */,
 				B3C0BBA620B5F0A3006CCEF3 /* ConvertUTF.h */,
 				B38C42121E8E001700033ACD /* FFOAppDelegate.h */,

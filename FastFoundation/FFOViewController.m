@@ -18,6 +18,7 @@
 #import "FFOJsonTester.h"
 #import "FFOJsonParser.h"
 #import "FFOEnvironment.h"
+#import "process_chars.h"
 
 @interface FFOViewController ()
 
@@ -55,7 +56,21 @@
 BOOL sHasGone = NO;
 BOOL sShouldStop = NO;
 volatile NSInteger sResult = 0;
-extern int64_t process_chars(char *str, int64_t length, void *dest);
+
+static void FFOTestProcessChars(char *string, char *dest, NSInteger length) {
+    process_chars(string, length, dest);
+    for (NSInteger i = 0; i < length; i++) {
+        BOOL isQuote = !!((dest[i / 8] >> (7 - i % 8)) & 1);
+        if (isQuote) {
+            assert(string[i] == '"');
+        } else {
+            assert(string[i] != '"');
+        }
+    }
+}
+
+#define NEAR_SIZE 5000
+#define ALIGNMENT 64
 
 - (void)viewDidLoad
 {
@@ -63,18 +78,19 @@ extern int64_t process_chars(char *str, int64_t length, void *dest);
     FFORunTests();
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
 
-    char str[5000];
+    char str[NEAR_SIZE - NEAR_SIZE % ALIGNMENT];
     char dest[sizeof(str) / 8] = {0};
     char idxs[sizeof(str)] = {0};
     NSInteger idxsLength = 0;
-    NSInteger alignment = 16;
-    NSInteger mod = (NSUInteger)str % alignment;
-    char *start = mod == 0 ? str : (str + alignment - mod);
+    NSInteger mod = (NSUInteger)str % ALIGNMENT;
+    char *start = mod == 0 ? str : (str + ALIGNMENT - mod);
     char *end = str + sizeof(str);
-    end -= (NSUInteger)end % alignment;
+    end -= (NSUInteger)end % ALIGNMENT;
+    srand(0);
     for (NSInteger i = 0; i < sizeof(str); i++) {
-        str[i] = i % 16 == 0 ? '"' : 'a' + rand() % 26;
+        str[i] = rand() % 8 == 0 ? '"' : 'a' + rand() % 26;
     }
+    FFOTestProcessChars(str, dest, sizeof(str));
     // It's ok if end < start, that will be checked for
     BENCH("mine", ({
         process_chars(start, end - start, dest);

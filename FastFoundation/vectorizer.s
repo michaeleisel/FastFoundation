@@ -17,13 +17,13 @@
 #define stepmask stepmask_raw##.16b
 #define halfmask_raw v8
 #define adder_scratch v9
-// #define halfmask halfmask_raw##.16b
 
 #define string x0
 #define length x1
 #define out x2
 #define end x3
 #define scratch_reg x4
+
 
 .section    __TEXT,__text,regular,pure_instructions
 .build_version ios, 12, 0
@@ -34,20 +34,17 @@ _process_chars:
 // load masks
 movi vrepquote, #0x22
 
-mov scratch_reg, 0x0201
-movk scratch_reg, 0x0804, lsl 16
-movk scratch_reg, 0x2010, lsl 32
-movk scratch_reg, 0x8040, lsl 48
+.macro fill64 reg:req, s0:req, s1:req, s2:req, s3:req
+mov \reg, \s3
+movk \reg, \s2, lsl 16
+movk \reg, \s1, lsl 32
+movk \reg, \s0, lsl 48
+.endm
+
+fill64 scratch_reg, 0x0102, 0x0408, 0x1020, 0x4080
 dup stepmask_raw.2d, scratch_reg
 
-mov scratch_reg, 0xffff
-movk scratch_reg, 0xffff, lsl 16
-movk scratch_reg, 0xffff, lsl 32
-movk scratch_reg, 0xffff, lsl 48
-// ldr q8, [scratch_reg, x31]
-//ins halfmask_raw.d[0], x0
-//ins halfmask_raw.d[1], x31 // hope this is zero
-
+fill64 scratch_reg, 0xffff, 0xffff, 0xffff, 0xffff
 ins halfmask_raw.d[0], x31 // hope this is zero
 ins halfmask_raw.d[1], scratch_reg
 
@@ -55,34 +52,44 @@ add end, string, length
 iter:
 cmp string, end
 b.ge _end
+
 // ld4 {vchrs0, vchrs1, vchrs2, vchrs3}, [string]
 ld1 {vchrs0}, [string]
+add string, string, #16
+ld1 {vchrs1}, [string]
+add string, string, #16
+ld1 {vchrs2}, [string]
+add string, string, #16
+ld1 {vchrs3}, [string]
+add string, string, #16
 
 cmeq vchrs0, vchrs0, vrepquote
 and vchrs0, vchrs0, stepmask
-/*cmeq vchrs1, vchrs1, vrepquote
+cmeq vchrs1, vchrs1, vrepquote
 and vchrs1, vchrs1, stepmask
 cmeq vchrs2, vchrs2, vrepquote
 and vchrs2, vchrs2, stepmask
 cmeq vchrs3, vchrs3, vrepquote
-and vchrs3, vchrs3, stepmask*/
+and vchrs3, vchrs3, stepmask
 
 movi.16b vadds_raw, #0
-// no ins needed for very first one
-addv b0, vchrs0_raw.8b
-and vchrs0, vchrs0, halfmask_raw.16b
-addv b9, vchrs0
-ins vadds_raw.b[1], adder_scratch.b[0]
 
-// shift
-// addv b0, v0.8b
-// addv b5, vres1
-// addv b6, vres2
-// addv b7, vres3
+.macro sum vchrs_8:req, vchrs:req, num:req, num_times_two:req, num_times_two_plus_one:req
+addv b9, \vchrs_8
+ins vadds_raw.b[\num_times_two], adder_scratch.b[0]
+and \vchrs, \vchrs, halfmask_raw.16b
+addv b9, \vchrs
+ins vadds_raw.b[\num_times_two_plus_one], adder_scratch.b[0]
+.endm
 
-str h0, [out]
-add out, out, #2
-add string, string, #16
+sum vchrs0_raw.8b, vchrs0, 0, 0, 1
+sum vchrs1_raw.8b, vchrs1, 1, 2, 3
+sum vchrs2_raw.8b, vchrs2, 2, 4, 5
+sum vchrs3_raw.8b, vchrs3, 3, 6, 7
+
+str d0, [out]
+add out, out, #8
+// add string, string, #64
 b iter
 _end:
 ret
