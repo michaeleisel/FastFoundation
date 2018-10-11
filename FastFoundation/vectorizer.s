@@ -34,10 +34,10 @@ _process_chars:
 // load masks
 movi vrepquote, #0x22
 
-mov scratch_reg, 0x0201
-movk scratch_reg, 0x0804, lsl 16
-movk scratch_reg, 0x2010, lsl 32
-movk scratch_reg, 0x8040, lsl 48
+mov scratch_reg, 0x4080
+movk scratch_reg, 0x1020, lsl 16
+movk scratch_reg, 0x0408, lsl 32
+movk scratch_reg, 0x0201, lsl 48
 dup stepmask_raw.2d, scratch_reg
 
 mov scratch_reg, 0xffff

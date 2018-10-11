@@ -57,10 +57,22 @@ BOOL sShouldStop = NO;
 volatile NSInteger sResult = 0;
 extern int64_t process_chars(char *str, int64_t length, void *dest);
 
+static void FFOTestProcessChars(char *string, char *dest, NSInteger length) {
+    process_chars(string, length, dest);
+    for (NSInteger i = 0; i < length; i++) {
+        BOOL isQuote = !!((dest[i / 8] >> (7 - i % 8)) & 1);
+        if (isQuote) {
+            assert(string[i] == '"');
+        } else {
+            assert(string[i] != '"');
+        }
+    }
+}
+
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-    FFORunTests();
+    // FFORunTests();
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
 
     char str[5000];
@@ -75,6 +87,7 @@ extern int64_t process_chars(char *str, int64_t length, void *dest);
     for (NSInteger i = 0; i < sizeof(str); i++) {
         str[i] = i % 16 == 0 ? '"' : 'a' + rand() % 26;
     }
+    FFOTestProcessChars(start, dest, end - start);
     // It's ok if end < start, that will be checked for
     BENCH("mine", ({
         process_chars(start, end - start, dest);
