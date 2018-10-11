@@ -103,6 +103,7 @@ static void FFOTestProcessChars(char *string, char *dest, NSInteger length) {
         str[0] = rand() % 26 + 'a';
         sum;
     }));
+    return;
     // int64_t ret = process_chars("\"s\"fas\"fa\"dfasdf", 16, dest);
 
     uint16_t a = 0x1234;

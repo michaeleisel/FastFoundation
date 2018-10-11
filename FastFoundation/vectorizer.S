@@ -2,8 +2,7 @@
 
 // assume it's not going to run over a bad page boundary, assume it's aligned
 
-#define vadds_raw v0 // can't move from here
-#define vadds vadds_raw##.16b
+#define adder_scratch v0
 #define vrepquote v1.16b
 #define vchrs0_raw v2
 #define vchrs0 vchrs0_raw##.16b
@@ -16,7 +15,6 @@
 #define stepmask_raw v7
 #define stepmask stepmask_raw##.16b
 #define halfmask_raw v8
-#define adder_scratch v9
 
 #define string x0
 #define length x1
@@ -50,18 +48,8 @@ ins halfmask_raw.d[1], scratch_reg
 
 add end, string, length
 iter:
-cmp string, end
-b.ge _end
 
-// ld4 {vchrs0, vchrs1, vchrs2, vchrs3}, [string]
-ld1 {vchrs0}, [string]
-add string, string, #16
-ld1 {vchrs1}, [string]
-add string, string, #16
-ld1 {vchrs2}, [string]
-add string, string, #16
-ld1 {vchrs3}, [string]
-add string, string, #16
+st4 {vchrs0, vchrs1, vchrs2, vchrs3}, [string]
 
 cmeq vchrs0, vchrs0, vrepquote
 and vchrs0, vchrs0, stepmask
@@ -72,14 +60,14 @@ and vchrs2, vchrs2, stepmask
 cmeq vchrs3, vchrs3, vrepquote
 and vchrs3, vchrs3, stepmask
 
-movi.16b vadds_raw, #0
+movi.16b adder_scratch, #0
 
 .macro sum vchrs_8:req, vchrs:req, num:req, num_times_two:req, num_times_two_plus_one:req
-addv b9, \vchrs_8
-ins vadds_raw.b[\num_times_two], adder_scratch.b[0]
+addv b0, \vchrs_8
 and \vchrs, \vchrs, halfmask_raw.16b
-addv b9, \vchrs
-ins vadds_raw.b[\num_times_two_plus_one], adder_scratch.b[0]
+ushr adder_scratch.8h, adder_scratch.8h, #8
+addv b0, \vchrs
+ushr adder_scratch.4s, adder_scratch.4s, #16
 .endm
 
 sum vchrs0_raw.8b, vchrs0, 0, 0, 1
@@ -89,7 +77,9 @@ sum vchrs3_raw.8b, vchrs3, 3, 6, 7
 
 str d0, [out]
 add out, out, #8
-// add string, string, #64
+add string, string, #64
+cmp string, end
+b.ge _end
 b iter
 _end:
 ret

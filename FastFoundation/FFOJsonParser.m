@@ -393,7 +393,7 @@ void FFORunTests()
     // todo: test non-ascii chars
     // FFOTestGatherCharIdxs();
     // FFOTestPerformDeletions();
-    printf("tests pass\n");
+    // printf("tests pass\n");
 }
 
 __used static void printVec(uint8x16_t vec) {
