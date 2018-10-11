@@ -52,12 +52,42 @@
     sShouldStop = NO; \
 })
 
-process_chars(char *str, int32_t length, uint16_t *data);
+BOOL sHasGone = NO;
+BOOL sShouldStop = NO;
+volatile NSInteger sResult = 0;
+extern int64_t process_chars(char *str, int64_t length, void *dest);
 
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
     FFORunTests();
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
+
+    char str[5000];
+    char dest[sizeof(str) / 8] = {0};
+    char idxs[sizeof(str)] = {0};
+    NSInteger idxsLength = 0;
+    NSInteger alignment = 16;
+    NSInteger mod = (NSUInteger)str % alignment;
+    char *start = mod == 0 ? str : (str + alignment - mod);
+    char *end = str + sizeof(str);
+    end -= (NSUInteger)end % alignment;
+    for (NSInteger i = 0; i < sizeof(str); i++) {
+        str[i] = i % 16 == 0 ? '"' : 'a' + rand() % 26;
+    }
+    // It's ok if end < start, that will be checked for
+    BENCH("mine", ({
+        process_chars(start, end - start, dest);
+    }));
+    BENCH("sum", (int64_t)({
+        NSInteger sum = 0;
+        for (NSInteger i = 0; i < sizeof(str); i++) {
+            sum += str[i];
+        }
+        str[0] = rand() % 26 + 'a';
+        sum;
+    }));
+    // int64_t ret = process_chars("\"s\"fas\"fa\"dfasdf", 16, dest);
 
     uint16_t a = 0x1234;
     char *c = (char *)&a;

@@ -2,66 +2,87 @@
 
 // assume it's not going to run over a bad page boundary, assume it's aligned
 
-#define vrepquote v0.16b
-#define vchrs0 v1.16b
-#define vchrs1 v2.16b
-#define vres0 v3.16b
-#define vres1 v4.16b
-#define stepmask_raw v5
+#define vadds_raw v0 // can't move from here
+#define vadds vadds_raw##.16b
+#define vrepquote v1.16b
+#define vchrs0_raw v2
+#define vchrs0 vchrs0_raw##.16b
+#define vchrs1_raw v3
+#define vchrs1 vchrs1_raw##.16b
+#define vchrs2_raw v4
+#define vchrs2 vchrs2_raw##.16b
+#define vchrs3_raw v5
+#define vchrs3 vchrs3_raw##.16b
+#define stepmask_raw v7
 #define stepmask stepmask_raw##.16b
+#define halfmask_raw v8
+#define adder_scratch v9
+// #define halfmask halfmask_raw##.16b
 
-#define str x0
+#define string x0
 #define length x1
 #define out x2
 #define end x3
+#define scratch_reg x4
 
-
-// #0x8040201008040201
 .section    __TEXT,__text,regular,pure_instructions
 .build_version ios, 12, 0
-.globl    _f1                     ; -- Begin function f1
+.globl    _process_chars
 .p2align    2
 
 _process_chars:
-    movi vrepquote, #0x22
-    // movi v0.2d, #0
-    mov x0, 0x0201
-    movk x0, 0x0804, lsl 16
-    movk x0, 0x2010, lsl 32
-    movk x0, 0x8040, lsl 48
-    dup stepmask_raw.2d, x0
-    // mov
-    // movi stepmask_raw.2D, 1:2:3:4:5:7:8// #0x8040201008040201
-    add end, str, length
-    iter:
-    cmp str, end
-    b.ge _end
-    // ld1 {vchrs0}, [str]! // specify alignment with "@128" // explore other instructions that mean something similar; explore putting the pointer into an simd register ; explore loading more registers here
-    cmeq vres0, vchrs0, vrepquote
-    and vres0, vres0, stepmask
-    addv B4, vres0
-    mov x1, v4.D[0] // vres1[0]
-    // mov x1, vres1
-    // and vres0, stepmask
-    // and vres0
-    // vmeq
+// load masks
+movi vrepquote, #0x22
 
-    // ands vstepmask
+mov scratch_reg, 0x0201
+movk scratch_reg, 0x0804, lsl 16
+movk scratch_reg, 0x2010, lsl 32
+movk scratch_reg, 0x8040, lsl 48
+dup stepmask_raw.2d, scratch_reg
 
-    ; cmeq  vres0, vchrs1, vrepchr
+mov scratch_reg, 0xffff
+movk scratch_reg, 0xffff, lsl 16
+movk scratch_reg, 0xffff, lsl 32
+movk scratch_reg, 0xffff, lsl 48
+// ldr q8, [scratch_reg, x31]
+//ins halfmask_raw.d[0], x0
+//ins halfmask_raw.d[1], x31 // hope this is zero
 
+ins halfmask_raw.d[0], x31 // hope this is zero
+ins halfmask_raw.d[1], scratch_reg
 
+add end, string, length
+iter:
+cmp string, end
+b.ge _end
+// ld4 {vchrs0, vchrs1, vchrs2, vchrs3}, [string]
+ld1 {vchrs0}, [string]
 
-    ; move data of str into vector, aligned, and add 128 to str
-    ; if
-    ; combined:
-    ; cmpeq
-    ; mask with vector
-    ; add up elements
-    ; if it's > 0:
-    ;   move it, plus the index, to the data
-    ;   add 1 to the count
-    ;   if count == 16:
-    ;     ; move to stack?
-    _end:
-    ret
+cmeq vchrs0, vchrs0, vrepquote
+and vchrs0, vchrs0, stepmask
+/*cmeq vchrs1, vchrs1, vrepquote
+and vchrs1, vchrs1, stepmask
+cmeq vchrs2, vchrs2, vrepquote
+and vchrs2, vchrs2, stepmask
+cmeq vchrs3, vchrs3, vrepquote
+and vchrs3, vchrs3, stepmask*/
+
+movi.16b vadds_raw, #0
+// no ins needed for very first one
+addv b0, vchrs0_raw.8b
+and vchrs0, vchrs0, halfmask_raw.16b
+addv b9, vchrs0
+ins vadds_raw.b[1], adder_scratch.b[0]
+
+// shift
+// addv b0, v0.8b
+// addv b5, vres1
+// addv b6, vres2
+// addv b7, vres3
+
+str h0, [out]
+add out, out, #2
+add string, string, #16
+b iter
+_end:
+ret
