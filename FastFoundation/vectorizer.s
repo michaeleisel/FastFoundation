@@ -2,7 +2,6 @@
 
 // assume it's not going to run over a bad page boundary, assume it's aligned
 
-// .file    1 "/Users/michaeleisel/Documents/Projects/FastFoundation" "/Users/michaeleisel/Documents/Projects/FastFoundation/FastFoundation/vectorizer.s"
 #define vadds_raw v0 // can't move from here
 #define vadds vadds_raw##.16b
 #define vrepquote v1.16b
@@ -32,14 +31,13 @@
 .p2align    2
 
 _process_chars:
-.cfi_startproc
 // load masks
 movi vrepquote, #0x22
 
-mov scratch_reg,  0x4080
+mov scratch_reg, 0x4080
 movk scratch_reg, 0x1020, lsl 16
 movk scratch_reg, 0x0408, lsl 32
-movk scratch_reg, 0x0102, lsl 48
+movk scratch_reg, 0x0201, lsl 48
 dup stepmask_raw.2d, scratch_reg
 
 mov scratch_reg, 0xffff
@@ -50,32 +48,40 @@ movk scratch_reg, 0xffff, lsl 48
 ins halfmask_raw.d[0], x31 // hope this is zero
 ins halfmask_raw.d[1], scratch_reg
 
-
 iter:
-// .loc    1 55 0
 subs length, length, #32
+cc a1:
 ldp q2, q3, [string], #32
 
 cmeq vchrs0, vchrs0, vrepquote
+cc a2:
 and vchrs0, vchrs0, stepmask
+cc a3:
+
+movi.16b vadds_raw, #0
+cc a4:
+addv b0, vchrs0_raw.8b
+cc a5:
+and vchrs0, vchrs0, halfmask_raw.16b
+cc a6:
+addv b9, vchrs0
+cc a7:
+ins vadds_raw.b[1], adder_scratch.b[0]
+
+cc a8:
+str h0, [out], #2
+cc a9:
+
 cmeq vchrs1, vchrs1, vrepquote
 and vchrs1, vchrs1, stepmask
 
-addv b9, vchrs1_raw.8b
+movi.16b vadds_raw, #0
+addv b0, vchrs1_raw.8b
 and vchrs1, vchrs1, halfmask_raw.16b
-addv b10, vchrs1
-shl v10.2d, v10.2d, #8
-orr v9.8b, v9.8b, v10.8b
+addv b9, vchrs1
+ins vadds_raw.b[1], adder_scratch.b[0]
 
-addv b0, vchrs0_raw.8b
-and vchrs0, vchrs0, halfmask_raw.16b
-addv b11, vchrs0
-shl v11.2d, v11.2d, #8
-orr v0.8b, v0.8b, v11.8b
-shl v9.2d, v9.2d, #16
-orr v0.8b, v0.8b, v9.8b
-
-str s0, [out], #4
+str h0, [out], #2
 b.hi iter
+cc a12:
 ret
-.cfi_endproc
