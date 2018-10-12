@@ -10,6 +10,7 @@
 		B30A194620AD37A00073CFB8 /* citm_catalog.json in Resources */ = {isa = PBXBuildFile; fileRef = B30A194520AD37A00073CFB8 /* citm_catalog.json */; };
 		B3178BCD20B64C9400E3076A /* FFORapidJsonTester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3178BCC20B64C9400E3076A /* FFORapidJsonTester.cpp */; };
 		B32879F31E8E1625007E49B7 /* FFODateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = B32879F21E8E1625007E49B7 /* FFODateFormatter.m */; };
+		B3690D182170DFFA00E074C0 /* FFOBenchmarker.m in Sources */ = {isa = PBXBuildFile; fileRef = B3690D172170DFFA00E074C0 /* FFOBenchmarker.m */; };
 		B38586DB1EEE46BD00496750 /* NSArrayFFOMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = B38586DA1EEE46BD00496750 /* NSArrayFFOMethods.m */; };
 		B38586DE1EEE48BA00496750 /* pcg_basic.c in Sources */ = {isa = PBXBuildFile; fileRef = B38586DC1EEE48BA00496750 /* pcg_basic.c */; };
 		B38C01F620B65183002D4613 /* FFOJsonTester.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C01F520B65183002D4613 /* FFOJsonTester.m */; };
@@ -36,6 +37,8 @@
 		B32879F11E8E1625007E49B7 /* FFODateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFODateFormatter.h; sourceTree = "<group>"; };
 		B32879F21E8E1625007E49B7 /* FFODateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFODateFormatter.m; sourceTree = "<group>"; };
 		B3486AAD20AE640000C7291B /* FastFoundation.profdata */ = {isa = PBXFileReference; lastKnownFileType = file; path = FastFoundation.profdata; sourceTree = "<group>"; };
+		B3690D162170DFFA00E074C0 /* FFOBenchmarker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOBenchmarker.h; sourceTree = "<group>"; };
+		B3690D172170DFFA00E074C0 /* FFOBenchmarker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFOBenchmarker.m; sourceTree = "<group>"; };
 		B38586D91EEE46BD00496750 /* NSArrayFFOMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSArrayFFOMethods.h; sourceTree = "<group>"; };
 		B38586DA1EEE46BD00496750 /* NSArrayFFOMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSArrayFFOMethods.m; sourceTree = "<group>"; };
 		B38586DC1EEE48BA00496750 /* pcg_basic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pcg_basic.c; sourceTree = "<group>"; };
@@ -220,6 +223,8 @@
 				B3CF25F320B63DA400C1A65E /* FFOString.h */,
 				B38C42151E8E001700033ACD /* FFOViewController.h */,
 				B38C42161E8E001700033ACD /* FFOViewController.m */,
+				B3690D162170DFFA00E074C0 /* FFOBenchmarker.h */,
+				B3690D172170DFFA00E074C0 /* FFOBenchmarker.m */,
 				B3F73C40207C383300E11E2D /* fishhook.c */,
 				B3F73C42207C383700E11E2D /* fishhook.h */,
 				B38C42201E8E001700033ACD /* Info.plist */,
@@ -462,6 +467,7 @@
 				B38C01F920B651B7002D4613 /* FFOJsonParser.m in Sources */,
 				B38C01F620B65183002D4613 /* FFOJsonTester.m in Sources */,
 				B38C42111E8E001700033ACD /* main.m in Sources */,
+				B3690D182170DFFA00E074C0 /* FFOBenchmarker.m in Sources */,
 				B3C0BBA520B5F063006CCEF3 /* ConvertUTF.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

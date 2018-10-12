@@ -18,6 +18,15 @@
 #import "FFOJsonTester.h"
 #import "FFOJsonParser.h"
 #import "FFOEnvironment.h"
+#import "FFOBenchmarker.h"
+
+__used void process_chars2(char *str, NSInteger length, char *dest) {
+    for (NSInteger i = 0; i < length; i++) {
+        if (str[i] == '"') {
+            dest[i / 8] = dest[i / 8] | (1 << (i % 8));
+        }
+    }
+}
 
 @interface FFOViewController ()
 
@@ -28,83 +37,13 @@
     UIViewController *_childController;
 }
 
-#define BENCH(name, ...) \
-({ \
-    printf("%s\n", name); \
-    sHasGone = NO; \
-    sShouldStop = NO; \
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1.0 * NSEC_PER_SEC), queue, ^(void){ \
-        sShouldStop = YES; \
-    }); \
-    CFTimeInterval startTime, endTime; \
-    NSInteger count = 0; \
-    @autoreleasepool { \
-        startTime = CACurrentMediaTime(); \
-        while (!sShouldStop) { \
-            sResult += (int)__VA_ARGS__; \
-            count++; \
-            sHasGone = YES; \
-        } \
-        endTime = CACurrentMediaTime(); \
-        usleep(500000); \
-    } \
-    printf("%.2e per second\n", count / (endTime - startTime)); \
-    sShouldStop = NO; \
-})
-
-BOOL sHasGone = NO;
-BOOL sShouldStop = NO;
-volatile NSInteger sResult = 0;
-extern __attribute__((noinline)) int64_t process_chars(char *str, int64_t length, void *dest);
-
-static void FFOTestProcessChars(char *string, char *dest, NSInteger length) {
-    process_chars(string, length, dest);
-    for (NSInteger i = 0; i < length; i++) {
-        BOOL isQuote = !!((dest[i / 8] >> (7 - i % 8)) & 1);
-        if (isQuote) {
-            assert(string[i] == '"');
-        } else {
-            assert(string[i] != '"');
-        }
-    }
-}
-
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
     // FFORunTests();
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
-
-    char str[5000];
-    char dest[sizeof(str) / 8] = {0};
-    NSInteger alignment = 16;
-    NSInteger mod = (NSUInteger)str % alignment;
-    char *start = mod == 0 ? str : (str + alignment - mod);
-    char *end = str + sizeof(str);
-    end -= (NSUInteger)end % alignment;
-    for (NSInteger i = 0; i < sizeof(str); i++) {
-        str[i] = i % 16 == 0 ? '"' : 'a' + rand() % 26;
-    }
-    // process_chars(start, end - start, dest);
-    FFOTestProcessChars(start, dest, end - start);
-    // It's ok if end < start, that will be checked for
-    BENCH("mine", ({
-        process_chars(start, end - start, dest);
-    }));
-    return;
-    BENCH("sum", (int64_t)({
-        NSInteger sum = 0;
-        for (NSInteger i = 0; i < sizeof(str); i++) {
-            sum += str[i];
-        }
-        str[0] = rand() % 26 + 'a';
-        sum;
-    }));
     // int64_t ret = process_chars("\"s\"fas\"fa\"dfasdf", 16, dest);
 
-    uint16_t a = 0x1234;
-    char *c = (char *)&a;
-    printf("%#x, %#x", c[0], c[1]);
+    [[[FFOBenchmarker alloc] init] performBenchmarks];
 
     NSString *path = [[NSBundle mainBundle] pathForResource:@"citm_catalog" ofType:@"json"];
     NS_VALID_UNTIL_END_OF_SCOPE NSData *objcData = [[[NSFileManager defaultManager] contentsAtPath:path] mutableCopy];
