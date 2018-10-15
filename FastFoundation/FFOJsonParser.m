@@ -10,8 +10,9 @@
 #import "FFOArray.h"
 #import "FFOString.h"
 #import "ConvertUTF.h"
-#import <arm_neon.h>
-#import <arm_acle.h>
+#import "vectorizer.h"
+
+typedef unsigned char byte;
 
 #ifndef RAPIDJSON_UINT64_C2
 #define RAPIDJSON_UINT64_C2(high32, low32) (((uint64_t)(high32) << 32) | (uint64_t)(low32))
@@ -113,18 +114,6 @@ static void FFOPerformDeletions(char *string, uint32_t startIdx, uint32_t endIdx
     }
     memcpy(string + startIdx, copyBuffer->chars, copyBuffer->length);
     string[startIdx + copyBuffer->length] = '\0';
-}
-
-static const uint8x16_t sOneVec = {0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80};
-
-static void FFOPopulateVecsForChar(char c, uint8x16_t *lowVec, uint8x16_t *highVec) {
-    uint8_t low = 127 - c;
-    uint8_t high = 128 - c;
-
-    uint8x16_t lowVecTemp = {low, low, low, low, low, low, low, low, low, low, low, low, low, low, low, low};
-    uint8x16_t highVecTemp = {high, high, high, high, high, high, high, high, high, high, high, high, high, high, high, high};
-    *lowVec = lowVecTemp;
-    *highVec = highVecTemp;
 }
 
 void FFOGatherCharIdxs(const char *string, uint32_t length, FFOArray **quoteIdxsPtr, FFOArray **slashIdxsPtr) {
@@ -233,6 +222,8 @@ void FFOParseJson(char *string, uint32_t length, FFOCallbacks *callbacks) {
     FFOString *copyBuffer = FFOStringWithCapacity(100);
     // FFOGatherCharsNaive(string, length, &quoteIdxsArray, &slashIdxsArray);
     FFOGatherCharIdxs(string, length, &quoteIdxsArray, &slashIdxsArray);
+    byte *dest = malloc(length / 8);
+    process_chars
     FFOPushToArray(quoteIdxsArray, UINT32_MAX);
     uint32_t *quoteIdxs = quoteIdxsArray->elements;
     uint32_t *slashIdxs = slashIdxsArray->elements;

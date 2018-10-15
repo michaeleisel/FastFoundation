@@ -60,12 +60,12 @@ ldur q2, [string]
 add string, string, #16
 
 cmeq vchrs1, vchrs0, vrepquote
-/*cmeq vchrs2, vchrs0, vrepcomma
+cmeq vchrs2, vchrs0, vrepcomma
 orr vchrs1, vchrs1, vchrs2
 cmeq vchrs2, vchrs0, vrepcolon
 orr vchrs1, vchrs1, vchrs2
 cmeq vchrs2, vchrs0, vrepslash
-orr vchrs1, vchrs1, vchrs2*/
+orr vchrs1, vchrs1, vchrs2
 
 and vchrs1, vchrs1, stepmask
 

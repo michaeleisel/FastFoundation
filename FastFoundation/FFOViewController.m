@@ -18,6 +18,7 @@
 #import "FFOJsonTester.h"
 #import "FFOJsonParser.h"
 #import "FFOEnvironment.h"
+#import "vectorizer.h"
 
 @interface FFOViewController ()
 
@@ -55,9 +56,8 @@
 BOOL sHasGone = NO;
 BOOL sShouldStop = NO;
 volatile NSInteger sResult = 0;
-extern __attribute__((noinline)) int64_t process_chars(char *str, int64_t length, void *dest);
 
-static const char kChars[] = {'"', 'a', 'z'}; // {':', ',', '"', '\\', 'a', 'z'};
+static const char kChars[] = {':', ',', '"', '\\', 'a', 'z'};
 
 __used static void pb(char c) {
     for (NSInteger i = 0; i < 8; i++) {
@@ -78,35 +78,18 @@ static void FFOTestProcessChars(char *string, char *dest, NSInteger length) {
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-    // FFORunTests();
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
 
     NSString *path = [[NSBundle mainBundle] pathForResource:@"citm_catalog" ofType:@"json"];
     NSString *objcStr = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
     const char *cStrOrig = [objcStr UTF8String];
     char *str = NULL;
-    asprintf(&str, "%s", cStrOrig);
-
+    NSInteger alignment = 32;
     NSInteger length = strlen(str);
-    NSInteger destLength = length / 8;
-    char dest[destLength];
-    memset(dest, '\0', destLength);
-    NSInteger alignment = 16;
-    NSInteger mod = (NSUInteger)str % alignment;
-    char *start = mod == 0 ? str : (str + alignment - mod);
-    char *end = str + length;
-    end -= (NSUInteger)end % alignment;
-    // commas, quotes, slashes, colons
-    for (NSInteger i = 0; i < length; i++) {
-        str[i] = kChars[rand() % sizeof(kChars)];
-    }
-    FFOTestProcessChars(start, dest, end - start);
-    // It's ok if end < start, that will be checked for
-    BENCH("mine", ({
-        process_chars(start, end - start, dest);
-    }));
+    assert(length % alignment == 0);
+    posix_memalign((void **)(&str), alignment, length);
+    memcpy(str, cStrOrig, length);
 
-    return;
+    [self _testProcessCharsWithLength:length];
     if (FFOIsDebug()) {
         NSLog(@"running in debug, don't benchmark");
         FFOTestResults(str, (uint32_t)length);
@@ -137,7 +120,7 @@ static void FFOTestProcessChars(char *string, char *dest, NSInteger length) {
             gooo(rapStrings[i]);
         }
         CFTimeInterval end = CACurrentMediaTime();
-        printf("rap: %lf\n", (end - start));
+        printf("rap: %lf per sec\n", nIterations / (end - start));
         start = CACurrentMediaTime();
         for (NSInteger i = 0; i < nIterations; i++) {
             FFOTestResults(myStrings[i], (int32_t)length);
@@ -147,6 +130,30 @@ static void FFOTestProcessChars(char *string, char *dest, NSInteger length) {
         printf("%llu, %llu\n", sMyEventCount, sEventCount);
     }
     NSLog(@"done");
+}
+
+- (void)_testProcessCharsWithLength:(NSInteger)length
+{
+    char *str = malloc(length);
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
+    NSInteger destLength = length / 8;
+    char dest[destLength];
+    memset(dest, '\0', destLength);
+    NSInteger alignment = 16;
+    NSInteger mod = (NSUInteger)str % alignment;
+    char *start = mod == 0 ? str : (str + alignment - mod);
+    char *end = str + length;
+    end -= (NSUInteger)end % alignment;
+    // commas, quotes, slashes, colons
+    for (NSInteger i = 0; i < length; i++) {
+        str[i] = kChars[rand() % sizeof(kChars)];
+    }
+    FFOTestProcessChars(start, dest, end - start);
+    // It's ok if end < start, that will be checked for
+    BENCH("mine", ({
+        process_chars(start, end - start, dest);
+    }));
+    free(str);
 }
 
 @end
