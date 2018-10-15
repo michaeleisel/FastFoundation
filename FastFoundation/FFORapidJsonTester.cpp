@@ -16,7 +16,7 @@
 using namespace rapidjson;
 using namespace std;
 
-FFOJsonEvent *sEvents;
+FFOJsonEvent sEvents[5000000];
 uint64_t sEventCount = 0;
 
 static void pushResult(FFOJsonType type, FFOResult result) {
@@ -83,7 +83,6 @@ struct MyHandler : public BaseReaderHandler<UTF8<>, MyHandler> {
 };
 
 extern "C" void gooo(char *json) {
-    sEvents = (FFOJsonEvent *)malloc(5000000 * sizeof(*sEvents));
     MyHandler handler;
     Reader reader;
     StringStream ss(json);

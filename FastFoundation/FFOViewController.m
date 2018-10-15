@@ -75,14 +75,22 @@ static void FFOTestProcessChars(char *string, char *dest, NSInteger length) {
     // FFORunTests();
     dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0);
 
-    char str[5000];
-    char dest[sizeof(str) / 8] = {0};
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"citm_catalog" ofType:@"json"];
+    NSString *objcStr = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+    const char *cStrOrig = [objcStr UTF8String];
+    char *str = NULL;
+    asprintf(&str, "%s", cStrOrig);
+
+    NSInteger length = strlen(str);
+    NSInteger destLength = length / 8;
+    char dest[destLength];
+    memset(dest, '\0', destLength);
     NSInteger alignment = 16;
     NSInteger mod = (NSUInteger)str % alignment;
     char *start = mod == 0 ? str : (str + alignment - mod);
-    char *end = str + sizeof(str);
+    char *end = str + length;
     end -= (NSUInteger)end % alignment;
-    for (NSInteger i = 0; i < sizeof(str); i++) {
+    for (NSInteger i = 0; i < length; i++) {
         str[i] = i % 16 == 0 ? '"' : 'a' + rand() % 26;
     }
     // process_chars(start, end - start, dest);
@@ -91,31 +99,17 @@ static void FFOTestProcessChars(char *string, char *dest, NSInteger length) {
     BENCH("mine", ({
         process_chars(start, end - start, dest);
     }));
-    return;
-    BENCH("sum", (int64_t)({
-        NSInteger sum = 0;
-        for (NSInteger i = 0; i < sizeof(str); i++) {
-            sum += str[i];
-        }
-        str[0] = rand() % 26 + 'a';
-        sum;
-    }));
+    // return;
     // int64_t ret = process_chars("\"s\"fas\"fa\"dfasdf", 16, dest);
 
     uint16_t a = 0x1234;
     char *c = (char *)&a;
     printf("%#x, %#x", c[0], c[1]);
 
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"citm_catalog" ofType:@"json"];
-    NS_VALID_UNTIL_END_OF_SCOPE NSData *objcData = [[[NSFileManager defaultManager] contentsAtPath:path] mutableCopy];
-    char *string1 = (char *)[objcData bytes];
-    char *string2 = NULL;
-    asprintf(&string2, "%s", string1);
-    uint32_t length = (uint32_t)strlen(string1);
     if (FFOIsDebug()) {
         NSLog(@"running in debug, don't benchmark");
-        FFOTestResults(string1, length);
-        gooo(string2);
+        FFOTestResults(str, length);
+        gooo(str);
         for (NSInteger i = 0; i < MIN(sMyEventCount, sEventCount); i++) {
             if (sMyEvents[i].type != sEvents[i].type) {
                 NSAssert(NO, @"");
@@ -128,14 +122,14 @@ static void FFOTestProcessChars(char *string, char *dest, NSInteger length) {
         }
         NSAssert(sMyEventCount == sEventCount || sMyEventCount == sEventCount + 1/*hack*/, @"");
     } else {
-        NSInteger nIterations = 1e2;
+        NSInteger nIterations = 1e1;
         char *myStrings[nIterations];
         for (NSInteger i = 0; i < nIterations; i++) {
-            asprintf(&(myStrings[i]), "%s", string1);
+            asprintf(&(myStrings[i]), "%s", str);
         }
         char *rapStrings[nIterations];
         for (NSInteger i = 0; i < nIterations; i++) {
-            asprintf(&(rapStrings[i]), "%s", string1);
+            asprintf(&(rapStrings[i]), "%s", str);
         }
         CFTimeInterval start = CACurrentMediaTime();
         for (NSInteger i = 0; i < nIterations; i++) {
@@ -145,7 +139,7 @@ static void FFOTestProcessChars(char *string, char *dest, NSInteger length) {
         printf("rap: %lf\n", (end - start));
         start = CACurrentMediaTime();
         for (NSInteger i = 0; i < nIterations; i++) {
-            FFOTestResults(myStrings[i], length);
+            FFOTestResults(myStrings[i], (int32_t)length);
         }
         end = CACurrentMediaTime();
         printf("my: %lf\n", (end - start));
