@@ -5,6 +5,9 @@
 #define vadds_raw v0 // can't move from here
 #define vadds vadds_raw##.16b
 #define vrepquote v1.16b
+#define vrepcomma v11.16b
+#define vrepcolon v12.16b
+#define vrepslash v13.16b
 #define vchrs0_raw v2
 #define vchrs0 vchrs0_raw##.16b
 #define vchrs1_raw v3
@@ -33,11 +36,14 @@
 _process_chars:
 // load masks
 movi vrepquote, #0x22
+movi vrepcomma, #0x2c
+movi vrepcolon, #0x3a
+movi vrepslash, #0x5c
 
 mov scratch_reg, 0x4080
 movk scratch_reg, 0x1020, lsl 16
 movk scratch_reg, 0x0408, lsl 32
-movk scratch_reg, 0x0201, lsl 48
+movk scratch_reg, 0x0102, lsl 48
 dup stepmask_raw.2d, scratch_reg
 
 mov scratch_reg, 0xffff
@@ -45,25 +51,22 @@ movk scratch_reg, 0xffff, lsl 16
 movk scratch_reg, 0xffff, lsl 32
 movk scratch_reg, 0xffff, lsl 48
 
-ins halfmask_raw.d[0], x31 // hope this is zero
+ins halfmask_raw.d[0], x31
 ins halfmask_raw.d[1], scratch_reg
 
 iter:
-subs length, length, #32
-ldp q2, q3, [string], #32
+subs length, length, #16
+ldur q2, [string]
+add string, string, #16
 
-cmeq vchrs0, vchrs0, vrepquote
-and vchrs0, vchrs0, stepmask
+cmeq vchrs1, vchrs0, vrepquote
+/*cmeq vchrs2, vchrs0, vrepcomma
+orr vchrs1, vchrs1, vchrs2
+cmeq vchrs2, vchrs0, vrepcolon
+orr vchrs1, vchrs1, vchrs2
+cmeq vchrs2, vchrs0, vrepslash
+orr vchrs1, vchrs1, vchrs2*/
 
-movi.16b vadds_raw, #0
-addv b0, vchrs0_raw.8b
-and vchrs0, vchrs0, halfmask_raw.16b
-addv b9, vchrs0
-ins vadds_raw.b[1], adder_scratch.b[0]
-
-str h0, [out], #2
-
-cmeq vchrs1, vchrs1, vrepquote
 and vchrs1, vchrs1, stepmask
 
 movi.16b vadds_raw, #0
@@ -73,5 +76,6 @@ addv b9, vchrs1
 ins vadds_raw.b[1], adder_scratch.b[0]
 
 str h0, [out], #2
+
 b.hi iter
 ret

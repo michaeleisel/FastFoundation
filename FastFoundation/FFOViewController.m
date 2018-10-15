@@ -57,15 +57,21 @@ BOOL sShouldStop = NO;
 volatile NSInteger sResult = 0;
 extern __attribute__((noinline)) int64_t process_chars(char *str, int64_t length, void *dest);
 
+static const char kChars[] = {'"', 'a', 'z'}; // {':', ',', '"', '\\', 'a', 'z'};
+
+__used static void pb(char c) {
+    for (NSInteger i = 0; i < 8; i++) {
+        printf("%d", (c >> (7 - i)) & 1);
+    }
+    printf("\n");
+}
+
 static void FFOTestProcessChars(char *string, char *dest, NSInteger length) {
     process_chars(string, length, dest);
     for (NSInteger i = 0; i < length; i++) {
-        BOOL isQuote = !!((dest[i / 8] >> (7 - i % 8)) & 1);
-        if (isQuote) {
-            assert(string[i] == '"');
-        } else {
-            assert(string[i] != '"');
-        }
+        BOOL shouldBeSpecial = !!((dest[i / 8] >> (7 - i % 8)) & 1);
+        BOOL isSpecial = !!memchr(kChars, string[i], sizeof(kChars) - 2);
+        assert(isSpecial == shouldBeSpecial);
     }
 }
 
@@ -90,25 +96,20 @@ static void FFOTestProcessChars(char *string, char *dest, NSInteger length) {
     char *start = mod == 0 ? str : (str + alignment - mod);
     char *end = str + length;
     end -= (NSUInteger)end % alignment;
+    // commas, quotes, slashes, colons
     for (NSInteger i = 0; i < length; i++) {
-        str[i] = i % 16 == 0 ? '"' : 'a' + rand() % 26;
+        str[i] = kChars[rand() % sizeof(kChars)];
     }
-    // process_chars(start, end - start, dest);
     FFOTestProcessChars(start, dest, end - start);
     // It's ok if end < start, that will be checked for
     BENCH("mine", ({
         process_chars(start, end - start, dest);
     }));
-    // return;
-    // int64_t ret = process_chars("\"s\"fas\"fa\"dfasdf", 16, dest);
 
-    uint16_t a = 0x1234;
-    char *c = (char *)&a;
-    printf("%#x, %#x", c[0], c[1]);
-
+    return;
     if (FFOIsDebug()) {
         NSLog(@"running in debug, don't benchmark");
-        FFOTestResults(str, length);
+        FFOTestResults(str, (uint32_t)length);
         gooo(str);
         for (NSInteger i = 0; i < MIN(sMyEventCount, sEventCount); i++) {
             if (sMyEvents[i].type != sEvents[i].type) {
@@ -146,51 +147,6 @@ static void FFOTestProcessChars(char *string, char *dest, NSInteger length) {
         printf("%llu, %llu\n", sMyEventCount, sEventCount);
     }
     NSLog(@"done");
-    /*FFOArray *quoteIdxsPtr, *slashIdxsPtr;
-    NSInteger nIterations = 1e2;
-    CFTimeInterval startTime = CACurrentMediaTime();
-    for (NSInteger i = 0; i < nIterations; i++) {
-        FFOGatherCharIdxs(string, length, &quoteIdxsPtr, &slashIdxsPtr);
-    }
-    CFTimeInterval endTime = CACurrentMediaTime();
-    NSLog(@"%@", @(endTime - startTime));
-
-    startTime = CACurrentMediaTime();
-    for (NSInteger i = 0; i < nIterations; i++) {
-        gooo(string);
-    }
-    endTime = CACurrentMediaTime();
-    NSLog(@"%@", @(endTime - startTime));
-    NSLog(@"%llu", sTotal);*/
-    /*FFOJsonEvent *events = NULL;
-    uint64_t eventCount = 0;
-    FFOTestResults(string, (uint32_t)length, &events, &eventCount);*/
-    // FFOParseJson(string, (uint32_t)length);
-    // assert(FFOSearchMemChr(string, length) == 53210);
-    // assert(FFOMemChr(string, length) == 53210);
-    /*NSInteger total = 0;
-    NSInteger nIterations = 1e3;
-    for (NSInteger i = 0; i < 1; i++) {
-        CFTimeInterval start = CACurrentMediaTime();
-        for (NSInteger j = 0; j < nIterations; j++) {
-            NSInteger l = 0;
-            if (rand() % 1) {
-                l = length;
-            } else {
-                l = length - 1;
-            }
-            total += FFOSearchMemChr(string, l);
-        }
-        CFTimeInterval end = CACurrentMediaTime();
-        printf("arm %lf, %zd\n", (end - start), total);*/
-
-        /*start = CACurrentMediaTime();
-        for (NSInteger j = 0; j < nIterations; j++) {
-            total += FFOMemChr(string, length);
-        }
-        end = CACurrentMediaTime();
-        printf("memchr %lf, %zd\n", (end - start), total);*/
-    //}
 }
 
 @end
