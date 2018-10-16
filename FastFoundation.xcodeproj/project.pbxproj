@@ -10,6 +10,7 @@
 		B30A194620AD37A00073CFB8 /* citm_catalog.json in Resources */ = {isa = PBXBuildFile; fileRef = B30A194520AD37A00073CFB8 /* citm_catalog.json */; };
 		B3178BCD20B64C9400E3076A /* FFORapidJsonTester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3178BCC20B64C9400E3076A /* FFORapidJsonTester.cpp */; };
 		B32879F31E8E1625007E49B7 /* FFODateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = B32879F21E8E1625007E49B7 /* FFODateFormatter.m */; };
+		B34D94DB217570230072050A /* twitter.json in Resources */ = {isa = PBXBuildFile; fileRef = B34D94DA217570230072050A /* twitter.json */; };
 		B38586DB1EEE46BD00496750 /* NSArrayFFOMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = B38586DA1EEE46BD00496750 /* NSArrayFFOMethods.m */; };
 		B38586DE1EEE48BA00496750 /* pcg_basic.c in Sources */ = {isa = PBXBuildFile; fileRef = B38586DC1EEE48BA00496750 /* pcg_basic.c */; };
 		B38C01F620B65183002D4613 /* FFOJsonTester.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C01F520B65183002D4613 /* FFOJsonTester.m */; };
@@ -23,6 +24,7 @@
 		B3CF25F520B6486300C1A65E /* j1.json in Resources */ = {isa = PBXBuildFile; fileRef = B3CF25F420B6486200C1A65E /* j1.json */; };
 		B3CF25F720B6486800C1A65E /* j2.json in Resources */ = {isa = PBXBuildFile; fileRef = B3CF25F620B6486800C1A65E /* j2.json */; };
 		B3D753B9208946A90090C3E2 /* NSString+FFOMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C422B1E8E029100033ACD /* NSString+FFOMethods.m */; };
+		B3E28D5821757196007CF207 /* canada.json in Resources */ = {isa = PBXBuildFile; fileRef = B3E28D5721757196007CF207 /* canada.json */; };
 		B3F73C41207C383300E11E2D /* fishhook.c in Sources */ = {isa = PBXBuildFile; fileRef = B3F73C40207C383300E11E2D /* fishhook.c */; };
 		B3F9CA26216E866400148A8F /* vectorizer.s in Sources */ = {isa = PBXBuildFile; fileRef = B3F9CA25216E866400148A8F /* vectorizer.s */; };
 /* End PBXBuildFile section */
@@ -37,6 +39,7 @@
 		B32879F21E8E1625007E49B7 /* FFODateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFODateFormatter.m; sourceTree = "<group>"; };
 		B3486AAD20AE640000C7291B /* FastFoundation.profdata */ = {isa = PBXFileReference; lastKnownFileType = file; path = FastFoundation.profdata; sourceTree = "<group>"; };
 		B34D94D72174E1600072050A /* vectorizer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vectorizer.h; sourceTree = "<group>"; };
+		B34D94DA217570230072050A /* twitter.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = twitter.json; sourceTree = SOURCE_ROOT; };
 		B38586D91EEE46BD00496750 /* NSArrayFFOMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSArrayFFOMethods.h; sourceTree = "<group>"; };
 		B38586DA1EEE46BD00496750 /* NSArrayFFOMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSArrayFFOMethods.m; sourceTree = "<group>"; };
 		B38586DC1EEE48BA00496750 /* pcg_basic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pcg_basic.c; sourceTree = "<group>"; };
@@ -101,6 +104,7 @@
 		B3CF266F20B64B7000C1A65E /* inttypes.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = inttypes.h; sourceTree = "<group>"; };
 		B3CF267020B64B7000C1A65E /* stdint.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = stdint.h; sourceTree = "<group>"; };
 		B3D753B72089249A0090C3E2 /* rust_bindings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rust_bindings.h; sourceTree = SOURCE_ROOT; };
+		B3E28D5721757196007CF207 /* canada.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = canada.json; sourceTree = SOURCE_ROOT; };
 		B3F73C40207C383300E11E2D /* fishhook.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fishhook.c; sourceTree = "<group>"; };
 		B3F73C42207C383700E11E2D /* fishhook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fishhook.h; sourceTree = "<group>"; };
 		B3F73C44207C403D00E11E2D /* ARKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ARKit.framework; path = System/Library/Frameworks/ARKit.framework; sourceTree = SDKROOT; };
@@ -201,6 +205,8 @@
 			children = (
 				B38C421B1E8E001700033ACD /* Assets.xcassets */,
 				B30A194520AD37A00073CFB8 /* citm_catalog.json */,
+				B34D94DA217570230072050A /* twitter.json */,
+				B3E28D5721757196007CF207 /* canada.json */,
 				B301A38D20B8BD7700AF3378 /* FFOEnvironment.h */,
 				B301A38E20B8CB0700AF3378 /* FFONumberParser.h */,
 				B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */,
@@ -440,7 +446,9 @@
 				B3CF25F720B6486800C1A65E /* j2.json in Resources */,
 				B38C42291E8E025200033ACD /* Launch.xib in Resources */,
 				B30A194620AD37A00073CFB8 /* citm_catalog.json in Resources */,
+				B3E28D5821757196007CF207 /* canada.json in Resources */,
 				B3CF25F520B6486300C1A65E /* j1.json in Resources */,
+				B34D94DB217570230072050A /* twitter.json in Resources */,
 				B38C421C1E8E001700033ACD /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
