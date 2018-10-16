@@ -84,18 +84,22 @@ static void FFOTestProcessChars(char *string, char *dest, NSInteger length) {
     const char *cStrOrig = [objcStr UTF8String];
     char *str = NULL;
     NSInteger alignment = 32;
-    NSInteger length = strlen(str);
+    NSInteger length = strlen(cStrOrig);
     assert(length % alignment == 0);
     posix_memalign((void **)(&str), alignment, length);
     memcpy(str, cStrOrig, length);
 
-    [self _testProcessCharsWithLength:length];
+    // [self _testProcessCharsWithLength:length];
     if (FFOIsDebug()) {
         NSLog(@"running in debug, don't benchmark");
+        char *rapidStr = NULL;
+        asprintf(&rapidStr, "%s", str);
         FFOTestResults(str, (uint32_t)length);
-        gooo(str);
+        gooo(rapidStr);
         for (NSInteger i = 0; i < MIN(sMyEventCount, sEventCount); i++) {
-            if (sMyEvents[i].type != sEvents[i].type) {
+            FFOJsonEvent myEvent = sMyEvents[i];
+            FFOJsonEvent event = sEvents[i];
+            if (myEvent.type != event.type) {
                 NSAssert(NO, @"");
             }
             if (sMyEvents[i].type == FFOJsonTypeString) {

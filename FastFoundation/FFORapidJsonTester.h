@@ -13,7 +13,7 @@ extern "C" {
 #endif
 
 extern uint64_t sEventCount;
-extern FFOJsonEvent *sEvents;
+extern FFOJsonEvent sEvents[];
 
 void gooo(char *json);
 

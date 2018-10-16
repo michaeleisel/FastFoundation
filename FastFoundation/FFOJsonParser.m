@@ -11,6 +11,7 @@
 #import "FFOString.h"
 #import "ConvertUTF.h"
 #import "vectorizer.h"
+#import <arm_acle.h>
 
 typedef unsigned char byte;
 
@@ -56,11 +57,11 @@ static inline unichar FFOUnicharFromHexCode(const char *hexCode) {
 }
 
 // We want to skip the next slash if that slash is denoting the low part of a unicode surrogate pair
-static inline BOOL/*skip next slash*/ FFOProcessEscapedSequence(FFOArray *deletions, char *string, uint32_t stringLen, uint32_t slashIdx) {
+static inline uint32_t/*skip next slash*/ FFOProcessEscapedSequence(FFOArray *deletions, char *string, uint32_t stringLen, uint32_t slashIdx) {
     if (unlikely(slashIdx > stringLen - 2)) {
         FFOPushToArray(deletions, stringLen - slashIdx);
         FFOPushToArray(deletions, slashIdx);
-        return NO;
+        return 0;
     }
 
     char afterSlash = string[slashIdx + 1];
@@ -68,7 +69,7 @@ static inline BOOL/*skip next slash*/ FFOProcessEscapedSequence(FFOArray *deleti
         if (unlikely(slashIdx > stringLen - 6)) {
             FFOPushToArray(deletions, stringLen - slashIdx);
             FFOPushToArray(deletions, slashIdx);
-            return NO;
+            return 0;
         }
         unichar uChars[2];
         uChars[0] = FFOUnicharFromHexCode(string + slashIdx + 2);
@@ -79,19 +80,19 @@ static inline BOOL/*skip next slash*/ FFOProcessEscapedSequence(FFOArray *deleti
             ConvertUTF16toUTF8((const unichar **)&uChars, uChars + 2, &targetStart, targetStart + 4, 0);
             FFOPushToArray(deletions, slashIdx + 4);
             FFOPushToArray(deletions, (6 - 2) * 2);
-            return YES;
+            return 12;
         } else {
             ConvertUTF16toUTF8((const unichar **)&uChars, uChars + 1, &targetStart, targetStart + 2, 0);
             FFOPushToArray(deletions, slashIdx + 2);
             FFOPushToArray(deletions, 6 - 2);
-            return NO;
+            return 6;
         }
     }
 
     FFOPushToArray(deletions, slashIdx + 1);
     FFOPushToArray(deletions, 1);
     string[slashIdx] = FFOEscapeCharForChar(string[slashIdx + 1]);
-    return NO;
+    return 2;
 }
 
 // ideas:
@@ -115,74 +116,6 @@ static void FFOPerformDeletions(char *string, uint32_t startIdx, uint32_t endIdx
     memcpy(string + startIdx, copyBuffer->chars, copyBuffer->length);
     string[startIdx + copyBuffer->length] = '\0';
 }
-
-void FFOGatherCharIdxs(const char *string, uint32_t length, FFOArray **quoteIdxsPtr, FFOArray **slashIdxsPtr) {
-    FFOArray *quoteIdxs = FFOArrayWithCapacity(length / 10);
-    FFOArray *slashIdxs = FFOArrayWithCapacity(length / 10);
-
-    uint8x16_t lowQuoteVec, highQuoteVec, lowSlashVec, highSlashVec;
-    FFOPopulateVecsForChar('"', &lowQuoteVec, &highQuoteVec);
-    FFOPopulateVecsForChar('\\', &lowSlashVec, &highSlashVec);
-
-    uint32_t total = length / sizeof(uint8x16_t);
-    uint8x16_t *vectors = (uint8x16_t *)string;
-    uint8x16_t *end = vectors + total;
-    uint8x16_t vector;
-    for (; vectors != end; vectors++) {
-        vector = *vectors;
-        uint8x16_t quoteResult = sOneVec & ((vmvnq_u8(vector + lowQuoteVec)) & (vector + highQuoteVec));
-        uint8_t max = vmaxvq_u8(quoteResult);
-        if (max != 0) {
-            uint64x2_t chunks = vreinterpretq_u64_u8(quoteResult);
-            uint64_t chunk = __rbitll(vgetq_lane_u64(chunks, 0));
-            while (chunk != 0) {
-                uint64_t lead = __clzll(chunk);
-                uint32_t idx =  (uint32_t)(((const char *)vectors - string) + lead / 8);
-                FFOPushToArray(quoteIdxs, idx);
-                chunk &= ~(1ULL << (63 - lead));
-            }
-            chunk = __rbitll(vgetq_lane_u64(chunks, 1));
-            while (chunk != 0) {
-                uint64_t lead = __clzll(chunk);
-                uint32_t idx =  (uint32_t)(((const char *)vectors - string) + 8 + lead / 8);
-                FFOPushToArray(quoteIdxs, idx);
-                chunk &= ~(1ULL << (63 - lead));
-            }
-        }
-
-        uint8x16_t slashResult = sOneVec & ((vmvnq_u8(vector + lowSlashVec)) & (vector + highSlashVec));
-        max = vmaxvq_u8(slashResult);
-        if (max != 0) {
-            uint64x2_t chunks = vreinterpretq_u64_u8(slashResult);
-            uint64_t chunk = __rbitll(vgetq_lane_u64(chunks, 0));
-            while (chunk != 0) {
-                uint64_t lead = __clzll(chunk);
-                uint32_t idx =  (uint32_t)(((const char *)vectors - string) + lead / 8);
-                FFOPushToArray(slashIdxs, idx);
-                chunk &= ~(1ULL << (63 - lead));
-            }
-            chunk = __rbitll(vgetq_lane_u64(chunks, 1));
-            while (chunk != 0) {
-                uint64_t lead = __clzll(chunk);
-                uint32_t idx =  (uint32_t)(((const char *)vectors - string) + 8 + lead / 8);
-                FFOPushToArray(slashIdxs, idx);
-                chunk &= ~(1ULL << (63 - lead));
-            }
-        }
-    }
-
-     // Do the bit at the end
-     for (uint32_t i = length - length % sizeof(uint8x16_t); i < length; i++) {
-         if (string[i] == '"') {
-             FFOPushToArray(quoteIdxs, i);
-         } else if (string [i] == '\\'){
-             FFOPushToArray(slashIdxs, i);
-         }
-     }
-
-     *slashIdxsPtr = slashIdxs;
-     *quoteIdxsPtr = quoteIdxs;
- }
 
 static inline BOOL FFOConsume(const char *string, uint32_t *idx, char c) {
     if (string[*idx] == c) {
@@ -217,72 +150,103 @@ static inline uint32_t FFOParseNumber(char *string, FFOCallbacks *callbacks) {
     return endIdx;
 }
 
+__used static void pp(char *str) {
+    for (NSInteger i = 0; i < 500; i++) {
+        printf("%c", str[i]);
+    }
+    printf("\n");
+}
+
 void FFOParseJson(char *string, uint32_t length, FFOCallbacks *callbacks) {
-    FFOArray *quoteIdxsArray, *slashIdxsArray;
     FFOString *copyBuffer = FFOStringWithCapacity(100);
-    // FFOGatherCharsNaive(string, length, &quoteIdxsArray, &slashIdxsArray);
-    FFOGatherCharIdxs(string, length, &quoteIdxsArray, &slashIdxsArray);
-    byte *dest = malloc(length / 8);
-    process_chars
-    FFOPushToArray(quoteIdxsArray, UINT32_MAX);
-    uint32_t *quoteIdxs = quoteIdxsArray->elements;
-    uint32_t *slashIdxs = slashIdxsArray->elements;
+    uint32_t destLen = length / 8;
+    byte *dest = malloc(destLen);
+    process_chars(string, length, dest);
+    BOOL inDictionary = NO;
     uint32_t idx = 0;
-    NSInteger quoteIdxIdx = 0;
-    NSInteger slashIdxIdx = 0;
-    uint32_t nextSlashIdx = slashIdxs[slashIdxIdx];
+    uint32_t specialIdx = 0;
     FFOArray *deletions = FFOArrayWithCapacity(10);
     BOOL nextStringIsAKey = NO;
     while (idx < length) {
+        if (idx >= 21200) {
+            ;
+        }
         switch (string[idx]) {
-            case '"':
-                quoteIdxIdx++;
-                uint32_t stringStartIdx = idx + 1;
-                uint32_t nextQuoteIdx = quoteIdxs[quoteIdxIdx];
-                while (slashIdxIdx < slashIdxsArray->length && nextSlashIdx < nextQuoteIdx) {
-                    if (string[nextSlashIdx + 1] == '"') {
-                        nextQuoteIdx = quoteIdxs[++quoteIdxIdx];
+            case '"': {
+                uint32_t startIdx = idx + 1;
+                uint32_t destIdx = startIdx >> 3;
+                uint32_t offset = startIdx & 0x7;
+                byte b = dest[destIdx] << offset;
+                // todo: separate list for strings?
+                BOOL hitEnd = NO;
+                while (destIdx < destLen) {
+                    while (b) {
+                        // if __clz is slow, use a lookup table instead
+                        uint32_t next = __clz(b) - 24 + 1;
+                        offset += next;
+                        b = b << next;
+                        // Offset could be 8, so use "+" and not "|"
+                        specialIdx = ((destIdx << 3) + offset) - 1;
+                        char c = string[specialIdx];
+                        if (c == '"') {
+                            hitEnd = YES;
+                            break;
+                        } else if (c == '\\') {
+                            uint32_t extraOffset = -1 + FFOProcessEscapedSequence(deletions, string, length, specialIdx);
+                            b = b << extraOffset;
+                            offset += extraOffset;
+                            // Handles overflow
+                            if (offset >= 8) {
+                                destIdx += offset >> 3;
+                                offset = offset & 0x7;
+                                b = dest[destIdx] << offset;
+                            }
+                        }
                     }
-                    BOOL skip = FFOProcessEscapedSequence(deletions, string, length, nextSlashIdx);
-                    if (unlikely(skip)) {
-                        slashIdxIdx++;
+                    if (hitEnd) {
+                        break;
                     }
-                    nextSlashIdx = slashIdxs[++slashIdxIdx];
+                    offset = 0;
+                    destIdx++;
+                    b = dest[destIdx];
                 }
+                idx = specialIdx;
                 if (deletions->length > 0) {
-                    FFOPerformDeletions(string, stringStartIdx, nextQuoteIdx, deletions, copyBuffer);
+                    FFOPerformDeletions(string, startIdx, idx, deletions, copyBuffer);
                     deletions->length = 0;
                 } else {
-                    string[nextQuoteIdx] = '\0';
+                    string[idx] = '\0';
                 }
-                callbacks->stringCallback(string + stringStartIdx);
-                nextStringIsAKey = !nextStringIsAKey;
-                quoteIdxIdx++;
-                idx = nextQuoteIdx; // will be incremented at the end of the loop
+                printf("%s\n", string + startIdx);
+                callbacks->stringCallback(string + startIdx);
+            }
                 break;
             case '{':
                 nextStringIsAKey = YES;
                 callbacks->dictionaryStartCallback();
+                inDictionary = YES;
                 break;
             case '}':
                 callbacks->dictionaryEndCallback();
                 break;
             case '[':
                 callbacks->arrayStartCallback();
+                inDictionary = NO;
                 break;
             case ']':
                 callbacks->arrayEndCallback();
                 break;
             case ',':
-                nextStringIsAKey = YES;
+                nextStringIsAKey = inDictionary;
+                break;
             case ':':
                 nextStringIsAKey = NO;
                 break;
             default: {
                 // todo: deal with when null or undefined is the key
-                if (string[idx] == ',') {
-                    // skip
-                } else if (isalpha(string[idx])) {
+                // todo: can keys start with something for which isalpha is false, e.g. a number?
+                if (isalpha(string[idx])) {
+                    // todo: add skips here
                     // It's a dictionary key
                     if (nextStringIsAKey) {
                         char *colonStart = memchr(string + idx + 1, ':', length - idx - 1);
@@ -306,51 +270,6 @@ void FFOParseJson(char *string, uint32_t length, FFOCallbacks *callbacks) {
     }
 
     // todo: free the FFOArrays here
-}
-
-static void FFOGatherCharsNaive(const char *string, uint32_t length, FFOArray **quoteIdxsPtr, FFOArray **slashIdxsPtr) {
-    FFOArray *quoteIdxs = FFOArrayWithCapacity(1);
-    FFOArray *slashIdxs = FFOArrayWithCapacity(1);
-    for (NSInteger i = 0; i < length; i++) {
-        if (string[i] == '"') {
-            FFOPushToArray(quoteIdxs, (uint32_t)i);
-        } else if (string[i] == '\\') {
-            FFOPushToArray(slashIdxs, (uint32_t)i);
-        }
-    }
-    *quoteIdxsPtr = quoteIdxs;
-    *slashIdxsPtr = slashIdxs;
-}
-
-static void FFOTestGatherCharIdxsWithString(const char *string)
-{
-    FFOArray *testQuoteIdxs;
-    FFOArray *testSlashIdxs;
-    NSInteger length = strlen(string);
-    FFOGatherCharIdxs(string, (uint32_t)length, &testQuoteIdxs, &testSlashIdxs);
-    FFOArray *expectedQuoteIdxs = FFOArrayWithCapacity(1);
-    FFOArray *expectedSlashIdxs = FFOArrayWithCapacity(1);
-    for (NSInteger i = 0; i < length; i++) {
-        if (string[i] == '"') {
-            FFOPushToArray(expectedQuoteIdxs, (uint32_t)i);
-        } else if (string[i] == '\\') {
-            FFOPushToArray(expectedSlashIdxs, (uint32_t)i);
-        }
-    }
-    NSCAssert(FFOArraysAreEqual(testQuoteIdxs, expectedQuoteIdxs), @"");
-    NSCAssert(FFOArraysAreEqual(testSlashIdxs, expectedSlashIdxs), @"");
-}
-
-static void FFOTestGatherCharIdxs()
-{
-    FFOTestGatherCharIdxsWithString("\"\"              ");
-    FFOTestGatherCharIdxsWithString("");
-    FFOTestGatherCharIdxsWithString("\"");
-    FFOTestGatherCharIdxsWithString("\"\\");
-    FFOTestGatherCharIdxsWithString(" \"");
-    FFOTestGatherCharIdxsWithString(" \" ");
-    FFOTestGatherCharIdxsWithString("                  \"\"");
-    FFOTestGatherCharIdxsWithString("                  \"\"   \\ \\   adsf adsf \"  \"   \\   ");
 }
 
 static void FFOTestPerformDeletions()
@@ -381,16 +300,8 @@ static void FFOTestPerformDeletions()
 void FFORunTests()
 {
     // todo: test non-ascii chars
-    FFOTestGatherCharIdxs();
     FFOTestPerformDeletions();
     printf("tests pass\n");
-}
-
-__used static void printVec(uint8x16_t vec) {
-    for (NSInteger i = 0; i < sizeof(uint8x16_t); i++) {
-        printf("%zd, ", (NSInteger)vec[i]);
-    }
-    printf("\n");
 }
 
 __used static void printBinaryRep(uint64_t num) {

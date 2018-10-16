@@ -9,5 +9,5 @@
 #import "FFOJsonTestTypes.h"
 
 extern void FFOTestResults(char *string, uint32_t length);
-extern FFOJsonEvent *sMyEvents;
+extern FFOJsonEvent sMyEvents[];
 extern uint64_t sMyEventCount;

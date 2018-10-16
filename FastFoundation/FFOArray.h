@@ -18,7 +18,6 @@ static FFOArray *FFOArrayWithCapacity(NSInteger capacity) {
     if (capacity == 0) {
         capacity++;
     }
-    // Hack to do one malloc to allocate for two pointers
     FFOArray *array = malloc(sizeof(FFOArray));
     array->elements = malloc(sizeof(array->elements[0]) * capacity);
     array->length = 0;
@@ -31,10 +30,7 @@ static inline void FFOGrowArray(FFOArray *array, NSInteger capacity) {
     while (array->capacity < capacity) {
         array->capacity *= 2;
     }
-    uint32_t *elements = array->elements;
-    array->elements = malloc(sizeof(array->elements[0]) * array->capacity);
-    memcpy(array->elements, elements, sizeof(array->elements[0]) * array->length);
-    free(elements);
+    array->elements = realloc(array->elements, sizeof(array->elements[0]) * array->capacity);
 }
 
 static inline void FFOPushToArray(FFOArray *array, uint32_t element) {

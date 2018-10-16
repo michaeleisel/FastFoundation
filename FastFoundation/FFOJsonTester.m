@@ -11,7 +11,7 @@
 #import "FFOJsonParser.h"
 #import "FFOEnvironment.h"
 
-FFOJsonEvent *sMyEvents;
+FFOJsonEvent sMyEvents[500000];
 uint64_t sMyEventCount = 0;
 
 static const char *FFONameForType(FFOJsonType type) {
@@ -116,8 +116,5 @@ static FFOCallbacks sCallbacks = {
 };
 
 void FFOTestResults(char *string, uint32_t length) {
-    if (FFOIsDebug()) {
-        sMyEvents = (FFOJsonEvent *)malloc(5000000 * sizeof(*sMyEvents));
-    }
     FFOParseJson(string, length, &sCallbacks);
 }

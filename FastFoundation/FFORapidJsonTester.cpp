@@ -16,7 +16,7 @@
 using namespace rapidjson;
 using namespace std;
 
-FFOJsonEvent sEvents[5000000];
+FFOJsonEvent sEvents[500000];
 uint64_t sEventCount = 0;
 
 static void pushResult(FFOJsonType type, FFOResult result) {
@@ -86,5 +86,6 @@ extern "C" void gooo(char *json) {
     MyHandler handler;
     Reader reader;
     StringStream ss(json);
-    reader.Parse(ss, handler);
+    ParseResult p = reader.Parse(ss, handler);
+    ;
 }
