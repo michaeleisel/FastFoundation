@@ -217,7 +217,6 @@ void FFOParseJson(char *string, uint32_t length, FFOCallbacks *callbacks) {
                 } else {
                     string[idx] = '\0';
                 }
-                printf("%s\n", string + startIdx);
                 callbacks->stringCallback(string + startIdx);
             }
                 break;

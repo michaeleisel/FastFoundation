@@ -23,7 +23,6 @@ typedef struct {
     FFONotificationCallback nullCallback;
 } FFOCallbacks;
 
-
 void FFORunTests();
 void FFOParseJson(char *string, uint32_t length, FFOCallbacks *callbacks);
 void FFOGatherCharIdxs(const char *string, uint32_t length, FFOArray **quoteIdxsPtr, FFOArray **slashIdxsPtr);

@@ -74,36 +74,59 @@ static void push(FFOJsonType type, FFOResult result) {
 }
 
 static void FFOGotNull() {
+    if (!FFOIsDebug()) {
+        return;
+    }
     push(FFOJsonTypeNull, kNoResult);
 }
 
 static void FFOGotString(char *string) {
+    if (!FFOIsDebug()) {
+        return;
+    }
     FFOResult result = {.str = string};
     push(FFOJsonTypeString, result);
 }
 
 static void FFOGotDictionaryStart() {
+    if (!FFOIsDebug()) {
+        return;
+    }
     push(FFOJsonTypeStartDict, kNoResult);
 }
 
 static void FFOGotDictionaryEnd() {
+    if (!FFOIsDebug()) {
+        return;
+    }
     push(FFOJsonTypeEndDict, kNoResult);
 }
 
 static void FFOGotArrayStart() {
+    if (!FFOIsDebug()) {
+        sMyEventCount++;
+        return;
+    }
     push(FFOJsonTypeStartArray, kNoResult);
 }
 
 static void FFOGotNum(double num) {
+    if (!FFOIsDebug()) {
+        sMyEventCount++;
+        return;
+    }
     FFOResult result;
     result.d = num;
     push(FFOJsonTypeNum, result);
 }
 
 static void FFOGotArrayEnd() {
+    if (!FFOIsDebug()) {
+        sMyEventCount++;
+        return;
+    }
     push(FFOJsonTypeEndArray, kNoResult);
 }
-
 
 static FFOCallbacks sCallbacks = {
     .stringCallback = FFOGotString,

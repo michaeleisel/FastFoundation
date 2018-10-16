@@ -20,15 +20,27 @@ FFOJsonEvent sEvents[500000];
 uint64_t sEventCount = 0;
 
 static void pushResult(FFOJsonType type, FFOResult result) {
+    if (!FFOIsDebug()) {
+        sEventCount++;
+        return;
+    }
     FFOJsonEvent event = {.type = type, .result = result};
     sEvents[sEventCount++] = event;
 }
 
 static void push(FFOJsonType type) {
+    if (!FFOIsDebug()) {
+        sEventCount++;
+        return;
+    }
     pushResult(type, kNoResult);
 }
 
 static void pushNum(FFOJsonType type, double d) {
+    if (!FFOIsDebug()) {
+        sEventCount++;
+        return;
+    }
     FFOResult result = {.d = d};
     pushResult(type, result);
 }
@@ -87,5 +99,4 @@ extern "C" void gooo(char *json) {
     Reader reader;
     StringStream ss(json);
     ParseResult p = reader.Parse(ss, handler);
-    ;
 }

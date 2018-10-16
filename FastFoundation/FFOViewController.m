@@ -110,7 +110,7 @@ static void FFOTestProcessChars(char *string, char *dest, NSInteger length) {
         }
         NSAssert(sMyEventCount == sEventCount || sMyEventCount == sEventCount + 1/*hack*/, @"");
     } else {
-        NSInteger nIterations = 1e1;
+        NSInteger nIterations = 1e2;
         char *myStrings[nIterations];
         for (NSInteger i = 0; i < nIterations; i++) {
             asprintf(&(myStrings[i]), "%s", str);
@@ -124,13 +124,13 @@ static void FFOTestProcessChars(char *string, char *dest, NSInteger length) {
             gooo(rapStrings[i]);
         }
         CFTimeInterval end = CACurrentMediaTime();
-        printf("rap: %lf per sec\n", nIterations / (end - start));
+        printf("rap: %lfsec\n", end - start);
         start = CACurrentMediaTime();
         for (NSInteger i = 0; i < nIterations; i++) {
             FFOTestResults(myStrings[i], (int32_t)length);
         }
         end = CACurrentMediaTime();
-        printf("my: %lf\n", (end - start));
+        printf("my: %lf\n", end - start);
         printf("%llu, %llu\n", sMyEventCount, sEventCount);
     }
     NSLog(@"done");
