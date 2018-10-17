@@ -97,6 +97,9 @@ OS_NOINLINE static size_t naive_strlen(const char *str) {
 {
 	[super viewDidLoad];
 
+    BOOL useUnalignedStrs = YES;
+
+    srand(0);
     NSInteger count = 200;
     char *strs[count];
     NSInteger start = 0;
@@ -108,11 +111,13 @@ OS_NOINLINE static size_t naive_strlen(const char *str) {
         strs[i][i] = '\0';
 
         // assert(cpy_strlen(strs[i]) == i);
-        assert(ffo_strlen(strs[i]) == i);
+        // test unaligned strings
+        int offset = arc4random_uniform(i);
+        assert(ffo_strlen(strs[i] + offset) == i - offset);
     }
 
     assert(start == 0);
-    NSInteger nIter = 1e6;
+    NSInteger nIter = 1e5;
 
     for (NSInteger z = 0; z < 10; z++) {
         ({
@@ -120,7 +125,11 @@ OS_NOINLINE static size_t naive_strlen(const char *str) {
             int sum = 0;
             for (NSInteger i = 0; i < nIter; i++) {
                 for (NSInteger j = 0; j < count; j++) {
-                    sum += strlen(strs[j]);
+                    char *str = strs[j];
+                    if (useUnalignedStrs) {
+                        str += j / 2;
+                    }
+                    sum += strlen(str);
                 }
             }
             CFTimeInterval end = CACurrentMediaTime();
@@ -159,7 +168,11 @@ OS_NOINLINE static size_t naive_strlen(const char *str) {
             int sum = 0;
             for (NSInteger i = 0; i < nIter; i++) {
                 for (NSInteger j = 0; j < count; j++) {
-                    sum += ffo_strlen(strs[j]);
+                    char *str = strs[j];
+                    if (useUnalignedStrs) {
+                        str += j / 2;
+                    }
+                    sum += ffo_strlen(str);
                 }
             }
             CFTimeInterval end = CACurrentMediaTime();

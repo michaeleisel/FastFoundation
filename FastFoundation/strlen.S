@@ -28,18 +28,20 @@ ldrb w3, [curr_string], #1
 cbz w3, found_one
 b aligner
 
+movi zeros.4s, #0x0 // is eor faster?
+
+// todo: play with loop unrolling
 .p2align
 vector:
-movi zeros.4s, #0x0
-ldur q0, [curr_string]
+ldr q0, [curr_string]
+add curr_string, curr_string, #0x10 // for some reason, adding explicitly is faster than adding in ldr
+// apple's version tests whether or not the min of the vector is 0. but for some strange reason, the following two lines do the job faster
 cmeq.16b buffer, buffer, zeros
-// vceq.16b buffer, #0 // doesn't work for some reason
-add curr_string, curr_string, #16
 umaxv b3, v0.16b
 mov reg_max, v3.d[0]
 cbz reg_max, vector
+
 // the correct chunk has been found
-// sub curr_string, curr_string, #16 // compensate for the fact
 mov reg_vec, v0.d[0]
 sub curr_string, curr_string, 16
 cbnz reg_vec, add_left
