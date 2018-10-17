@@ -20,13 +20,14 @@
 		B38C42171E8E001700033ACD /* FFOViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C42161E8E001700033ACD /* FFOViewController.m */; };
 		B38C421C1E8E001700033ACD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B38C421B1E8E001700033ACD /* Assets.xcassets */; };
 		B38C42291E8E025200033ACD /* Launch.xib in Resources */ = {isa = PBXBuildFile; fileRef = B38C42281E8E025200033ACD /* Launch.xib */; };
+		B3B6D0A72177879D0029D900 /* strlen.S in Sources */ = {isa = PBXBuildFile; fileRef = B3B6D0A62177879D0029D900 /* strlen.S */; };
 		B3C0BBA520B5F063006CCEF3 /* ConvertUTF.c in Sources */ = {isa = PBXBuildFile; fileRef = B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */; };
 		B3CF25F520B6486300C1A65E /* j1.json in Resources */ = {isa = PBXBuildFile; fileRef = B3CF25F420B6486200C1A65E /* j1.json */; };
 		B3CF25F720B6486800C1A65E /* j2.json in Resources */ = {isa = PBXBuildFile; fileRef = B3CF25F620B6486800C1A65E /* j2.json */; };
 		B3D753B9208946A90090C3E2 /* NSString+FFOMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C422B1E8E029100033ACD /* NSString+FFOMethods.m */; };
 		B3E28D5821757196007CF207 /* canada.json in Resources */ = {isa = PBXBuildFile; fileRef = B3E28D5721757196007CF207 /* canada.json */; };
 		B3F73C41207C383300E11E2D /* fishhook.c in Sources */ = {isa = PBXBuildFile; fileRef = B3F73C40207C383300E11E2D /* fishhook.c */; };
-		B3F9CA26216E866400148A8F /* vectorizer.s in Sources */ = {isa = PBXBuildFile; fileRef = B3F9CA25216E866400148A8F /* vectorizer.s */; };
+		B3F9CA26216E866400148A8F /* vectorizer.S in Sources */ = {isa = PBXBuildFile; fileRef = B3F9CA25216E866400148A8F /* vectorizer.S */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +60,8 @@
 		B38C42281E8E025200033ACD /* Launch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Launch.xib; sourceTree = "<group>"; };
 		B38C422A1E8E029100033ACD /* NSString+FFOMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FFOMethods.h"; sourceTree = "<group>"; };
 		B38C422B1E8E029100033ACD /* NSString+FFOMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FFOMethods.m"; sourceTree = "<group>"; };
+		B3B6D0A52177879D0029D900 /* strlen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = strlen.h; sourceTree = "<group>"; };
+		B3B6D0A62177879D0029D900 /* strlen.S */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = strlen.S; sourceTree = "<group>"; };
 		B3C0BBA220B53607006CCEF3 /* FFOArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOArray.h; sourceTree = "<group>"; };
 		B3C0BBA320B5362F006CCEF3 /* FFODefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFODefines.h; sourceTree = "<group>"; };
 		B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ConvertUTF.c; sourceTree = "<group>"; };
@@ -160,7 +163,7 @@
 		B3F73C76207C403F00E11E2D /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		B3F73C77207C403F00E11E2D /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		B3F73C78207C403F00E11E2D /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
-		B3F9CA25216E866400148A8F /* vectorizer.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = vectorizer.s; sourceTree = "<group>"; };
+		B3F9CA25216E866400148A8F /* vectorizer.S */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = vectorizer.S; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -242,8 +245,10 @@
 				B3CF264920B64B7000C1A65E /* rapidjson */,
 				B3D753B72089249A0090C3E2 /* rust_bindings.h */,
 				B38C420F1E8E001700033ACD /* Supporting Files */,
-				B3F9CA25216E866400148A8F /* vectorizer.s */,
+				B3F9CA25216E866400148A8F /* vectorizer.S */,
 				B34D94D72174E1600072050A /* vectorizer.h */,
+				B3B6D0A52177879D0029D900 /* strlen.h */,
+				B3B6D0A62177879D0029D900 /* strlen.S */,
 			);
 			path = FastFoundation;
 			sourceTree = "<group>";
@@ -463,10 +468,11 @@
 				B32879F31E8E1625007E49B7 /* FFODateFormatter.m in Sources */,
 				B3178BCD20B64C9400E3076A /* FFORapidJsonTester.cpp in Sources */,
 				B38C42171E8E001700033ACD /* FFOViewController.m in Sources */,
+				B3B6D0A72177879D0029D900 /* strlen.S in Sources */,
 				B38586DE1EEE48BA00496750 /* pcg_basic.c in Sources */,
 				B38C42141E8E001700033ACD /* FFOAppDelegate.m in Sources */,
 				B38586DB1EEE46BD00496750 /* NSArrayFFOMethods.m in Sources */,
-				B3F9CA26216E866400148A8F /* vectorizer.s in Sources */,
+				B3F9CA26216E866400148A8F /* vectorizer.S in Sources */,
 				B3D753B9208946A90090C3E2 /* NSString+FFOMethods.m in Sources */,
 				B3F73C41207C383300E11E2D /* fishhook.c in Sources */,
 				B38C01F920B651B7002D4613 /* FFOJsonParser.m in Sources */,

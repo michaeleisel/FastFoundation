@@ -19,6 +19,7 @@
 #import "FFOJsonParser.h"
 #import "FFOEnvironment.h"
 #import "vectorizer.h"
+#import "strlen.h"
 
 @interface FFOViewController ()
 
@@ -34,6 +35,7 @@
     printf("%s\n", name); \
     sHasGone = NO; \
     sShouldStop = NO; \
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0); \
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1.0 * NSEC_PER_SEC), queue, ^(void){ \
         sShouldStop = YES; \
     }); \
@@ -59,6 +61,13 @@ volatile NSInteger sResult = 0;
 
 static const char kChars[] = {':', ',', '"', '\\', 'a', 'z'};
 
+__used static void pl(long long ll) {
+    for (NSInteger i = 0; i < 64; i++) {
+        printf("%lld", (ll >> (63 - i)) & 1);
+    }
+    printf("\n");
+}
+
 __used static void pb(char c) {
     for (NSInteger i = 0; i < 8; i++) {
         printf("%d", (c >> (7 - i)) & 1);
@@ -78,6 +87,54 @@ static void FFOTestProcessChars(char *string, char *dest, NSInteger length) {
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
+
+    NSInteger count = 4;
+    char *strs[count];
+    NSInteger start = 0;
+    for (NSInteger i = start; i < count; i++) {
+        strs[i] = malloc(i + 1);
+        for (NSInteger j = 0; j < i; j++) {
+            strs[i][j] = 'a' + (rand() % 26);
+        }
+        strs[i][i] = '\0';
+
+        assert(ffo_strlen(strs[i]) == i);
+    }
+
+    assert(start == 0);
+    NSInteger nIter = 1e6;
+
+    for (NSInteger z = 0; z < 10; z++) {
+        ({
+            CFTimeInterval start = CACurrentMediaTime();
+            int sum = 0;
+            for (NSInteger i = 0; i < nIter; i++) {
+                for (NSInteger j = 0; j < count; j++) {
+                    sum += strlen(strs[j]);
+                }
+            }
+            CFTimeInterval end = CACurrentMediaTime();
+            printf("apple: %lf\n", (end - start));
+            if (rand() % INT_MAX == 0) printf("%d\n", sum);
+        });
+
+        ({
+            CFTimeInterval start = CACurrentMediaTime();
+            int sum = 0;
+            for (NSInteger i = 0; i < nIter; i++) {
+                for (NSInteger j = 0; j < count; j++) {
+                    sum += ffo_strlen(strs[j]);
+                }
+            }
+            CFTimeInterval end = CACurrentMediaTime();
+            printf("ffo:   %lf\n", (end - start));
+            if (rand() % INT_MAX == 0) printf("%d\n", sum);
+        });
+        printf("\n");
+    }
+
+    NSLog(@"%@", @(sResult));
+    return;
 
     NSString *path = [[NSBundle mainBundle] pathForResource:@"citm_catalog" ofType:@"json"];
     NSString *objcStr = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
