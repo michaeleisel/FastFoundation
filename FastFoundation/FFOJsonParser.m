@@ -12,6 +12,7 @@
 #import "ConvertUTF.h"
 #import "vectorizer.h"
 #import <arm_acle.h>
+#import <mach-o/dyld.h>
 
 typedef unsigned char byte;
 
@@ -33,6 +34,8 @@ static inline char FFOEscapeCharForChar(char origChar) {
             return '\f';
         case 'n':
             return '\n';
+        case 'r':
+            return '\r';
         default:
             NSCAssert(NO, @"invalid/unsupported escape char");
             return '?';
@@ -168,12 +171,12 @@ void FFOParseJson(char *string, uint32_t length, FFOCallbacks *callbacks) {
     FFOArray *deletions = FFOArrayWithCapacity(10);
     BOOL nextStringIsAKey = NO;
     while (idx < length) {
-        if (idx >= 21200) {
-            ;
-        }
         switch (string[idx]) {
             case '"': {
                 uint32_t startIdx = idx + 1;
+                if (startIdx == 41683) {
+                    ;
+                }
                 uint32_t destIdx = startIdx >> 3;
                 uint32_t offset = startIdx & 0x7;
                 byte b = dest[destIdx] << offset;
@@ -217,6 +220,7 @@ void FFOParseJson(char *string, uint32_t length, FFOCallbacks *callbacks) {
                 } else {
                     string[idx] = '\0';
                 }
+                // printf("%s\n", string + startIdx);
                 callbacks->stringCallback(string + startIdx);
             }
                 break;
@@ -241,6 +245,18 @@ void FFOParseJson(char *string, uint32_t length, FFOCallbacks *callbacks) {
             case ':':
                 nextStringIsAKey = NO;
                 break;
+            case 'f':
+                idx += 4;
+                callbacks->booleanCallback(NO);
+                break;
+            case 't':
+                idx += 3;
+                callbacks->booleanCallback(YES);
+                break;
+            case 'n':
+                idx += 3;
+                callbacks->nullCallback();
+                break;
             default: {
                 // todo: deal with when null or undefined is the key
                 // todo: can keys start with something for which isalpha is false, e.g. a number?
@@ -253,11 +269,6 @@ void FFOParseJson(char *string, uint32_t length, FFOCallbacks *callbacks) {
                         callbacks->stringCallback(string + idx);
                         // *colonStart = ':'
                         idx = (uint32_t)(colonStart - string);
-                    } else {
-                        // It's null
-                        assert(0 == memcmp(string + idx, "null", 4) && !isalnum(string[idx + 4]));
-                        callbacks->nullCallback();
-                        idx += 4;
                     }
                 } else {
                     // It's a number

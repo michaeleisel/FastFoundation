@@ -73,6 +73,14 @@ static void push(FFOJsonType type, FFOResult result) {
     sMyEvents[sMyEventCount++] = event;
 }
 
+static void FFOGotBoolean(bool b) {
+    if (!FFOIsDebug()) {
+        return;
+    }
+    FFOResult result = {.d = b};
+    push(FFOJsonTypeBool, result);
+}
+
 static void FFOGotNull() {
     if (!FFOIsDebug()) {
         return;
@@ -136,6 +144,7 @@ static FFOCallbacks sCallbacks = {
     .dictionaryStartCallback = FFOGotDictionaryStart,
     .dictionaryEndCallback = FFOGotDictionaryEnd,
     .nullCallback = FFOGotNull,
+    .booleanCallback = FFOGotBoolean,
 };
 
 void FFOTestResults(char *string, uint32_t length) {

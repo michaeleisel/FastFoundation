@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "FFOArray.h"
 
+typedef void (*FFOBooleanCallback)(bool);
 typedef void (*FFOStringCallback)(char *);
 typedef void (*FFONumberCallback)(double);
 typedef void (*FFONotificationCallback)();
@@ -21,6 +22,7 @@ typedef struct {
     FFONotificationCallback dictionaryStartCallback;
     FFONotificationCallback dictionaryEndCallback;
     FFONotificationCallback nullCallback;
+    FFOBooleanCallback booleanCallback;
 } FFOCallbacks;
 
 void FFORunTests();

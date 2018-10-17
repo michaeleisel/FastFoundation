@@ -584,6 +584,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				OTHER_CFLAGS = "-DRAPIDJSON_NEON=1";
 				PRODUCT_BUNDLE_IDENTIFIER = com.eisel.michael.FastFoundation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -604,6 +605,7 @@
 					"$(PROJECT_DIR)",
 				);
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "-DRAPIDJSON_NEON=1";
 				PRODUCT_BUNDLE_IDENTIFIER = com.eisel.michael.FastFoundation;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

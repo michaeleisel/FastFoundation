@@ -79,7 +79,7 @@ static void FFOTestProcessChars(char *string, char *dest, NSInteger length) {
 {
 	[super viewDidLoad];
 
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"twitter" ofType:@"json"];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"citm_catalog" ofType:@"json"];
     NSString *objcStr = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
     const char *cStrOrig = [objcStr UTF8String];
     char *str = NULL;
