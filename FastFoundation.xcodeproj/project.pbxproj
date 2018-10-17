@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B30A194620AD37A00073CFB8 /* citm_catalog.json in Resources */ = {isa = PBXBuildFile; fileRef = B30A194520AD37A00073CFB8 /* citm_catalog.json */; };
+		B312864E2177CEED001C919C /* cpy_strlen.S in Sources */ = {isa = PBXBuildFile; fileRef = B312864D2177CEED001C919C /* cpy_strlen.S */; };
 		B3178BCD20B64C9400E3076A /* FFORapidJsonTester.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B3178BCC20B64C9400E3076A /* FFORapidJsonTester.cpp */; };
 		B32879F31E8E1625007E49B7 /* FFODateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = B32879F21E8E1625007E49B7 /* FFODateFormatter.m */; };
 		B34D94DB217570230072050A /* twitter.json in Resources */ = {isa = PBXBuildFile; fileRef = B34D94DA217570230072050A /* twitter.json */; };
@@ -34,6 +35,8 @@
 		B301A38D20B8BD7700AF3378 /* FFOEnvironment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOEnvironment.h; sourceTree = "<group>"; };
 		B301A38E20B8CB0700AF3378 /* FFONumberParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFONumberParser.h; sourceTree = "<group>"; };
 		B30A194520AD37A00073CFB8 /* citm_catalog.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = citm_catalog.json; sourceTree = SOURCE_ROOT; };
+		B312864C2177CEED001C919C /* cpy_strlen.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cpy_strlen.h; sourceTree = "<group>"; };
+		B312864D2177CEED001C919C /* cpy_strlen.S */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = cpy_strlen.S; sourceTree = "<group>"; };
 		B3178BCC20B64C9400E3076A /* FFORapidJsonTester.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FFORapidJsonTester.cpp; sourceTree = "<group>"; };
 		B3178BCE20B64EE500E3076A /* FFOJsonTestTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOJsonTestTypes.h; sourceTree = "<group>"; };
 		B32879F11E8E1625007E49B7 /* FFODateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFODateFormatter.h; sourceTree = "<group>"; };
@@ -249,6 +252,8 @@
 				B34D94D72174E1600072050A /* vectorizer.h */,
 				B3B6D0A52177879D0029D900 /* strlen.h */,
 				B3B6D0A62177879D0029D900 /* strlen.S */,
+				B312864C2177CEED001C919C /* cpy_strlen.h */,
+				B312864D2177CEED001C919C /* cpy_strlen.S */,
 			);
 			path = FastFoundation;
 			sourceTree = "<group>";
@@ -467,6 +472,7 @@
 			files = (
 				B32879F31E8E1625007E49B7 /* FFODateFormatter.m in Sources */,
 				B3178BCD20B64C9400E3076A /* FFORapidJsonTester.cpp in Sources */,
+				B312864E2177CEED001C919C /* cpy_strlen.S in Sources */,
 				B38C42171E8E001700033ACD /* FFOViewController.m in Sources */,
 				B3B6D0A72177879D0029D900 /* strlen.S in Sources */,
 				B38586DE1EEE48BA00496750 /* pcg_basic.c in Sources */,

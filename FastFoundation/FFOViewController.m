@@ -20,6 +20,7 @@
 #import "FFOEnvironment.h"
 #import "vectorizer.h"
 #import "strlen.h"
+#import "cpy_strlen.h"
 
 @interface FFOViewController ()
 
@@ -84,11 +85,19 @@ static void FFOTestProcessChars(char *string, char *dest, NSInteger length) {
     }
 }
 
+OS_NOINLINE static size_t naive_strlen(const char *str) {
+    const char *origStr = str;
+    while (*str != '\0') {
+        str++;
+    }
+    return str - origStr;
+}
+
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
 
-    NSInteger count = 4;
+    NSInteger count = 200;
     char *strs[count];
     NSInteger start = 0;
     for (NSInteger i = start; i < count; i++) {
@@ -98,6 +107,7 @@ static void FFOTestProcessChars(char *string, char *dest, NSInteger length) {
         }
         strs[i][i] = '\0';
 
+        // assert(cpy_strlen(strs[i]) == i);
         assert(ffo_strlen(strs[i]) == i);
     }
 
@@ -117,6 +127,32 @@ static void FFOTestProcessChars(char *string, char *dest, NSInteger length) {
             printf("apple: %lf\n", (end - start));
             if (rand() % INT_MAX == 0) printf("%d\n", sum);
         });
+
+        /*({
+            CFTimeInterval start = CACurrentMediaTime();
+            int sum = 0;
+            for (NSInteger i = 0; i < nIter; i++) {
+                for (NSInteger j = 0; j < count; j++) {
+                    sum += naive_strlen(strs[j]);
+                }
+            }
+            CFTimeInterval end = CACurrentMediaTime();
+            printf("naive: %lf\n", (end - start));
+            if (rand() % INT_MAX == 0) printf("%d\n", sum);
+        });*/
+
+        /*({
+            CFTimeInterval start = CACurrentMediaTime();
+            int sum = 0;
+            for (NSInteger i = 0; i < nIter; i++) {
+                for (NSInteger j = 0; j < count; j++) {
+                    sum += cpy_strlen(strs[j]);
+                }
+            }
+            CFTimeInterval end = CACurrentMediaTime();
+            printf("cpy:   %lf\n", (end - start));
+            if (rand() % INT_MAX == 0) printf("%d\n", sum);
+        });*/
 
         ({
             CFTimeInterval start = CACurrentMediaTime();
