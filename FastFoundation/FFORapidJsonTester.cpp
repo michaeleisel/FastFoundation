@@ -97,6 +97,6 @@ struct MyHandler : public BaseReaderHandler<UTF8<>, MyHandler> {
 extern "C" void gooo(char *json) {
     MyHandler handler;
     Reader reader;
-    StringStream ss(json);
+    GenericInsituStringStream<UTF8<>> ss(json);
     ParseResult p = reader.Parse(ss, handler);
 }
