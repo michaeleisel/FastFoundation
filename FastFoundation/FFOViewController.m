@@ -107,14 +107,6 @@ void FFOInitialSetup() {
 
 extern char ***_NSGetArgv(void);
 
-void     free(void *ptr) {
-    je_free(ptr);
-}
-
-__alloc_size(1) void    *malloc(size_t __size) {
-    return je_malloc(__size);
-}
-
 extern void cool();
 
 - (void)viewDidLoad
