@@ -93,47 +93,61 @@ OS_NOINLINE static size_t naive_strlen(const char *str) {
     return str - origStr;
 }
 
+- (void)computeAverage:(CFTimeInterval *)average stdDev:(CFTimeInterval *)stdDev forArray:(CFTimeInterval *)array size:(NSInteger)size
+{
+    CFTimeInterval sum = 0;
+    NSInteger skip = 1; /*skip first*/
+    for (NSInteger i = skip; i < size; i++) {
+        CFTimeInterval time = array[i];
+        sum += time;
+    }
+    *average = sum / (size - skip);
+    *stdDev = 0;
+    for (NSInteger i = skip; i < size; i++) {
+        CFTimeInterval time = array[i];
+        *stdDev += (time - *average) * (time - *average);
+    }
+    *stdDev = sqrt(*stdDev);
+}
+
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
 
-    BOOL useUnalignedStrs = YES;
-
     srand(0);
-    NSInteger count = 200;
+    NSInteger benchRuns = 10;
+    NSInteger count = 15;
+    NSInteger size = 100;
+    NSInteger alignOffset = 0;
+    CFTimeInterval appleRuns[benchRuns];
+    CFTimeInterval ffoRuns[benchRuns];
     char *strs[count];
-    NSInteger start = 0;
-    for (NSInteger i = start; i < count; i++) {
-        strs[i] = malloc(i + 1);
-        for (NSInteger j = 0; j < i; j++) {
+    for (NSInteger i = 0; i < count; i++) {
+        strs[i] = malloc(size);
+        for (NSInteger j = 0; j < size - 1; j++) {
             strs[i][j] = 'a' + (rand() % 26);
         }
-        strs[i][i] = '\0';
+        strs[i][size - 1] = '\0';
 
-        // assert(cpy_strlen(strs[i]) == i);
-        // test unaligned strings
-        int offset = arc4random_uniform(i);
-        assert(ffo_strlen(strs[i] + offset) == i - offset);
+        // printf("%zd\n", ffo_strlen(strs[i] + alignOffset));
+        assert(ffo_strlen(strs[i] + alignOffset) == size - alignOffset - 1);
     }
 
-    assert(start == 0);
-    NSInteger nIter = 1e5;
+    NSInteger nIter = 1e6;
 
-    for (NSInteger z = 0; z < 10; z++) {
+    for (NSInteger z = 0; z < benchRuns; z++) {
         ({
             CFTimeInterval start = CACurrentMediaTime();
             int sum = 0;
             for (NSInteger i = 0; i < nIter; i++) {
                 for (NSInteger j = 0; j < count; j++) {
                     char *str = strs[j];
-                    if (useUnalignedStrs) {
-                        str += j / 2;
-                    }
-                    sum += strlen(str);
+                    sum += strlen(str + alignOffset);
                 }
             }
-            CFTimeInterval end = CACurrentMediaTime();
-            printf("apple: %lf\n", (end - start));
+            CFTimeInterval duration = CACurrentMediaTime() - start;
+            printf("apple: %lf\n", duration);
+            appleRuns[z] = duration;
             if (rand() % INT_MAX == 0) printf("%d\n", sum);
         });
 
@@ -169,18 +183,26 @@ OS_NOINLINE static size_t naive_strlen(const char *str) {
             for (NSInteger i = 0; i < nIter; i++) {
                 for (NSInteger j = 0; j < count; j++) {
                     char *str = strs[j];
-                    if (useUnalignedStrs) {
-                        str += j / 2;
-                    }
-                    sum += ffo_strlen(str);
+                    sum += ffo_strlen(str + alignOffset);
                 }
             }
-            CFTimeInterval end = CACurrentMediaTime();
-            printf("ffo:   %lf\n", (end - start));
+            CFTimeInterval duration = CACurrentMediaTime() - start;
+            printf("ffo:   %lf\n", duration);
+            ffoRuns[z] = duration;
             if (rand() % INT_MAX == 0) printf("%d\n", sum);
         });
         printf("\n");
     }
+
+    CFTimeInterval appleAverage = 0;
+    CFTimeInterval appleStdDev = 0;
+    [self computeAverage:&appleAverage stdDev:&appleStdDev forArray:appleRuns size:benchRuns];
+
+    CFTimeInterval ffoAverage = 0;
+    CFTimeInterval ffoStdDev = 0;
+    [self computeAverage:&ffoAverage stdDev:&ffoStdDev forArray:ffoRuns size:benchRuns];
+
+    NSLog(@"ffo: %lf±%lf, apple: %lf±%lf", ffoAverage, ffoStdDev, appleAverage, appleStdDev);
 
     NSLog(@"%@", @(sResult));
     return;

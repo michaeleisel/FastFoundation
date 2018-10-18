@@ -16,22 +16,27 @@
 #define zero_count q2
 #define simd_max b3
 
+// todo: compare with bionic's strcmp
+
 .globl _ffo_strlen
 _ffo_strlen:
 .cfi_startproc
 mov orig_string, curr_string
 
-aligner:
 ands ands_buffer, curr_string, #0xf
-b.eq vector
-ldrb w3, [curr_string], #1
-cbz w3, found_one
-b aligner
+// jump here if it's aligned already
+adrp x7, _chars@PAGE
+add x7, x7, _chars@PAGEOFF
+add x7, x7, ands_buffer
+
+ldr q7, [x7]
+ldr q0, [curr_string]
+orr.16b v0, v0, v7
 
 movi zeros.4s, #0x0 // is eor faster?
 
 // todo: play with loop unrolling
-.p2align
+// .p2align // give this a value
 vector:
 ldr q0, [curr_string]
 add curr_string, curr_string, #0x10 // for some reason, adding explicitly is faster than adding in ldr
@@ -58,9 +63,7 @@ found:
 sub curr_string, curr_string, x2
 ret
 
-found_one:
-sub curr_string, curr_string, x2
-sub curr_string, curr_string, 1
-ret
-
 .cfi_endproc
+
+_chars:
+    .asciz "1111111111111111000000000000000"
