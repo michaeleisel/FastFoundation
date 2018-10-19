@@ -19,7 +19,7 @@
 		B38C421C1E8E001700033ACD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B38C421B1E8E001700033ACD /* Assets.xcassets */; };
 		B38C42291E8E025200033ACD /* Launch.xib in Resources */ = {isa = PBXBuildFile; fileRef = B38C42281E8E025200033ACD /* Launch.xib */; };
 		B398390F217A1ADE00721475 /* libjemalloc.2.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = B3D559F4217915BF00FEF2F2 /* libjemalloc.2.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		B3983911217A1AE000721475 /* libjemalloc.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D559F4217915BF00FEF2F2 /* libjemalloc.2.dylib */; };
+		B3983916217A385A00721475 /* libjemalloc.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D559F4217915BF00FEF2F2 /* libjemalloc.2.dylib */; };
 		B3B954F22135D4D3001B5B93 /* FFOThreadLocalMemory.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B954F12135D4D3001B5B93 /* FFOThreadLocalMemory.m */; };
 		B3B954F721363608001B5B93 /* FFOJemallocAllocator.mm in Sources */ = {isa = PBXBuildFile; fileRef = B3B954F621363608001B5B93 /* FFOJemallocAllocator.mm */; };
 		B3C0BBA520B5F063006CCEF3 /* ConvertUTF.c in Sources */ = {isa = PBXBuildFile; fileRef = B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */; };
@@ -190,11 +190,11 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		B38C42091E8E001700033ACD /* Frameworks */ = {
+		B3983915217A385100721475 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3983911217A1AE000721475 /* libjemalloc.2.dylib in Frameworks */,
+				B3983916217A385A00721475 /* libjemalloc.2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,7 +430,7 @@
 			buildConfigurationList = B38C42231E8E001700033ACD /* Build configuration list for PBXNativeTarget "FastFoundation" */;
 			buildPhases = (
 				B38C42081E8E001700033ACD /* Sources */,
-				B38C42091E8E001700033ACD /* Frameworks */,
+				B3983915217A385100721475 /* Frameworks */,
 				B3983912217A2E8900721475 /* ShellScript */,
 				B38C420A1E8E001700033ACD /* Resources */,
 				B3983910217A1ADE00721475 /* Embed Libraries */,
@@ -510,7 +510,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -demangle -lto_library /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libLTO.dylib -dynamic -arch arm64 -dead_strip -no_dead_strip_inits_and_terms -iphoneos_version_min 10.2.0 -syslibroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk -o /Users/michaeleisel/Documents/Projects/FastFoundation/Build/Products/Release-iphoneos/FastFoundation.app/FastFoundation -L/Users/michaeleisel/Documents/Projects/FastFoundation/Build/Products/Release-iphoneos -L/Users/michaeleisel/Documents/Projects/FastFoundation -L/Users/michaeleisel/Documents/Projects/FastFoundation/rusty -L/Users/michaeleisel/Documents/Projects/FastFoundation/FastFoundation -filelist /Users/michaeleisel/Documents/Projects/FastFoundation/Build/Intermediates/FastFoundation.build/Release-iphoneos/FastFoundation.build/Objects-normal/arm64/FastFoundation.LinkFileList -rpath @executable_path/Frameworks -object_path_lto /Users/michaeleisel/Documents/Projects/FastFoundation/Build/Intermediates/FastFoundation.build/Release-iphoneos/FastFoundation.build/Objects-normal/arm64/FastFoundation_lto.o -lc++ -dependency_info /Users/michaeleisel/Documents/Projects/FastFoundation/Build/Intermediates/FastFoundation.build/Release-iphoneos/FastFoundation.build/Objects-normal/arm64/FastFoundation_dependency_info.dat -framework Foundation -lobjc -lc++ /Users/michaeleisel/Documents/Projects/FastFoundation/FastFoundation/libjemalloc.2.dylib -rpath @executable_path -rpath /Users/michaeleisel/Documents/Projects/FastFoundation/FastFoundation -lSystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.0/lib/darwin/libclang_rt.ios.a -F/Users/michaeleisel/Documents/Projects/FastFoundation/Build/Products/Release-iphoneos -F/Users/michaeleisel/Documents/Projects/FastFoundation\n";
+			shellScript = "# sh /Users/michaeleisel/notes/link.sh\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
