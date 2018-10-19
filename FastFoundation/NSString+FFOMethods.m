@@ -10,6 +10,7 @@
 #import "jemalloc.h"
 #import <pthread.h>
 #import "FFOJemallocAllocator.h"
+#import "FFOEnabler.h"
 
 typedef struct {
 	char *string;

@@ -10,8 +10,6 @@
 		B301A39020BCC1CF00AF3378 /* twitter.json in Resources */ = {isa = PBXBuildFile; fileRef = B301A38F20BCC1CE00AF3378 /* twitter.json */; };
 		B30A194620AD37A00073CFB8 /* citm_catalog.json in Resources */ = {isa = PBXBuildFile; fileRef = B30A194520AD37A00073CFB8 /* citm_catalog.json */; };
 		B32879F31E8E1625007E49B7 /* FFODateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = B32879F21E8E1625007E49B7 /* FFODateFormatter.m */; };
-		B3405E7821399CBD00F8723A /* libjemalloc.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B3405E7721399CBD00F8723A /* libjemalloc.2.dylib */; };
-		B3405E7921399CC000F8723A /* libjemalloc.2.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = B3405E7721399CBD00F8723A /* libjemalloc.2.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		B3405E7C2139DCA700F8723A /* constructo.c in Sources */ = {isa = PBXBuildFile; fileRef = B3405E7B2139DCA600F8723A /* constructo.c */; };
 		B38586DB1EEE46BD00496750 /* NSArrayFFOMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = B38586DA1EEE46BD00496750 /* NSArrayFFOMethods.m */; };
 		B38586DE1EEE48BA00496750 /* pcg_basic.c in Sources */ = {isa = PBXBuildFile; fileRef = B38586DC1EEE48BA00496750 /* pcg_basic.c */; };
@@ -20,6 +18,8 @@
 		B38C42171E8E001700033ACD /* FFOViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C42161E8E001700033ACD /* FFOViewController.m */; };
 		B38C421C1E8E001700033ACD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B38C421B1E8E001700033ACD /* Assets.xcassets */; };
 		B38C42291E8E025200033ACD /* Launch.xib in Resources */ = {isa = PBXBuildFile; fileRef = B38C42281E8E025200033ACD /* Launch.xib */; };
+		B398390F217A1ADE00721475 /* libjemalloc.2.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = B3D559F4217915BF00FEF2F2 /* libjemalloc.2.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		B3983911217A1AE000721475 /* libjemalloc.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B3D559F4217915BF00FEF2F2 /* libjemalloc.2.dylib */; };
 		B3B954F22135D4D3001B5B93 /* FFOThreadLocalMemory.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B954F12135D4D3001B5B93 /* FFOThreadLocalMemory.m */; };
 		B3B954F721363608001B5B93 /* FFOJemallocAllocator.mm in Sources */ = {isa = PBXBuildFile; fileRef = B3B954F621363608001B5B93 /* FFOJemallocAllocator.mm */; };
 		B3C0BBA520B5F063006CCEF3 /* ConvertUTF.c in Sources */ = {isa = PBXBuildFile; fileRef = B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */; };
@@ -31,13 +31,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		B3405E7A21399CC000F8723A /* Embed Libraries */ = {
+		B3983910217A1ADE00721475 /* Embed Libraries */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				B3405E7921399CC000F8723A /* libjemalloc.2.dylib in Embed Libraries */,
+				B398390F217A1ADE00721475 /* libjemalloc.2.dylib in Embed Libraries */,
 			);
 			name = "Embed Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -54,7 +54,6 @@
 		B32126AD213ECDB2007929FA /* libicuXcode.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libicuXcode.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B32879F11E8E1625007E49B7 /* FFODateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFODateFormatter.h; sourceTree = "<group>"; };
 		B32879F21E8E1625007E49B7 /* FFODateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFODateFormatter.m; sourceTree = "<group>"; };
-		B3405E7721399CBD00F8723A /* libjemalloc.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libjemalloc.2.dylib; sourceTree = "<group>"; };
 		B3405E7B2139DCA600F8723A /* constructo.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = constructo.c; sourceTree = "<group>"; };
 		B3486AAD20AE640000C7291B /* FastFoundation.profdata */ = {isa = PBXFileReference; lastKnownFileType = file; path = FastFoundation.profdata; sourceTree = "<group>"; };
 		B38586D91EEE46BD00496750 /* NSArrayFFOMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSArrayFFOMethods.h; sourceTree = "<group>"; };
@@ -76,6 +75,7 @@
 		B38C42281E8E025200033ACD /* Launch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Launch.xib; sourceTree = "<group>"; };
 		B38C422A1E8E029100033ACD /* NSString+FFOMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FFOMethods.h"; sourceTree = "<group>"; };
 		B38C422B1E8E029100033ACD /* NSString+FFOMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FFOMethods.m"; sourceTree = "<group>"; };
+		B398390721792E5A00721475 /* libjemalloc.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjemalloc.a; sourceTree = "<group>"; };
 		B3B954D62135AAE9001B5B93 /* rusty.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = rusty.a; path = rusty/rusty.a; sourceTree = SOURCE_ROOT; };
 		B3B954EF2135CE7F001B5B93 /* jemalloc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = jemalloc.h; sourceTree = "<group>"; };
 		B3B954F02135D4D3001B5B93 /* FFOThreadLocalMemory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOThreadLocalMemory.h; sourceTree = "<group>"; };
@@ -83,7 +83,6 @@
 		B3B954F32135F24D001B5B93 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		B3B954F521363608001B5B93 /* FFOJemallocAllocator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOJemallocAllocator.h; sourceTree = "<group>"; };
 		B3B954F621363608001B5B93 /* FFOJemallocAllocator.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = FFOJemallocAllocator.mm; sourceTree = "<group>"; };
-		B3B955A821375E8C001B5B93 /* jemalloc_universal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = jemalloc_universal.a; sourceTree = "<group>"; };
 		B3C0BBA220B53607006CCEF3 /* FFOArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOArray.h; sourceTree = "<group>"; };
 		B3C0BBA320B5362F006CCEF3 /* FFODefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFODefines.h; sourceTree = "<group>"; };
 		B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ConvertUTF.c; sourceTree = "<group>"; };
@@ -129,6 +128,9 @@
 		B3CF266D20B64B7000C1A65E /* pointer.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = pointer.h; sourceTree = "<group>"; };
 		B3CF266F20B64B7000C1A65E /* inttypes.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = inttypes.h; sourceTree = "<group>"; };
 		B3CF267020B64B7000C1A65E /* stdint.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = stdint.h; sourceTree = "<group>"; };
+		B3D559F22178E6DC00FEF2F2 /* FFOEnabler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOEnabler.h; sourceTree = "<group>"; };
+		B3D559F32178E76F00FEF2F2 /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
+		B3D559F4217915BF00FEF2F2 /* libjemalloc.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libjemalloc.2.dylib; sourceTree = "<group>"; };
 		B3D753B72089249A0090C3E2 /* rust_bindings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rust_bindings.h; sourceTree = SOURCE_ROOT; };
 		B3F73C40207C383300E11E2D /* fishhook.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = fishhook.c; sourceTree = "<group>"; };
 		B3F73C42207C383700E11E2D /* fishhook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fishhook.h; sourceTree = "<group>"; };
@@ -192,7 +194,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3405E7821399CBD00F8723A /* libjemalloc.2.dylib in Frameworks */,
+				B3983911217A1AE000721475 /* libjemalloc.2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,8 +212,11 @@
 		B38C42031E8E001700033ACD = {
 			isa = PBXGroup;
 			children = (
+				B3D559F32178E76F00FEF2F2 /* Prefix.pch */,
+				B3D559F22178E6DC00FEF2F2 /* FFOEnabler.h */,
 				B3B954F521363608001B5B93 /* FFOJemallocAllocator.h */,
 				B3B954F621363608001B5B93 /* FFOJemallocAllocator.mm */,
+				B398390721792E5A00721475 /* libjemalloc.a */,
 				B3B954F02135D4D3001B5B93 /* FFOThreadLocalMemory.h */,
 				B3B954F12135D4D3001B5B93 /* FFOThreadLocalMemory.m */,
 				B38C420E1E8E001700033ACD /* FastFoundation */,
@@ -235,14 +240,12 @@
 				B38C421B1E8E001700033ACD /* Assets.xcassets */,
 				B30A194520AD37A00073CFB8 /* citm_catalog.json */,
 				B301A38F20BCC1CE00AF3378 /* twitter.json */,
-				B3405E7721399CBD00F8723A /* libjemalloc.2.dylib */,
 				B301A38D20B8BD7700AF3378 /* FFOEnvironment.h */,
 				B301A38E20B8CB0700AF3378 /* FFONumberParser.h */,
 				B3B954EF2135CE7F001B5B93 /* jemalloc.h */,
 				B3B954D62135AAE9001B5B93 /* rusty.a */,
 				B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */,
 				B3C0BBA620B5F0A3006CCEF3 /* ConvertUTF.h */,
-				B3B955A821375E8C001B5B93 /* jemalloc_universal.a */,
 				B38C42121E8E001700033ACD /* FFOAppDelegate.h */,
 				B38C42131E8E001700033ACD /* FFOAppDelegate.m */,
 				B3C0BBA220B53607006CCEF3 /* FFOArray.h */,
@@ -254,6 +257,7 @@
 				B38C01FA20B65275002D4613 /* FFOJsonTester.h */,
 				B38C01F520B65183002D4613 /* FFOJsonTester.m */,
 				B3178BCE20B64EE500E3076A /* FFOJsonTestTypes.h */,
+				B3D559F4217915BF00FEF2F2 /* libjemalloc.2.dylib */,
 				B3178BCC20B64C9400E3076A /* FFORapidJsonTester.cpp */,
 				B3CF262020B64A1300C1A65E /* FFORapidJsonTester.h */,
 				B3CF25F320B63DA400C1A65E /* FFOString.h */,
@@ -427,8 +431,9 @@
 			buildPhases = (
 				B38C42081E8E001700033ACD /* Sources */,
 				B38C42091E8E001700033ACD /* Frameworks */,
+				B3983912217A2E8900721475 /* ShellScript */,
 				B38C420A1E8E001700033ACD /* Resources */,
-				B3405E7A21399CC000F8723A /* Embed Libraries */,
+				B3983910217A1ADE00721475 /* Embed Libraries */,
 			);
 			buildRules = (
 			);
@@ -488,6 +493,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B3983912217A2E8900721475 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ld -demangle -lto_library /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/libLTO.dylib -dynamic -arch arm64 -dead_strip -no_dead_strip_inits_and_terms -iphoneos_version_min 10.2.0 -syslibroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk -o /Users/michaeleisel/Documents/Projects/FastFoundation/Build/Products/Release-iphoneos/FastFoundation.app/FastFoundation -L/Users/michaeleisel/Documents/Projects/FastFoundation/Build/Products/Release-iphoneos -L/Users/michaeleisel/Documents/Projects/FastFoundation -L/Users/michaeleisel/Documents/Projects/FastFoundation/rusty -L/Users/michaeleisel/Documents/Projects/FastFoundation/FastFoundation -filelist /Users/michaeleisel/Documents/Projects/FastFoundation/Build/Intermediates/FastFoundation.build/Release-iphoneos/FastFoundation.build/Objects-normal/arm64/FastFoundation.LinkFileList -rpath @executable_path/Frameworks -object_path_lto /Users/michaeleisel/Documents/Projects/FastFoundation/Build/Intermediates/FastFoundation.build/Release-iphoneos/FastFoundation.build/Objects-normal/arm64/FastFoundation_lto.o -lc++ -dependency_info /Users/michaeleisel/Documents/Projects/FastFoundation/Build/Intermediates/FastFoundation.build/Release-iphoneos/FastFoundation.build/Objects-normal/arm64/FastFoundation_dependency_info.dat -framework Foundation -lobjc -lc++ /Users/michaeleisel/Documents/Projects/FastFoundation/FastFoundation/libjemalloc.2.dylib -rpath @executable_path -rpath /Users/michaeleisel/Documents/Projects/FastFoundation/FastFoundation -lSystem /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/10.0.0/lib/darwin/libclang_rt.ios.a -F/Users/michaeleisel/Documents/Projects/FastFoundation/Build/Products/Release-iphoneos -F/Users/michaeleisel/Documents/Projects/FastFoundation\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B38C42081E8E001700033ACD /* Sources */ = {
@@ -622,6 +647,8 @@
 				DEVELOPMENT_TEAM = LE4EC4296K;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = FastFoundation/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -646,6 +673,8 @@
 				DEVELOPMENT_TEAM = LE4EC4296K;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "";
 				INFOPLIST_FILE = FastFoundation/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (

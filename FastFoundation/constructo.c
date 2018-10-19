@@ -10,8 +10,8 @@
 #include <unistd.h>
 #include <string.h>
 
-__attribute__((constructor)) __used void doStuff() {
+/*__attribute__((constructor)) __used void doStuff() {
     const char *str = "main proj\n";
     write(STDOUT_FILENO, (const void *)str, (size_t)strlen(str));
-}
+}*/
 

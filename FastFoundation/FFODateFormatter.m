@@ -12,6 +12,7 @@
 #import "jemalloc.h"
 #import "FFOThreadLocalMemory.h"
 #import "FFOJemallocAllocator.h"
+#import "FFOEnabler.h"
 
 struct FFODateComponent {
     NSCalendarUnit unit;

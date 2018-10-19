@@ -24,6 +24,7 @@
 #import <malloc/malloc.h>
 #import <execinfo.h>
 #import <mach-o/dyld.h>
+#import "FFOEnabler.h"
 
 @interface FFOViewController ()
 
@@ -33,6 +34,12 @@
     UINavigationController *_navController;
     UIViewController *_childController;
 }
+
+void je_zone_register(void);
+
+/*__attribute__((constructor)) void FFOStart() {
+    je_zone_register();
+}*/
 
 #define BENCH(name, ...) \
 ({ \
@@ -58,8 +65,11 @@
     sShouldStop = NO; \
 })
 
-/* returns the size of a block or 0 if not in this zone; must be fast, especially for negative answers */
-size_t FFOZoneSize(struct _malloc_zone_t *zone, const void *ptr) {
+static inline NSInteger FFORound(double d) {
+    return (NSInteger)(d + 0.5);
+}
+
+/*size_t FFOZoneSize(struct _malloc_zone_t *zone, const void *ptr) {
     return je_sallocx(ptr, 0);
 }
 
@@ -67,13 +77,8 @@ void *FFOZoneMalloc(struct _malloc_zone_t *zone, size_t size) {
     return je_malloc(size);
 }
 
-/* same as malloc, but block returned is set to zero */
 void *FFOZoneCalloc(struct _malloc_zone_t *zone, size_t num_items, size_t size) {
     return je_calloc(num_items, size);
-}
-
-static inline NSInteger FFORound(double d) {
-    return (NSInteger)(d + 0.5);
 }
 
 void *FFOZoneValloc(struct _malloc_zone_t *zone, size_t size) {
@@ -88,7 +93,7 @@ void FFOZoneFree(struct _malloc_zone_t *zone, void *ptr) {
 
 void *FFOZoneRealloc(struct _malloc_zone_t *zone, void *ptr, size_t size) {
     return je_realloc(ptr, size);
-}
+}*/
 
 /*void FFOZoneDestroy(struct _malloc_zone_t *zone) {
     // no-op
@@ -111,39 +116,46 @@ extern void cool();
 
 - (void)viewDidLoad
 {
-	[super viewDidLoad];
+    [super viewDidLoad];
     cool();
     FFOInitialSetup();
     FFORunTests();
+    NSInteger sum = 0;
     if (NO && FFOIsDebug()) {
         NSLog(@"running in debug, don't benchmark");
     } else {
-        NSInteger nIterations = 1e7;
-        NSInteger bytes = 16;
-        ({
-            CFTimeInterval start = CACurrentMediaTime();
-            @autoreleasepool {
-                for (NSInteger i = 0; i < nIterations; i++) {
-                    void *ptr = malloc(bytes);
-                    free(ptr);
+        for (NSInteger z = 0; z < 3; z++) {
+            NSInteger nIterations = 1e7;
+            NSInteger bytes = 16;
+            ({
+                CFTimeInterval start = CACurrentMediaTime();
+                @autoreleasepool {
+                    for (NSInteger i = 0; i < nIterations; i++) {
+                        void *ptr = malloc(bytes);
+                        sum += (NSInteger)ptr;
+                        free(ptr);
+                    }
                 }
-            }
-            CFTimeInterval end = CACurrentMediaTime();
-            printf("apple: %lf\n", (end - start));
-        });
-        usleep(500000);
-        ({
-            CFTimeInterval start = CACurrentMediaTime();
-            @autoreleasepool {
-                for (NSInteger i = 0; i < nIterations; i++) {
-                    void *ptr = je_malloc(bytes); // je_malloc(bytes);
-                    je_free(ptr);
+                CFTimeInterval end = CACurrentMediaTime();
+                printf("apple: %lf\n", (end - start));
+            });
+            /*({
+                CFTimeInterval start = CACurrentMediaTime();
+                @autoreleasepool {
+                    for (NSInteger i = 0; i < nIterations; i++) {
+                        void *ptr = je_malloc(bytes); // je_malloc(bytes);
+                        sum += (NSInteger)ptr;
+                        je_free(ptr);
+                    }
                 }
-            }
-            CFTimeInterval end = CACurrentMediaTime();
-            printf("my: %lf\n", (end - start));
-        });
+                CFTimeInterval end = CACurrentMediaTime();
+                printf("my: %lf\n", (end - start));
+            });*/
+        }
     }
+    // if ((rand() & 0) == 1) {
+        NSLog(@"%@", @(sum));
+    // }
     NSLog(@"done");
 }
 

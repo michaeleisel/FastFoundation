@@ -8,6 +8,7 @@
 
 #import "FFOJemallocAllocator.h"
 #import "jemalloc.h"
+#import "FFOEnabler.h"
 
 static CFAllocatorRef sJemallocAllocator;
 
