@@ -112,12 +112,20 @@ void FFOInitialSetup() {
 
 extern char ***_NSGetArgv(void);
 
-extern void cool();
+extern void je_zone_register(void);
+extern malloc_zone_t *je_get_jemalloc_zone(void);
+
+__attribute__((constructor)) void FFORegister() {
+    // je_zone_register();
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    cool();
+    return;
+    je_zone_register();
+    malloc_zone_t *jeZone = je_get_jemalloc_zone();
+    malloc_zone_t *defaultZone = malloc_default_zone();
     FFOInitialSetup();
     FFORunTests();
     NSInteger sum = 0;
@@ -139,7 +147,7 @@ extern void cool();
                 CFTimeInterval end = CACurrentMediaTime();
                 printf("apple: %lf\n", (end - start));
             });
-            /*({
+            ({
                 CFTimeInterval start = CACurrentMediaTime();
                 @autoreleasepool {
                     for (NSInteger i = 0; i < nIterations; i++) {
@@ -150,7 +158,31 @@ extern void cool();
                 }
                 CFTimeInterval end = CACurrentMediaTime();
                 printf("my: %lf\n", (end - start));
-            });*/
+            });
+            ({
+                CFTimeInterval start = CACurrentMediaTime();
+                @autoreleasepool {
+                    for (NSInteger i = 0; i < nIterations; i++) {
+                        void *ptr = malloc_zone_malloc(defaultZone, bytes);
+                        sum += (NSInteger)ptr;
+                        malloc_zone_free(defaultZone, ptr);
+                    }
+                }
+                CFTimeInterval end = CACurrentMediaTime();
+                printf("malloc_zone default: %lf\n", (end - start));
+            });
+            ({
+                CFTimeInterval start = CACurrentMediaTime();
+                @autoreleasepool {
+                    for (NSInteger i = 0; i < nIterations; i++) {
+                        void *ptr = malloc_zone_malloc(jeZone, bytes);
+                        sum += (NSInteger)ptr;
+                        malloc_zone_free(jeZone, ptr);
+                    }
+                }
+                CFTimeInterval end = CACurrentMediaTime();
+                printf("malloc_zone je: %lf\n", (end - start));
+            });
         }
     }
     // if ((rand() & 0) == 1) {
