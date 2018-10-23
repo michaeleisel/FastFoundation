@@ -116,12 +116,17 @@ extern void je_zone_register(void);
 extern malloc_zone_t *je_get_jemalloc_zone(void);
 
 __attribute__((constructor)) void FFORegister() {
+    printf("ffo reg");
     // je_zone_register();
 }
+
+void asf(void);
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    printf("vc\n");
+    // asf();
     return;
     je_zone_register();
     malloc_zone_t *jeZone = je_get_jemalloc_zone();
