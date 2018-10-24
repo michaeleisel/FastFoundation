@@ -1,2 +1,4 @@
 Build/*
 *.xcbkptlist
+*.dylib
+*.a
