@@ -113,7 +113,7 @@ void FFOInitialSetup() {
 extern char ***_NSGetArgv(void);
 
 extern void je_zone_register(void);
-extern malloc_zone_t *je_get_jemalloc_zone(void);
+// extern malloc_zone_t *je_get_jemalloc_zone(void);
 
 __attribute__((constructor)) void FFORegister() {
     printf("ffo reg");
@@ -121,26 +121,73 @@ __attribute__((constructor)) void FFORegister() {
 }
 
 void asf(void);
+extern malloc_zone_t *originalDefaultZone();
+extern void wrap_free(void *p);
+extern void *wrap_malloc(size_t size);
+
+extern void *je_zone_malloc(malloc_zone_t *zone, size_t size);
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     printf("vc\n");
-    // asf();
-    return;
-    je_zone_register();
-    malloc_zone_t *jeZone = je_get_jemalloc_zone();
-    malloc_zone_t *defaultZone = malloc_default_zone();
+    // je_zone_register();
+    malloc_zone_t *jeZone = malloc_default_zone();
+    // malloc_zone_t *defaultZone = originalDefaultZone();
+    // printf("%p, %p\n", wrap_malloc, malloc);
+    // printf("%p, %p, %p, %p\n", jeZone, jeZone->malloc, defaultZone->malloc, je_zone_malloc);
+    jeZone->malloc(jeZone, 2);
     FFOInitialSetup();
     FFORunTests();
+    CFAllocatorRef jemallocAllocator = FFOJemallocAllocator();
     NSInteger sum = 0;
+    const char *str = "the quick brown fox jumped over the lazy dog";
     if (NO && FFOIsDebug()) {
         NSLog(@"running in debug, don't benchmark");
     } else {
         for (NSInteger z = 0; z < 3; z++) {
-            NSInteger nIterations = 1e7;
+            NSInteger nIterations = 1e6;
             NSInteger bytes = 16;
             ({
+                CFTimeInterval start = CACurrentMediaTime();
+                @autoreleasepool {
+                    for (NSInteger i = 0; i < nIterations; i++) {
+                        CFStringRef string = CFStringCreateWithCString(kCFAllocatorDefault, str, kCFStringEncodingUTF8);
+                        CFAutorelease(string);
+                    }
+                }
+                CFTimeInterval end = CACurrentMediaTime();
+                printf("default: %lf\n", (end - start));
+            });
+            usleep(200000);
+            ({
+                CFTimeInterval start = CACurrentMediaTime();
+                @autoreleasepool {
+                    for (NSInteger i = 0; i < nIterations; i++) {
+                        CFStringRef string = CFStringCreateWithCString(jemallocAllocator, str, kCFStringEncodingUTF8);
+                        CFAutorelease(string);
+                    }
+                }
+                CFTimeInterval end = CACurrentMediaTime();
+                printf("jemalloc allocator: %lf\n", (end - start));
+            });
+            usleep(200000);
+            ({
+                CFTimeInterval start = CACurrentMediaTime();
+                @autoreleasepool {
+                    for (NSInteger i = 0; i < nIterations; i++) {
+                        int size = strlen(str) + 1;
+                        const char *newStr = je_malloc(size);
+                        memcpy(newStr, str, size);
+                        CFStringRef string = CFStringCreateWithCStringNoCopy(kCFAllocatorDefault, newStr, kCFStringEncodingUTF8, jemallocAllocator);
+                        CFAutorelease(string);
+                    }
+                }
+                CFTimeInterval end = CACurrentMediaTime();
+                printf("jemalloc raw: %lf\n", (end - start));
+            });
+            usleep(200000);
+            /*({
                 CFTimeInterval start = CACurrentMediaTime();
                 @autoreleasepool {
                     for (NSInteger i = 0; i < nIterations; i++) {
@@ -150,7 +197,7 @@ void asf(void);
                     }
                 }
                 CFTimeInterval end = CACurrentMediaTime();
-                printf("apple: %lf\n", (end - start));
+                printf("malloc: %lf\n", (end - start));
             });
             ({
                 CFTimeInterval start = CACurrentMediaTime();
@@ -168,7 +215,7 @@ void asf(void);
                 CFTimeInterval start = CACurrentMediaTime();
                 @autoreleasepool {
                     for (NSInteger i = 0; i < nIterations; i++) {
-                        void *ptr = malloc_zone_malloc(defaultZone, bytes);
+                        void *ptr = defaultZone->malloc(defaultZone, bytes); // malloc_zone_malloc(defaultZone, bytes);
                         sum += (NSInteger)ptr;
                         malloc_zone_free(defaultZone, ptr);
                     }
@@ -187,7 +234,7 @@ void asf(void);
                 }
                 CFTimeInterval end = CACurrentMediaTime();
                 printf("malloc_zone je: %lf\n", (end - start));
-            });
+            });*/
         }
     }
     // if ((rand() & 0) == 1) {
