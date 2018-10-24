@@ -21,27 +21,12 @@
 		B3B954F22135D4D3001B5B93 /* FFOThreadLocalMemory.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B954F12135D4D3001B5B93 /* FFOThreadLocalMemory.m */; };
 		B3B954F721363608001B5B93 /* FFOJemallocAllocator.mm in Sources */ = {isa = PBXBuildFile; fileRef = B3B954F621363608001B5B93 /* FFOJemallocAllocator.mm */; };
 		B3C0BBA520B5F063006CCEF3 /* ConvertUTF.c in Sources */ = {isa = PBXBuildFile; fileRef = B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */; };
-		B3C19D4F217FF6E900FA9505 /* libjemalloc.2.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = B3C19D4E217FF6E900FA9505 /* libjemalloc.2.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		B3C19D50217FF6EC00FA9505 /* libjemalloc.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B3C19D4E217FF6E900FA9505 /* libjemalloc.2.dylib */; };
 		B3CF25F520B6486300C1A65E /* j1.json in Resources */ = {isa = PBXBuildFile; fileRef = B3CF25F420B6486200C1A65E /* j1.json */; };
 		B3CF25F720B6486800C1A65E /* j2.json in Resources */ = {isa = PBXBuildFile; fileRef = B3CF25F620B6486800C1A65E /* j2.json */; };
 		B3D753B9208946A90090C3E2 /* NSString+FFOMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C422B1E8E029100033ACD /* NSString+FFOMethods.m */; };
+		B3F045962180A4F7007327F5 /* libjemalloc_pic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3AF43D0217F5C74002DF023 /* libjemalloc_pic.a */; };
 		B3F73C41207C383300E11E2D /* fishhook.c in Sources */ = {isa = PBXBuildFile; fileRef = B3F73C40207C383300E11E2D /* fishhook.c */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		B3AF43D9217FC033002DF023 /* Embed Libraries */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				B3C19D4F217FF6E900FA9505 /* libjemalloc.2.dylib in Embed Libraries */,
-			);
-			name = "Embed Libraries";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		B301A38D20B8BD7700AF3378 /* FFOEnvironment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOEnvironment.h; sourceTree = "<group>"; };
@@ -192,7 +177,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3C19D50217FF6EC00FA9505 /* libjemalloc.2.dylib in Frameworks */,
+				B3F045962180A4F7007327F5 /* libjemalloc_pic.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -431,7 +416,6 @@
 				B3983915217A385100721475 /* Frameworks */,
 				B3983912217A2E8900721475 /* ShellScript */,
 				B38C420A1E8E001700033ACD /* Resources */,
-				B3AF43D9217FC033002DF023 /* Embed Libraries */,
 			);
 			buildRules = (
 			);

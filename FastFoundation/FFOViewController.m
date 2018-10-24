@@ -141,19 +141,23 @@ extern void *je_zone_malloc(malloc_zone_t *zone, size_t size);
     FFORunTests();
     CFAllocatorRef jemallocAllocator = FFOJemallocAllocator();
     NSInteger sum = 0;
-    const char *str = "the quick brown fox jumped over the lazy dog";
     if (NO && FFOIsDebug()) {
         NSLog(@"running in debug, don't benchmark");
     } else {
+        NSInteger bufferLength = 50;
+        char buffer[bufferLength];
+        for (NSInteger i = 0; i < bufferLength - 1; i++) {
+            buffer[i] = 'a' + arc4random_uniform(26);
+        }
+        buffer[bufferLength - 1] = '\0';
         for (NSInteger z = 0; z < 3; z++) {
-            NSInteger nIterations = 1e6;
+            NSInteger nIterations = 3e6;
             NSInteger bytes = 16;
             ({
                 CFTimeInterval start = CACurrentMediaTime();
                 @autoreleasepool {
                     for (NSInteger i = 0; i < nIterations; i++) {
-                        CFStringRef string = CFStringCreateWithCString(kCFAllocatorDefault, str, kCFStringEncodingUTF8);
-                        CFAutorelease(string);
+                        CFBridgingRelease(CFStringCreateWithCString(kCFAllocatorDefault, buffer, kCFStringEncodingUTF8));
                     }
                 }
                 CFTimeInterval end = CACurrentMediaTime();
@@ -164,23 +168,9 @@ extern void *je_zone_malloc(malloc_zone_t *zone, size_t size);
                 CFTimeInterval start = CACurrentMediaTime();
                 @autoreleasepool {
                     for (NSInteger i = 0; i < nIterations; i++) {
-                        CFStringRef string = CFStringCreateWithCString(jemallocAllocator, str, kCFStringEncodingUTF8);
-                        CFAutorelease(string);
-                    }
-                }
-                CFTimeInterval end = CACurrentMediaTime();
-                printf("jemalloc allocator: %lf\n", (end - start));
-            });
-            usleep(200000);
-            ({
-                CFTimeInterval start = CACurrentMediaTime();
-                @autoreleasepool {
-                    for (NSInteger i = 0; i < nIterations; i++) {
-                        int size = strlen(str) + 1;
-                        const char *newStr = je_malloc(size);
-                        memcpy(newStr, str, size);
-                        CFStringRef string = CFStringCreateWithCStringNoCopy(kCFAllocatorDefault, newStr, kCFStringEncodingUTF8, jemallocAllocator);
-                        CFAutorelease(string);
+                        char *newBuffer = je_malloc(bufferLength);
+                        memcpy(buffer, newBuffer, 50);
+                        CFBridgingRelease(CFStringCreateWithCStringNoCopy(kCFAllocatorDefault, newBuffer, kCFStringEncodingUTF8, jemallocAllocator));
                     }
                 }
                 CFTimeInterval end = CACurrentMediaTime();
