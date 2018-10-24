@@ -136,10 +136,10 @@ extern void *je_zone_malloc(malloc_zone_t *zone, size_t size);
     // malloc_zone_t *defaultZone = originalDefaultZone();
     // printf("%p, %p\n", wrap_malloc, malloc);
     // printf("%p, %p, %p, %p\n", jeZone, jeZone->malloc, defaultZone->malloc, je_zone_malloc);
+    CFAllocatorRef jeAllocator = FFOJemallocAllocator();
     jeZone->malloc(jeZone, 2);
     FFOInitialSetup();
     FFORunTests();
-    CFAllocatorRef jemallocAllocator = FFOJemallocAllocator();
     NSInteger sum = 0;
     if (NO && FFOIsDebug()) {
         NSLog(@"running in debug, don't benchmark");
@@ -150,81 +150,42 @@ extern void *je_zone_malloc(malloc_zone_t *zone, size_t size);
             buffer[i] = 'a' + arc4random_uniform(26);
         }
         buffer[bufferLength - 1] = '\0';
+        NSInteger nIterations = 3e6;
         for (NSInteger z = 0; z < 3; z++) {
-            NSInteger nIterations = 3e6;
-            NSInteger bytes = 16;
             ({
+                NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
+                formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
+                // NSISO8601DateFormatter *formatter = [[NSISO8601DateFormatter alloc] init];
                 CFTimeInterval start = CACurrentMediaTime();
-                @autoreleasepool {
-                    for (NSInteger i = 0; i < nIterations; i++) {
-                        CFBridgingRelease(CFStringCreateWithCString(kCFAllocatorDefault, buffer, kCFStringEncodingUTF8));
+                ({
+                    @autoreleasepool {
+                        for (NSInteger i = 0; i < nIterations; i++) {
+                            void *p = malloc(bufferLength);
+                            sum += (NSInteger)p;
+                            free(p);
+                        }
                     }
-                }
+                });
                 CFTimeInterval end = CACurrentMediaTime();
-                printf("default: %lf\n", (end - start));
+                printf("apple: %lf\n", (end - start));
             });
-            usleep(200000);
+            usleep(500000);
             ({
+                FFODateFormatter *formatter = [[[FFODateFormatter alloc] init] autorelease];
+                formatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ssZZZZZ";
                 CFTimeInterval start = CACurrentMediaTime();
-                @autoreleasepool {
-                    for (NSInteger i = 0; i < nIterations; i++) {
-                        char *newBuffer = je_malloc(bufferLength);
-                        memcpy(buffer, newBuffer, 50);
-                        CFBridgingRelease(CFStringCreateWithCStringNoCopy(kCFAllocatorDefault, newBuffer, kCFStringEncodingUTF8, jemallocAllocator));
+                ({
+                    @autoreleasepool {
+                        for (NSInteger i = 0; i < nIterations; i++) {
+                            void *p = je_malloc(bufferLength);
+                            sum += (NSInteger)p;
+                            je_free(p);
+                        }
                     }
-                }
-                CFTimeInterval end = CACurrentMediaTime();
-                printf("jemalloc raw: %lf\n", (end - start));
-            });
-            usleep(200000);
-            /*({
-                CFTimeInterval start = CACurrentMediaTime();
-                @autoreleasepool {
-                    for (NSInteger i = 0; i < nIterations; i++) {
-                        void *ptr = malloc(bytes);
-                        sum += (NSInteger)ptr;
-                        free(ptr);
-                    }
-                }
-                CFTimeInterval end = CACurrentMediaTime();
-                printf("malloc: %lf\n", (end - start));
-            });
-            ({
-                CFTimeInterval start = CACurrentMediaTime();
-                @autoreleasepool {
-                    for (NSInteger i = 0; i < nIterations; i++) {
-                        void *ptr = je_malloc(bytes); // je_malloc(bytes);
-                        sum += (NSInteger)ptr;
-                        je_free(ptr);
-                    }
-                }
+                });
                 CFTimeInterval end = CACurrentMediaTime();
                 printf("my: %lf\n", (end - start));
             });
-            ({
-                CFTimeInterval start = CACurrentMediaTime();
-                @autoreleasepool {
-                    for (NSInteger i = 0; i < nIterations; i++) {
-                        void *ptr = defaultZone->malloc(defaultZone, bytes); // malloc_zone_malloc(defaultZone, bytes);
-                        sum += (NSInteger)ptr;
-                        malloc_zone_free(defaultZone, ptr);
-                    }
-                }
-                CFTimeInterval end = CACurrentMediaTime();
-                printf("malloc_zone default: %lf\n", (end - start));
-            });
-            ({
-                CFTimeInterval start = CACurrentMediaTime();
-                @autoreleasepool {
-                    for (NSInteger i = 0; i < nIterations; i++) {
-                        void *ptr = malloc_zone_malloc(jeZone, bytes);
-                        sum += (NSInteger)ptr;
-                        malloc_zone_free(jeZone, ptr);
-                    }
-                }
-                CFTimeInterval end = CACurrentMediaTime();
-                printf("malloc_zone je: %lf\n", (end - start));
-            });*/
         }
     }
     // if ((rand() & 0) == 1) {
