@@ -53,7 +53,6 @@ __used CFAllocatorRef FFOJemallocAllocator() {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sJemallocAllocator = CFAllocatorCreate(kCFAllocatorDefault, &sJemallocContext);
-        // sSet = [NSMutableSet set];
     });
     return sJemallocAllocator;
 }
