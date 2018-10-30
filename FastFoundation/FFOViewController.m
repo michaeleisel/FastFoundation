@@ -26,6 +26,9 @@
 #import <mach-o/dyld.h>
 #import "FFOEnabler.h"
 #import <sys/utsname.h>
+#import <sys/event.h>
+#import <sys/resource.h>
+#import "libproc.h"
 
 @interface FFOViewController ()
 
@@ -280,20 +283,70 @@ static void FFOTest() __attribute__ ((optnone))
     // force lock and unlock?
 }
 
+static const NSInteger kEventCount = 5;
+static const NSInteger kChangeCount = 1;
+static struct kevent sChangeList[kChangeCount];
+static struct kevent sEventList[kEventCount];
+
+// struct kevent64_s {
+    // uint64_t    ident;        /* identifier for this event */
+    // int16_t        filter;        /* filter for event */
+    // uint16_t    flags;        /* general flags */
+    // uint32_t    fflags;        /* filter-specific flags */
+    // int64_t        data;        /* filter-specific data */
+    // uint64_t    udata;        /* opaque user data identifier */
+    // uint64_t    ext[2];        /* filter-specific extensions */
+// };
+
+int proc_info(int32_t callnum, pid_t pid, uint32_t flavor, int arg, void *buffer, size_t buffersize) {
+    return syscall(336, callnum, pid, flavor, arg, buffer, buffersize);
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    FFOTest();
-    struct utsname u;
-    int res = uname(&u);
-    je_free(NULL);
-    // je_zone_register();
-    void *v = malloc(1);
-    malloc_zone_t *jeZone = malloc_default_zone();
-    // printf("%p, %p\n", wrap_malloc, malloc);
-    // printf("%p, %p, %p, %p\n", jeZone, jeZone->malloc, defaultZone->malloc, je_zone_malloc);
-    CFAllocatorRef jeAllocator = FFOJemallocAllocator();
-    jeZone->malloc(jeZone, 2);
+
+    char nameBuf[5000];
+    proc_name(getpid(), nameBuf, sizeof(nameBuf));
+    char pidBuf[5000];
+
+    int kq = kqueue();
+    int major = 0, minor = 0;
+    // proc_pidfileportinfo(getpid(), <#uint32_t fileport#>, <#int flavor#>, <#void *buffer#>, <#int buffersize#>)
+    assert(kq >= 0);
+    int kq2 = kqueue();
+    assert(kq2 >= 0);
+    struct proc_fdinfo fdis[30] = {0};
+    NSString *path = [NSString stringWithFormat:@"%@test", NSTemporaryDirectory()];
+    int fd = open([path UTF8String], O_RDONLY | O_CREAT);
+    [[NSFileManager defaultManager] contentsOfDirectoryAtPath:@"." error:NULL];
+    struct vnode_fdinfo vfdinfo = {0};
+    int res = proc_pidfdinfo(getpid(), STDOUT_FILENO, PROC_PIDFDATALKINFO, &vfdinfo, sizeof(vfdinfo));
+    // int res = proc_info(9, getpid(), 16, 0, 0, 0);
+    // FFOTest();
+    // NOTE_VM_PRESSURE_SUDDEN_TERMINATE
+
+    /*struct kevent64_s event = {
+        .filter = EVFILT_VM,
+        .flags = EV_ADD | EV_ENABLE,
+        .fflags = NOTE_VM_PRESSURE_SUDDEN_TERMINATE,
+    };*/
+    /*struct kevent64_s changeEv = {0};
+    changeEv.filter = EVFILT_VM;
+    changeEv.flags = EV_ADD | EV_ENABLE;
+    changeEv.fflags = NOTE_VM_PRESSURE_SUDDEN_TERMINATE;
+    struct kevent64_s eventEv = {0};
+    int n = kevent64(kq, &changeEv, 1, &eventEv, 1, 0, NULL);
+    assert(n > 0 && !(eventEv.flags & EV_ERROR));
+    close(kq);
+    // EV_SET64(<#kevp#>, <#a#>, <#b#>, <#c#>, <#d#>, <#e#>, <#f#>, <#g#>, <#h#>);*/
+    if (0) {
+        volatile NSInteger ptr = NULL;
+        for (NSInteger i = 0; i < INT_MAX; i++) {
+            [[NSMutableArray alloc] init];
+        }
+        NSLog(@"%zd", ptr);
+    }
     FFOInitialSetup();
     FFORunTests();
     NSInteger sum = 0;

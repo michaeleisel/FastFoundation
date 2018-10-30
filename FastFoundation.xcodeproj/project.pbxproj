@@ -45,6 +45,10 @@
 		B301A38E20B8CB0700AF3378 /* FFONumberParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFONumberParser.h; sourceTree = "<group>"; };
 		B301A38F20BCC1CE00AF3378 /* twitter.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = twitter.json; sourceTree = SOURCE_ROOT; };
 		B30A194520AD37A00073CFB8 /* citm_catalog.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = citm_catalog.json; sourceTree = SOURCE_ROOT; };
+		B314023A2188B32A004200D3 /* libproc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libproc.h; sourceTree = "<group>"; };
+		B314023B2188B539004200D3 /* proc_info.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = proc_info.h; sourceTree = "<group>"; };
+		B314023C2188B5A2004200D3 /* kern_control.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = kern_control.h; sourceTree = "<group>"; };
+		B314023D2188B5D1004200D3 /* route.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = route.h; path = ../../../../../../Applications/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/net/route.h; sourceTree = "<group>"; };
 		B3178BCC20B64C9400E3076A /* FFORapidJsonTester.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FFORapidJsonTester.cpp; sourceTree = "<group>"; };
 		B3178BCE20B64EE500E3076A /* FFOJsonTestTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOJsonTestTypes.h; sourceTree = "<group>"; };
 		B32126AD213ECDB2007929FA /* libicuXcode.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libicuXcode.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -271,6 +275,10 @@
 				B3CF264920B64B7000C1A65E /* rapidjson */,
 				B3D753B72089249A0090C3E2 /* rust_bindings.h */,
 				B38C420F1E8E001700033ACD /* Supporting Files */,
+				B314023A2188B32A004200D3 /* libproc.h */,
+				B314023D2188B5D1004200D3 /* route.h */,
+				B314023B2188B539004200D3 /* proc_info.h */,
+				B314023C2188B5A2004200D3 /* kern_control.h */,
 			);
 			path = FastFoundation;
 			sourceTree = "<group>";
