@@ -317,29 +317,16 @@ int proc_info(int32_t callnum, pid_t pid, uint32_t flavor, int arg, void *buffer
     int kq2 = kqueue();
     assert(kq2 >= 0);
     struct proc_fdinfo fdis[30] = {0};
-    NSString *path = [NSString stringWithFormat:@"%@test", NSTemporaryDirectory()];
+    NSString *path = [NSString stringWithFormat:@"%@%u", NSTemporaryDirectory(), arc4random()];
     int fd = open([path UTF8String], O_RDONLY | O_CREAT);
+    assert(fd >= 0);
     [[NSFileManager defaultManager] contentsOfDirectoryAtPath:@"." error:NULL];
-    struct vnode_fdinfo vfdinfo = {0};
-    int res = proc_pidfdinfo(getpid(), STDOUT_FILENO, PROC_PIDFDATALKINFO, &vfdinfo, sizeof(vfdinfo));
-    // int res = proc_info(9, getpid(), 16, 0, 0, 0);
-    // FFOTest();
-    // NOTE_VM_PRESSURE_SUDDEN_TERMINATE
-
-    /*struct kevent64_s event = {
-        .filter = EVFILT_VM,
-        .flags = EV_ADD | EV_ENABLE,
-        .fflags = NOTE_VM_PRESSURE_SUDDEN_TERMINATE,
-    };*/
-    /*struct kevent64_s changeEv = {0};
-    changeEv.filter = EVFILT_VM;
-    changeEv.flags = EV_ADD | EV_ENABLE;
-    changeEv.fflags = NOTE_VM_PRESSURE_SUDDEN_TERMINATE;
-    struct kevent64_s eventEv = {0};
-    int n = kevent64(kq, &changeEv, 1, &eventEv, 1, 0, NULL);
-    assert(n > 0 && !(eventEv.flags & EV_ERROR));
-    close(kq);
-    // EV_SET64(<#kevp#>, <#a#>, <#b#>, <#c#>, <#d#>, <#e#>, <#f#>, <#g#>, <#h#>);*/
+    int count = proc_pidinfo(getpid(), PROC_PIDLISTFDS, 0, NULL, 0);
+    struct proc_fdinfo fds[30] = {0};
+    struct vnode_fdinfowithpath info = {0};
+    int res = proc_pidinfo(getpid(), PROC_PIDLISTFDS, 0, fds, sizeof(fds));
+    res = proc_pidfdinfo(getpid(), fd, PROC_PIDFDVNODEPATHINFO, &info, sizeof(info));
+    printf("");
     if (0) {
         volatile NSInteger ptr = NULL;
         for (NSInteger i = 0; i < INT_MAX; i++) {
