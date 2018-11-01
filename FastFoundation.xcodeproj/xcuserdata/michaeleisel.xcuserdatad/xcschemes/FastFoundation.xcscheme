@@ -28,10 +28,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B385CAC8213D9E6C009FBE52"
-               BuildableName = "libicuXcode.a"
-               BlueprintName = "icuXcode"
-               ReferencedContainer = "container:../icuXcode/icuXcode.xcodeproj">
+               BlueprintIdentifier = "B31402672189123A004200D3"
+               BuildableName = "framez.framework"
+               BlueprintName = "framez"
+               ReferencedContainer = "container:../framez/framez.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -83,6 +83,11 @@
             isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
+            key = "DYLD_SKIP_MAIN"
+            value = "1"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
             key = "DYLD_PRINT_INTERPOSING"
             value = ""
             isEnabled = "NO">
@@ -110,7 +115,7 @@
          <EnvironmentVariable
             key = "DYLD_PRINT_STATISTICS"
             value = "1"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "DYLD_PRINT_OPTS"

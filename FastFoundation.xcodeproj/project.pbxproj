@@ -9,13 +9,15 @@
 /* Begin PBXBuildFile section */
 		B301A39020BCC1CF00AF3378 /* twitter.json in Resources */ = {isa = PBXBuildFile; fileRef = B301A38F20BCC1CE00AF3378 /* twitter.json */; };
 		B30A194620AD37A00073CFB8 /* citm_catalog.json in Resources */ = {isa = PBXBuildFile; fileRef = B30A194520AD37A00073CFB8 /* citm_catalog.json */; };
+		B31402762189129A004200D3 /* framez.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B31402752189129A004200D3 /* framez.framework */; };
+		B31402772189129A004200D3 /* framez.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = B31402752189129A004200D3 /* framez.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B32879F31E8E1625007E49B7 /* FFODateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = B32879F21E8E1625007E49B7 /* FFODateFormatter.m */; };
 		B3405E7C2139DCA700F8723A /* constructo.c in Sources */ = {isa = PBXBuildFile; fileRef = B3405E7B2139DCA600F8723A /* constructo.c */; };
 		B38586DB1EEE46BD00496750 /* NSArrayFFOMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = B38586DA1EEE46BD00496750 /* NSArrayFFOMethods.m */; };
 		B38586DE1EEE48BA00496750 /* pcg_basic.c in Sources */ = {isa = PBXBuildFile; fileRef = B38586DC1EEE48BA00496750 /* pcg_basic.c */; };
 		B38C42111E8E001700033ACD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C42101E8E001700033ACD /* main.m */; };
 		B38C42141E8E001700033ACD /* FFOAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C42131E8E001700033ACD /* FFOAppDelegate.m */; };
-		B38C42171E8E001700033ACD /* FFOViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C42161E8E001700033ACD /* FFOViewController.m */; };
+		B38C42171E8E001700033ACD /* FFOViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B38C42161E8E001700033ACD /* FFOViewController.mm */; };
 		B38C421C1E8E001700033ACD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B38C421B1E8E001700033ACD /* Assets.xcassets */; };
 		B38C42291E8E025200033ACD /* Launch.xib in Resources */ = {isa = PBXBuildFile; fileRef = B38C42281E8E025200033ACD /* Launch.xib */; };
 		B3B954F22135D4D3001B5B93 /* FFOThreadLocalMemory.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B954F12135D4D3001B5B93 /* FFOThreadLocalMemory.m */; };
@@ -34,6 +36,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				B31402772189129A004200D3 /* framez.framework in Embed Libraries */,
 			);
 			name = "Embed Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -49,6 +52,7 @@
 		B314023B2188B539004200D3 /* proc_info.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = proc_info.h; sourceTree = "<group>"; };
 		B314023C2188B5A2004200D3 /* kern_control.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = kern_control.h; sourceTree = "<group>"; };
 		B314023D2188B5D1004200D3 /* route.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = route.h; path = ../../../../../../Applications/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/net/route.h; sourceTree = "<group>"; };
+		B31402752189129A004200D3 /* framez.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = framez.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3178BCC20B64C9400E3076A /* FFORapidJsonTester.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FFORapidJsonTester.cpp; sourceTree = "<group>"; };
 		B3178BCE20B64EE500E3076A /* FFOJsonTestTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOJsonTestTypes.h; sourceTree = "<group>"; };
 		B32126AD213ECDB2007929FA /* libicuXcode.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libicuXcode.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,7 +73,7 @@
 		B38C42121E8E001700033ACD /* FFOAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOAppDelegate.h; sourceTree = "<group>"; };
 		B38C42131E8E001700033ACD /* FFOAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFOAppDelegate.m; sourceTree = "<group>"; };
 		B38C42151E8E001700033ACD /* FFOViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOViewController.h; sourceTree = "<group>"; };
-		B38C42161E8E001700033ACD /* FFOViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFOViewController.m; sourceTree = "<group>"; };
+		B38C42161E8E001700033ACD /* FFOViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = FFOViewController.mm; sourceTree = "<group>"; };
 		B38C421B1E8E001700033ACD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B38C42201E8E001700033ACD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B38C42281E8E025200033ACD /* Launch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Launch.xib; sourceTree = "<group>"; };
@@ -192,6 +196,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B31402762189129A004200D3 /* framez.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,6 +214,7 @@
 		B38C42031E8E001700033ACD = {
 			isa = PBXGroup;
 			children = (
+				B31402752189129A004200D3 /* framez.framework */,
 				B3D559F32178E76F00FEF2F2 /* Prefix.pch */,
 				B3D559F22178E6DC00FEF2F2 /* FFOEnabler.h */,
 				B3B954F521363608001B5B93 /* FFOJemallocAllocator.h */,
@@ -258,7 +264,7 @@
 				B3CF262020B64A1300C1A65E /* FFORapidJsonTester.h */,
 				B3CF25F320B63DA400C1A65E /* FFOString.h */,
 				B38C42151E8E001700033ACD /* FFOViewController.h */,
-				B38C42161E8E001700033ACD /* FFOViewController.m */,
+				B38C42161E8E001700033ACD /* FFOViewController.mm */,
 				B3F73C40207C383300E11E2D /* fishhook.c */,
 				B3F73C42207C383700E11E2D /* fishhook.h */,
 				B38C42201E8E001700033ACD /* Info.plist */,
@@ -503,7 +509,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B32879F31E8E1625007E49B7 /* FFODateFormatter.m in Sources */,
-				B38C42171E8E001700033ACD /* FFOViewController.m in Sources */,
+				B38C42171E8E001700033ACD /* FFOViewController.mm in Sources */,
 				B38586DE1EEE48BA00496750 /* pcg_basic.c in Sources */,
 				B38C42141E8E001700033ACD /* FFOAppDelegate.m in Sources */,
 				B38586DB1EEE46BD00496750 /* NSArrayFFOMethods.m in Sources */,
@@ -567,6 +573,7 @@
 				OTHER_LDFLAGS = (
 					"-stdlib=libc++",
 					"-lstdc++",
+					"-Wl,-U,__dyld_all_twolevel_modules_prebound",
 				);
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -614,6 +621,7 @@
 				OTHER_LDFLAGS = (
 					"-stdlib=libc++",
 					"-lstdc++",
+					"-Wl,-U,__dyld_all_twolevel_modules_prebound",
 				);
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

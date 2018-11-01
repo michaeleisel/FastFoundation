@@ -15,6 +15,11 @@
 
 @implementation FFOAppDelegate
 
++ (void)load
+{
+    NSLog(@"load: %p", malloc);
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	_window = [[UIWindow alloc] init];
 	_window.rootViewController = [[FFOViewController alloc] init];
