@@ -15,6 +15,13 @@
 		B3405E7C2139DCA700F8723A /* constructo.c in Sources */ = {isa = PBXBuildFile; fileRef = B3405E7B2139DCA600F8723A /* constructo.c */; };
 		B38586DB1EEE46BD00496750 /* NSArrayFFOMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = B38586DA1EEE46BD00496750 /* NSArrayFFOMethods.m */; };
 		B38586DE1EEE48BA00496750 /* pcg_basic.c in Sources */ = {isa = PBXBuildFile; fileRef = B38586DC1EEE48BA00496750 /* pcg_basic.c */; };
+		B389A6CA2195E7AB00407428 /* procInfo2.h in Resources */ = {isa = PBXBuildFile; fileRef = B389A6C92195E7AB00407428 /* procInfo2.h */; };
+		B389A6CD2195E88C00407428 /* libprocInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B389A6CB2195E7B500407428 /* libprocInfo.a */; };
+		B389A6D82195E8DC00407428 /* ProcessMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = B389A6D02195E8DB00407428 /* ProcessMonitor.m */; };
+		B389A6D92195E8DC00407428 /* Binary.m in Sources */ = {isa = PBXBuildFile; fileRef = B389A6D22195E8DB00407428 /* Binary.m */; };
+		B389A6DA2195E8DC00407428 /* Signing.m in Sources */ = {isa = PBXBuildFile; fileRef = B389A6D42195E8DB00407428 /* Signing.m */; };
+		B389A6DB2195E8DC00407428 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = B389A6D52195E8DB00407428 /* Utilities.m */; };
+		B389A6DC2195E8DC00407428 /* Process.m in Sources */ = {isa = PBXBuildFile; fileRef = B389A6D72195E8DC00407428 /* Process.m */; };
 		B38C42111E8E001700033ACD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C42101E8E001700033ACD /* main.m */; };
 		B38C42141E8E001700033ACD /* FFOAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C42131E8E001700033ACD /* FFOAppDelegate.m */; };
 		B38C42171E8E001700033ACD /* FFOViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B38C42161E8E001700033ACD /* FFOViewController.mm */; };
@@ -64,6 +71,17 @@
 		B38586DA1EEE46BD00496750 /* NSArrayFFOMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSArrayFFOMethods.m; sourceTree = "<group>"; };
 		B38586DC1EEE48BA00496750 /* pcg_basic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pcg_basic.c; sourceTree = "<group>"; };
 		B38586DD1EEE48BA00496750 /* pcg_basic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pcg_basic.h; sourceTree = "<group>"; };
+		B389A6C92195E7AB00407428 /* procInfo2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = procInfo2.h; sourceTree = "<group>"; };
+		B389A6CB2195E7B500407428 /* libprocInfo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libprocInfo.a; sourceTree = "<group>"; };
+		B389A6CF2195E8DB00407428 /* Signing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Signing.h; sourceTree = "<group>"; };
+		B389A6D02195E8DB00407428 /* ProcessMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProcessMonitor.m; sourceTree = "<group>"; };
+		B389A6D12195E8DB00407428 /* Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Consts.h; sourceTree = "<group>"; };
+		B389A6D22195E8DB00407428 /* Binary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Binary.m; sourceTree = "<group>"; };
+		B389A6D42195E8DB00407428 /* Signing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Signing.m; sourceTree = "<group>"; };
+		B389A6D52195E8DB00407428 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
+		B389A6D62195E8DB00407428 /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
+		B389A6D72195E8DC00407428 /* Process.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Process.m; sourceTree = "<group>"; };
+		B389A6DD2195E94100407428 /* libbsm2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libbsm2.h; sourceTree = "<group>"; };
 		B38C01F520B65183002D4613 /* FFOJsonTester.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFOJsonTester.m; sourceTree = "<group>"; };
 		B38C01F720B651B7002D4613 /* FFOJsonParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOJsonParser.h; sourceTree = "<group>"; };
 		B38C01F820B651B7002D4613 /* FFOJsonParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFOJsonParser.m; sourceTree = "<group>"; };
@@ -197,6 +215,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B31402762189129A004200D3 /* framez.framework in Frameworks */,
+				B389A6CD2195E88C00407428 /* libprocInfo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -211,9 +230,26 @@
 			path = OptimizationProfiles;
 			sourceTree = "<group>";
 		};
+		B389A6CE2195E8D200407428 /* procInfo */ = {
+			isa = PBXGroup;
+			children = (
+				B389A6D22195E8DB00407428 /* Binary.m */,
+				B389A6D12195E8DB00407428 /* Consts.h */,
+				B389A6D72195E8DC00407428 /* Process.m */,
+				B389A6D02195E8DB00407428 /* ProcessMonitor.m */,
+				B389A6CF2195E8DB00407428 /* Signing.h */,
+				B389A6D42195E8DB00407428 /* Signing.m */,
+				B389A6D62195E8DB00407428 /* Utilities.h */,
+				B389A6D52195E8DB00407428 /* Utilities.m */,
+			);
+			path = procInfo;
+			sourceTree = "<group>";
+		};
 		B38C42031E8E001700033ACD = {
 			isa = PBXGroup;
 			children = (
+				B389A6DD2195E94100407428 /* libbsm2.h */,
+				B389A6CE2195E8D200407428 /* procInfo */,
 				B31402752189129A004200D3 /* framez.framework */,
 				B3D559F32178E76F00FEF2F2 /* Prefix.pch */,
 				B3D559F22178E6DC00FEF2F2 /* FFOEnabler.h */,
@@ -250,9 +286,11 @@
 				B3C0BBA420B5F062006CCEF3 /* ConvertUTF.c */,
 				B3C0BBA620B5F0A3006CCEF3 /* ConvertUTF.h */,
 				B38C42121E8E001700033ACD /* FFOAppDelegate.h */,
+				B389A6C92195E7AB00407428 /* procInfo2.h */,
 				B38C42131E8E001700033ACD /* FFOAppDelegate.m */,
 				B3C0BBA220B53607006CCEF3 /* FFOArray.h */,
 				B32879F11E8E1625007E49B7 /* FFODateFormatter.h */,
+				B389A6CB2195E7B500407428 /* libprocInfo.a */,
 				B32879F21E8E1625007E49B7 /* FFODateFormatter.m */,
 				B3C0BBA320B5362F006CCEF3 /* FFODefines.h */,
 				B38C01F720B651B7002D4613 /* FFOJsonParser.h */,
@@ -496,6 +534,7 @@
 				B38C42291E8E025200033ACD /* Launch.xib in Resources */,
 				B30A194620AD37A00073CFB8 /* citm_catalog.json in Resources */,
 				B3CF25F520B6486300C1A65E /* j1.json in Resources */,
+				B389A6CA2195E7AB00407428 /* procInfo2.h in Resources */,
 				B38C421C1E8E001700033ACD /* Assets.xcassets in Resources */,
 				B301A39020BCC1CF00AF3378 /* twitter.json in Resources */,
 			);
@@ -508,15 +547,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B389A6D92195E8DC00407428 /* Binary.m in Sources */,
 				B32879F31E8E1625007E49B7 /* FFODateFormatter.m in Sources */,
+				B389A6DB2195E8DC00407428 /* Utilities.m in Sources */,
 				B38C42171E8E001700033ACD /* FFOViewController.mm in Sources */,
 				B38586DE1EEE48BA00496750 /* pcg_basic.c in Sources */,
 				B38C42141E8E001700033ACD /* FFOAppDelegate.m in Sources */,
 				B38586DB1EEE46BD00496750 /* NSArrayFFOMethods.m in Sources */,
 				B3405E7C2139DCA700F8723A /* constructo.c in Sources */,
 				B3D753B9208946A90090C3E2 /* NSString+FFOMethods.m in Sources */,
+				B389A6DA2195E8DC00407428 /* Signing.m in Sources */,
 				B3F73C41207C383300E11E2D /* fishhook.c in Sources */,
 				B3B954F22135D4D3001B5B93 /* FFOThreadLocalMemory.m in Sources */,
+				B389A6DC2195E8DC00407428 /* Process.m in Sources */,
+				B389A6D82195E8DC00407428 /* ProcessMonitor.m in Sources */,
 				B38C42111E8E001700033ACD /* main.m in Sources */,
 				B3B954F721363608001B5B93 /* FFOJemallocAllocator.mm in Sources */,
 				B3C0BBA520B5F063006CCEF3 /* ConvertUTF.c in Sources */,

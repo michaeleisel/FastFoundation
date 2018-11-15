@@ -56,39 +56,19 @@ extern void kdbg_dump_trace_to_file(const char *);
 
 static NSTimer *sTimer;
 
-static void *wait_for_pressure_event(void *s);
+static void func(void) {
+    /*dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, <#dispatchQueue#>);
+    dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, <#intervalInSeconds#> * NSEC_PER_SEC, <#leewayInSeconds#> * NSEC_PER_SEC);
+    dispatch_source_set_event_handler(timer, ^{
+        <#code to be executed when timer fires#>
+    });
+    dispatch_resume(timer);*/
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    wait_for_pressure_event(NULL);
-}
-
-static void *wait_for_pressure_event(void *s) {
-    int kq;
-    int res;
-    struct kevent event, mevent;
-    char errMsg[100 + 1];
-
-    kq = kqueue();
-
-    EV_SET(&mevent, 0, EVFILT_VM, EV_ADD, NOTE_VM_PRESSURE, 0, 0);
-
-    res = kevent(kq, &mevent, 1, NULL, 0, NULL);
-    if (res != 0) {
-        abort();
-        /*printf("\t\tKevent registration failed - returning: %d!\n", res);*/
-        //snprintf(errMsg, ERR_BUF_LEN, "Kevent registration failed - returning: %d!",res);
-        // printTestResult(__func__, false, errMsg);
-        // cleanup_and_exit(-1);
-    }
-
-    while (1) {
-        memset(&event, 0, sizeof(struct kevent));
-        res = kevent(kq, NULL, 0, &event, 1, NULL);
-        // g_shared->pressure_event_fired = 1;
-    }
+    func();
 }
 
 @end
