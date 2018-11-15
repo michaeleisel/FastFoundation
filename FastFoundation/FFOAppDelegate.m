@@ -8,17 +8,13 @@
 
 #import "FFOAppDelegate.h"
 #import "FFOViewController.h"
+#import <mach/mach_time.h>
 
 @interface FFOAppDelegate ()
 
 @end
 
 @implementation FFOAppDelegate
-
-+ (void)load
-{
-    NSLog(@"load: %p", malloc);
-}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	_window = [[UIWindow alloc] init];
@@ -27,7 +23,7 @@
 	return YES;
 }
 
-static UIBackgroundTaskIdentifier taskId = 0;
+/*static UIBackgroundTaskIdentifier taskId = 0;
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
@@ -41,6 +37,6 @@ static UIBackgroundTaskIdentifier taskId = 0;
         [application endBackgroundTask:taskId];
         taskId = UIBackgroundTaskInvalid;
     });
-}
+}*/
 
 @end

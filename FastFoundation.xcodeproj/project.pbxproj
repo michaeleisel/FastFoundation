@@ -13,6 +13,48 @@
 		B31402772189129A004200D3 /* framez.framework in Embed Libraries */ = {isa = PBXBuildFile; fileRef = B31402752189129A004200D3 /* framez.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B32879F31E8E1625007E49B7 /* FFODateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = B32879F21E8E1625007E49B7 /* FFODateFormatter.m */; };
 		B3405E7C2139DCA700F8723A /* constructo.c in Sources */ = {isa = PBXBuildFile; fileRef = B3405E7B2139DCA600F8723A /* constructo.c */; };
+		B38496F1219DD7DB00E2AC23 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C50207C403D00E11E2D /* CloudKit.framework */; };
+		B38496F2219DD7DB00E2AC23 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C6A207C403F00E11E2D /* Contacts.framework */; };
+		B38496F3219DD7DB00E2AC23 /* ContactsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C56207C403E00E11E2D /* ContactsUI.framework */; };
+		B38496F4219DD7DB00E2AC23 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C65207C403F00E11E2D /* CoreAudio.framework */; };
+		B38496F5219DD7DB00E2AC23 /* CoreAudioKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C53207C403E00E11E2D /* CoreAudioKit.framework */; };
+		B38496F6219DD7DB00E2AC23 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C4D207C403D00E11E2D /* CoreBluetooth.framework */; };
+		B38496F7219DD7DB00E2AC23 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C6E207C403F00E11E2D /* CoreData.framework */; };
+		B38496F8219DD7DB00E2AC23 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C47207C403D00E11E2D /* CoreFoundation.framework */; };
+		B38496F9219DD7DB00E2AC23 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C54207C403E00E11E2D /* CoreGraphics.framework */; };
+		B38496FA219DD7DB00E2AC23 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C75207C403F00E11E2D /* CoreImage.framework */; };
+		B38496FB219DD7DB00E2AC23 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C74207C403F00E11E2D /* CoreLocation.framework */; };
+		B38496FC219DD7DB00E2AC23 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C57207C403E00E11E2D /* CoreMedia.framework */; };
+		B38496FD219DD7DB00E2AC23 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C6C207C403F00E11E2D /* CoreMIDI.framework */; };
+		B38496FE219DD7DB00E2AC23 /* CoreML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C6B207C403F00E11E2D /* CoreML.framework */; };
+		B38496FF219DD7DB00E2AC23 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C5B207C403E00E11E2D /* CoreMotion.framework */; };
+		B3849700219DD7DB00E2AC23 /* CoreNFC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C4C207C403D00E11E2D /* CoreNFC.framework */; };
+		B3849701219DD7DB00E2AC23 /* CoreSpotlight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C67207C403F00E11E2D /* CoreSpotlight.framework */; };
+		B3849702219DD7DB00E2AC23 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C6D207C403F00E11E2D /* CoreTelephony.framework */; };
+		B3849703219DD7DB00E2AC23 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C77207C403F00E11E2D /* CoreText.framework */; };
+		B3849704219DD7DB00E2AC23 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C5E207C403E00E11E2D /* CoreVideo.framework */; };
+		B3849705219DD7DB00E2AC23 /* DeviceCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C5F207C403E00E11E2D /* DeviceCheck.framework */; };
+		B3849706219DD7DB00E2AC23 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C70207C403F00E11E2D /* EventKit.framework */; };
+		B3849707219DD7DB00E2AC23 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C63207C403E00E11E2D /* EventKitUI.framework */; };
+		B3849708219DD7DB00E2AC23 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C46207C403D00E11E2D /* ExternalAccessory.framework */; };
+		B3849709219DD7DB00E2AC23 /* FileProvider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C6F207C403F00E11E2D /* FileProvider.framework */; };
+		B384970A219DD7DB00E2AC23 /* FileProviderUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C68207C403F00E11E2D /* FileProviderUI.framework */; };
+		B384970B219DD7DB00E2AC23 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C48207C403D00E11E2D /* Foundation.framework */; };
+		B384970C219DD7DB00E2AC23 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C66207C403F00E11E2D /* GameController.framework */; };
+		B384970D219DD7DB00E2AC23 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C4B207C403D00E11E2D /* GameKit.framework */; };
+		B384970E219DD7DB00E2AC23 /* GameplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C51207C403D00E11E2D /* GameplayKit.framework */; };
+		B384970F219DD7DB00E2AC23 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C5A207C403E00E11E2D /* GLKit.framework */; };
+		B3849710219DD7DB00E2AC23 /* GSS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C71207C403F00E11E2D /* GSS.framework */; };
+		B3849711219DD7DB00E2AC23 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C49207C403D00E11E2D /* HealthKit.framework */; };
+		B3849712219DD7DB00E2AC23 /* HealthKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C4A207C403D00E11E2D /* HealthKitUI.framework */; };
+		B3849713219DD7DB00E2AC23 /* HomeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C64207C403E00E11E2D /* HomeKit.framework */; };
+		B3849714219DD7DB00E2AC23 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C58207C403E00E11E2D /* iAd.framework */; };
+		B3849715219DD7DB00E2AC23 /* IdentityLookup.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C73207C403F00E11E2D /* IdentityLookup.framework */; };
+		B3849716219DD7DB00E2AC23 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C76207C403F00E11E2D /* ImageIO.framework */; };
+		B3849717219DD7DB00E2AC23 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C45207C403D00E11E2D /* Intents.framework */; };
+		B3849718219DD7DB00E2AC23 /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F73C4E207C403D00E11E2D /* IntentsUI.framework */; };
+		B384971B219DD7DC00E2AC23 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3849719219DD7DC00E2AC23 /* CoreServices.framework */; };
+		B384971C219DD7DC00E2AC23 /* IdentityLookupUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B384971A219DD7DC00E2AC23 /* IdentityLookupUI.framework */; };
 		B38586DB1EEE46BD00496750 /* NSArrayFFOMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = B38586DA1EEE46BD00496750 /* NSArrayFFOMethods.m */; };
 		B38586DE1EEE48BA00496750 /* pcg_basic.c in Sources */ = {isa = PBXBuildFile; fileRef = B38586DC1EEE48BA00496750 /* pcg_basic.c */; };
 		B38C42111E8E001700033ACD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B38C42101E8E001700033ACD /* main.m */; };
@@ -60,6 +102,8 @@
 		B32879F21E8E1625007E49B7 /* FFODateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFODateFormatter.m; sourceTree = "<group>"; };
 		B3405E7B2139DCA600F8723A /* constructo.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = constructo.c; sourceTree = "<group>"; };
 		B3486AAD20AE640000C7291B /* FastFoundation.profdata */ = {isa = PBXFileReference; lastKnownFileType = file; path = FastFoundation.profdata; sourceTree = "<group>"; };
+		B3849719219DD7DC00E2AC23 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		B384971A219DD7DC00E2AC23 /* IdentityLookupUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IdentityLookupUI.framework; path = System/Library/Frameworks/IdentityLookupUI.framework; sourceTree = SDKROOT; };
 		B38586D91EEE46BD00496750 /* NSArrayFFOMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSArrayFFOMethods.h; sourceTree = "<group>"; };
 		B38586DA1EEE46BD00496750 /* NSArrayFFOMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSArrayFFOMethods.m; sourceTree = "<group>"; };
 		B38586DC1EEE48BA00496750 /* pcg_basic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pcg_basic.c; sourceTree = "<group>"; };
@@ -196,6 +240,48 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B384971B219DD7DC00E2AC23 /* CoreServices.framework in Frameworks */,
+				B384971C219DD7DC00E2AC23 /* IdentityLookupUI.framework in Frameworks */,
+				B38496F1219DD7DB00E2AC23 /* CloudKit.framework in Frameworks */,
+				B38496F2219DD7DB00E2AC23 /* Contacts.framework in Frameworks */,
+				B38496F3219DD7DB00E2AC23 /* ContactsUI.framework in Frameworks */,
+				B38496F4219DD7DB00E2AC23 /* CoreAudio.framework in Frameworks */,
+				B38496F5219DD7DB00E2AC23 /* CoreAudioKit.framework in Frameworks */,
+				B38496F6219DD7DB00E2AC23 /* CoreBluetooth.framework in Frameworks */,
+				B38496F7219DD7DB00E2AC23 /* CoreData.framework in Frameworks */,
+				B38496F8219DD7DB00E2AC23 /* CoreFoundation.framework in Frameworks */,
+				B38496F9219DD7DB00E2AC23 /* CoreGraphics.framework in Frameworks */,
+				B38496FA219DD7DB00E2AC23 /* CoreImage.framework in Frameworks */,
+				B38496FB219DD7DB00E2AC23 /* CoreLocation.framework in Frameworks */,
+				B38496FC219DD7DB00E2AC23 /* CoreMedia.framework in Frameworks */,
+				B38496FD219DD7DB00E2AC23 /* CoreMIDI.framework in Frameworks */,
+				B38496FE219DD7DB00E2AC23 /* CoreML.framework in Frameworks */,
+				B38496FF219DD7DB00E2AC23 /* CoreMotion.framework in Frameworks */,
+				B3849700219DD7DB00E2AC23 /* CoreNFC.framework in Frameworks */,
+				B3849701219DD7DB00E2AC23 /* CoreSpotlight.framework in Frameworks */,
+				B3849702219DD7DB00E2AC23 /* CoreTelephony.framework in Frameworks */,
+				B3849703219DD7DB00E2AC23 /* CoreText.framework in Frameworks */,
+				B3849704219DD7DB00E2AC23 /* CoreVideo.framework in Frameworks */,
+				B3849705219DD7DB00E2AC23 /* DeviceCheck.framework in Frameworks */,
+				B3849706219DD7DB00E2AC23 /* EventKit.framework in Frameworks */,
+				B3849707219DD7DB00E2AC23 /* EventKitUI.framework in Frameworks */,
+				B3849708219DD7DB00E2AC23 /* ExternalAccessory.framework in Frameworks */,
+				B3849709219DD7DB00E2AC23 /* FileProvider.framework in Frameworks */,
+				B384970A219DD7DB00E2AC23 /* FileProviderUI.framework in Frameworks */,
+				B384970B219DD7DB00E2AC23 /* Foundation.framework in Frameworks */,
+				B384970C219DD7DB00E2AC23 /* GameController.framework in Frameworks */,
+				B384970D219DD7DB00E2AC23 /* GameKit.framework in Frameworks */,
+				B384970E219DD7DB00E2AC23 /* GameplayKit.framework in Frameworks */,
+				B384970F219DD7DB00E2AC23 /* GLKit.framework in Frameworks */,
+				B3849710219DD7DB00E2AC23 /* GSS.framework in Frameworks */,
+				B3849711219DD7DB00E2AC23 /* HealthKit.framework in Frameworks */,
+				B3849712219DD7DB00E2AC23 /* HealthKitUI.framework in Frameworks */,
+				B3849713219DD7DB00E2AC23 /* HomeKit.framework in Frameworks */,
+				B3849714219DD7DB00E2AC23 /* iAd.framework in Frameworks */,
+				B3849715219DD7DB00E2AC23 /* IdentityLookup.framework in Frameworks */,
+				B3849716219DD7DB00E2AC23 /* ImageIO.framework in Frameworks */,
+				B3849717219DD7DB00E2AC23 /* Intents.framework in Frameworks */,
+				B3849718219DD7DB00E2AC23 /* IntentsUI.framework in Frameworks */,
 				B31402762189129A004200D3 /* framez.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -368,6 +454,8 @@
 		B3F73C43207C403C00E11E2D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B3849719219DD7DC00E2AC23 /* CoreServices.framework */,
+				B384971A219DD7DC00E2AC23 /* IdentityLookupUI.framework */,
 				B3B954F32135F24D001B5B93 /* libicucore.tbd */,
 				B3F73C52207C403E00E11E2D /* Accounts.framework */,
 				B3F73C60207C403E00E11E2D /* AddressBook.framework */,
