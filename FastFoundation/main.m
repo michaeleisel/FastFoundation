@@ -148,14 +148,15 @@ int main(int argc, char * argv[], char **envp) {
 
     /* Set up a list of events to monitor. */
     vnode_events = NOTE_DELETE |  NOTE_WRITE | NOTE_EXTEND |                            NOTE_ATTRIB | NOTE_LINK | NOTE_RENAME | NOTE_REVOKE;
-    EV_SET( &events_to_monitor[0], event_fd, EVFILT_VNODE, EV_ADD | EV_CLEAR, vnode_events, 0, user_data);
+    EV_SET( &events_to_monitor[0], 0, EVFILT_VM, EV_ADD | EV_CLEAR , NOTE_VM_PRESSURE_SUDDEN_TERMINATE, 0, user_data);
 
     /* Handle events. */
     int num_files = 1;
     int continue_loop = 40; /* Monitor for twenty seconds. */
     while (--continue_loop) {
+        errno = 0;
         int event_count = kevent(kq, events_to_monitor, NUM_EVENT_SLOTS, event_data, num_files, &timeout);
-        if ((event_count < 0) || (event_data[0].flags == EV_ERROR)) {
+        if ((event_count <= 0) || (event_data[0].flags == EV_ERROR)) {
             /* An error occurred. */
             fprintf(stderr, "An error occurred (event count %d).  The error was %s.\n", event_count, strerror(errno));
             break;
