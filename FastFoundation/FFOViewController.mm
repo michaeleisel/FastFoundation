@@ -58,34 +58,47 @@ static NSTimer *sTimer;
 
 static void *wait_for_pressure_event(void *s);
 
-extern CFTimeInterval kDiff;
+extern CFTimeInterval kDiff, kDiff2;
+// extern "C" CFTimeInterval timeFromStartToNow();
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
+    int64_t delayInSeconds = 2.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        UIEdgeInsets insets = self.view.safeAreaInsets;
+        UILayoutGuide *guide = self.view.safeAreaLayoutGuide;
+        NSLog(@"%@, %@", NSStringFromUIEdgeInsets(insets), guide);
+    });
     UILabel *label = [[UILabel alloc] init];
     label.textColor = [UIColor purpleColor];
-    label.text = [NSString stringWithFormat:@"%@", @(kDiff)];
+    label.text = @"asdf";
+    // label.text = [NSString stringWithFormat:@"%@", @(timeFromStartToNow())];
+    label.numberOfLines = 0;
     label.font = [UIFont systemFontOfSize:30];
     label.frame = CGRectMake(40, 40, 300, 300);
     [self.view addSubview:label];
 
-    // useUpMemory();
+    useUpMemory();
     // runner();
-    code();
+    zz();
+    // code();
     // wait_for_pressure_event(NULL);
 }
 
 static void useUpMemory() {
-    void *a = malloc(1e9);
-    memset(a, 'a', 1e9);
-    while (true) {
-        NSInteger size = 50000000;
-        void *a = malloc(size);
-        memset(a, 'a', size);
-        sleep(1);
-    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        void *a = malloc(1e9);
+        memset(a, 'a', 1e9);
+        while (true) {
+            NSInteger size = 50000000;
+            void *a = malloc(size);
+            memset(a, 'a', size);
+            sleep(1);
+        }
+    });
 }
 
 static dispatch_source_t msp;
@@ -99,6 +112,36 @@ static void runner() {
         // dispatch_source_memorypressure_flags_t
     });
     dispatch_resume(msp);
+}
+
+static int zz() {
+    pid_t pid; // PID to monitor
+    int kq; // The kqueue file descriptor
+    int rc; // collecting return values
+    int done;
+    struct kevent ke;
+    pid = getpid();
+    kq = kqueue();
+    if (kq == -1) { perror("kqueue"); exit(2); }
+    // Set process fork/exec notifications
+    EV_SET(&ke, 0, EVFILT_VM, EV_ADD,
+           NOTE_VM_PRESSURE_SUDDEN_TERMINATE, 0, NULL);
+    // Register event
+    rc = kevent(kq, &ke, 1, NULL, 0, NULL);
+    if (rc < 0) { perror ("kevent"); exit (3); }
+    done = 0;
+    while (!done) {
+        memset(&ke, '\0', sizeof(struct kevent));
+        // This blocks until an event matching the filter occurs
+        printf("blocking\n");
+        rc = kevent(kq, NULL, 0, &ke, 1, NULL);
+        printf("done\n");
+        if (rc < 0) { perror ("kevent"); exit (4); }
+    } // end while
+
+    NSLog(@"fail");
+
+    return 0;
 }
 
 static void code() {
