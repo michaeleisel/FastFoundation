@@ -5,6 +5,8 @@ use std::ffi::CString;
 use std::slice;
 use libc::strlen;
 
+
+
 #[no_mangle]
 #[allow(unused_variables)]
 pub extern fn FFORustDeallocate(ptr: *mut c_void, info: *mut c_void) {
@@ -12,16 +14,6 @@ pub extern fn FFORustDeallocate(ptr: *mut c_void, info: *mut c_void) {
         CString::from_raw(ptr as *mut c_char);
     }
 }
-
-/*extern {
-    CFStringGetCStringPtr(string: *const c_void, encoding: CFStringEncoding)
-}*/
-
-/*#[repr(C)]
-pub struct FFOString {
-    chars: *const c_char,
-    len: u32,
-}*/
 
 #[no_mangle]
 #[allow(unused_variables)]
@@ -45,6 +37,40 @@ pub extern fn FFOComponentsJoinedByString_Rust(values: *const *const c_char, val
     }
     result.extend_from_slice(slices.last().unwrap());
     unsafe { CString::from_vec_unchecked(result).into_raw() }
+}
+
+pub struct Callbacks {
+    dict_start: &'static Fn(),
+    dict_end: &'static Fn(),
+    array_start: &'static Fn(),
+    array_end: &'static Fn(),
+    string: &'static Fn(&str),
+    int64: &'static Fn(i64),
+    double: &'static Fn(f64),
+}
+
+fn align(ptr: *const u8, alignment: usize) -> *const u8 {
+    // todo: fix
+    ptr// pt % alignment
+}
+
+extern "C" {
+    fn process_chars(start: *const u8, len: usize, destination: *mut u8);
+}
+
+unsafe fn summary(string: &[u8]) {
+    let string_ptr = string.as_ptr();
+    let start = align(string_ptr, 16);
+    let end = align(string_ptr.add(string.len()), 16);
+    let aligned_len: usize = 0;// end.offset_from(start);
+    let mut destination: Vec<u8> = Vec::with_capacity(aligned_len / 8);
+    process_chars(start, aligned_len, destination.as_mut_slice().as_mut_ptr());
+}
+
+pub fn parse(string: &[u8], callbacks: &Callbacks) {
+    let string_ptr = string.as_ptr();
+    let summary = unsafe { summary(string) };
+    // string
 }
 
 #[cfg(test)]

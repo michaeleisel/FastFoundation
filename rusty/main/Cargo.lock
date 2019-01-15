@@ -1,4 +1,29 @@
 [[package]]
+name = "cfg-if"
+version = "0.1.6"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "lexical"
+version = "2.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "cfg-if 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "lexical-core 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "lexical-core"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "cfg-if 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "ryu 0.2.7 (registry+https://github.com/rust-lang/crates.io-index)",
+ "stackvector 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "static_assertions 0.2.5 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "libc"
 version = "0.2.40"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -7,8 +32,48 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 name = "rusty"
 version = "0.1.0"
 dependencies = [
+ "lexical 2.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "libc 0.2.40 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
+[[package]]
+name = "ryu"
+version = "0.2.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "stackvector"
+version = "1.0.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "unreachable 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "static_assertions"
+version = "0.2.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "unreachable"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "void 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "void"
+version = "1.0.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
 [metadata]
+"checksum cfg-if 0.1.6 (registry+https://github.com/rust-lang/crates.io-index)" = "082bb9b28e00d3c9d39cc03e64ce4cea0f1bb9b3fde493f0cbc008472d22bdf4"
+"checksum lexical 2.0.0 (registry+https://github.com/rust-lang/crates.io-index)" = "e4fac65df7e751b57bb3a334c346239cb4ce2601907d698726ceeb82a54ba4ef"
+"checksum lexical-core 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)" = "025babf624c0c2b4bed1373efd684d5d0b2eecd61138d26ec3eec77bf0f2e33d"
 "checksum libc 0.2.40 (registry+https://github.com/rust-lang/crates.io-index)" = "6fd41f331ac7c5b8ac259b8bf82c75c0fb2e469bbf37d2becbba9a6a2221965b"
+"checksum ryu 0.2.7 (registry+https://github.com/rust-lang/crates.io-index)" = "eb9e9b8cde282a9fe6a42dd4681319bfb63f121b8a8ee9439c6f4107e58a46f7"
+"checksum stackvector 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)" = "c049c77bf85fbc036484c97b008276d539d9ebff9dfbde37b632ebcd5b8746b6"
+"checksum static_assertions 0.2.5 (registry+https://github.com/rust-lang/crates.io-index)" = "c19be23126415861cb3a23e501d34a708f7f9b2183c5252d690941c2e69199d5"
+"checksum unreachable 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)" = "382810877fe448991dfc7f0dd6e3ae5d58088fd0ea5e35189655f84e6814fa56"
+"checksum void 1.0.2 (registry+https://github.com/rust-lang/crates.io-index)" = "6a02e4885ed3bc0f2de90ea6dd45ebcbb66dacffe03547fadbb0eeae2770887d"
