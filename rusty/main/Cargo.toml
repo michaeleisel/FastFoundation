@@ -11,3 +11,4 @@ debug = true # generate debug symbols for the dSYM file
 
 [dependencies]
 libc = "*"
+lexical = "2.0.0"
