@@ -87,5 +87,5 @@ extern "C" void gooo(char *json) {
     MyHandler handler;
     Reader reader;
     StringStream ss(json);
-    reader.Parse(ss, handler);
+    reader.Parse<rapidjson::kParseFullPrecisionFlag>(ss, handler);
 }

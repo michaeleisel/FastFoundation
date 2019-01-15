@@ -103,14 +103,13 @@ static void FFOTestProcessChars(char *string, char *dest, NSInteger length) {
         str[0] = rand() % 26 + 'a';
         sum;
     }));
-    return;
     // int64_t ret = process_chars("\"s\"fas\"fa\"dfasdf", 16, dest);
 
     uint16_t a = 0x1234;
     char *c = (char *)&a;
     printf("%#x, %#x", c[0], c[1]);
 
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"citm_catalog" ofType:@"json"];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"canada" ofType:@"json"];
     NS_VALID_UNTIL_END_OF_SCOPE NSData *objcData = [[[NSFileManager defaultManager] contentsAtPath:path] mutableCopy];
     char *string1 = (char *)[objcData bytes];
     char *string2 = NULL;
@@ -118,8 +117,8 @@ static void FFOTestProcessChars(char *string, char *dest, NSInteger length) {
     uint32_t length = (uint32_t)strlen(string1);
     if (FFOIsDebug()) {
         NSLog(@"running in debug, don't benchmark");
-        FFOTestResults(string1, length);
         gooo(string2);
+        FFOTestResults(string1, length);
         for (NSInteger i = 0; i < MIN(sMyEventCount, sEventCount); i++) {
             if (sMyEvents[i].type != sEvents[i].type) {
                 NSAssert(NO, @"");
